@@ -2,8 +2,10 @@
 
 > **Paper:** CS+DA · **Priority:** P0 · **Plan topics:** Systems of linear equations and solutions; Gaussian elimination; LU decomposition
 > **Prerequisites:** [Vector spaces](vector-spaces.md) · [Matrices and determinants](matrices-and-determinants.md) · **Leads to:** [Eigenvalues and eigenvectors](eigenvalues-and-eigenvectors.md) · [Orthogonality, projections, SVD](orthogonality-projections-svd.md)
+> **PYQ weightage:** High · 17 Qs since 2015 (10 since 2021) · DA: 4 · Trend: rising · Most asked: System of Equations, LU Decomposition, Gaussian Elimination
 
 ## Quick glance
+- **Exam focus:** Consistency criteria of linear systems (rank(A) vs rank([A | b])), finding parameter values for unique/infinite/no solution, and LU factorisation (entries of L and U, operation count). Core high-weightage topic regularly tested via NAT and MCQs across CS and DA.
 - A system is Ax = b with A m × n. Form the **augmented matrix [A | b]** and row-reduce.
 - **Consistency (Rouché–Capelli):** consistent iff rank(A) = rank([A|b]). Then: rank = n gives a **unique** solution; rank = r < n gives **infinitely many** with **n - r free parameters**; rank(A) < rank([A|b]) gives **no solution**.
 - Homogeneous Ax = 0 is always consistent (x = 0). Non-trivial solutions exist iff rank < n; if m < n they always exist. Square case: iff det A = 0.
@@ -13,7 +15,7 @@
 - det A = product of U's diagonal (times (-1)^swaps).
 - **#1 trap:** the number of free variables is n - rank (columns minus rank), and "unique solution" needs rank = number of **unknowns**, not number of equations.
 
-## 1. Solution structure of Ax = b
+## 1. Solution structure of Ax = b [PYQ: High]
 
 **Intuition.** Each equation is a hyperplane; the solution is where they all meet: a point, a line/plane (infinite family), or nowhere (parallel/inconsistent).
 
@@ -31,7 +33,7 @@ Square n × n: unique solution iff det A ≠ 0. If det A = 0, then either none o
 
 **Structure theorem.** If x_p solves Ax = b then every solution is x_p + z, with z in N(A). Two particular solutions differ by a null-space vector.
 
-## 2. Gaussian elimination
+## 2. Gaussian elimination [PYQ: Medium]
 
 **Algorithm.**
 1. Take the leftmost column that is not all zero below the current row; if its pivot position is 0, swap with a row below that has a nonzero entry.
@@ -67,7 +69,7 @@ Square n × n: unique solution iff det A ≠ 0. If det A = 0, then either none o
 
 **Worked example 5 — another parameter pattern.** x + y + z = 1; x + 2y + 4z = λ; x + 4y + 10z = λ². Subtract: R2 - R1: y + 3z = λ - 1; R3 - R1: 3y + 9z = λ² - 1. R3 - 3R2: 0 = λ² - 3λ + 2 = (λ - 1)(λ - 2). So consistent iff λ = 1 or λ = 2; then rank = 2 and there are infinitely many solutions (one free variable). The coefficient matrix is singular for every λ, so it **never** has a unique solution.
 
-## 3. Cramer's rule and the inverse
+## 3. Cramer's rule and the inverse [PYQ: Low]
 
 **Cramer's rule** (square, det A ≠ 0): x_i = det(A_i) / det(A), where A_i is A with column i replaced by b. Fine for 2 × 2 and 3 × 3; **far too slow** for large n (Θ(n · n!) by cofactors, Θ(n⁴) by elimination).
 
@@ -84,7 +86,7 @@ Square n × n: unique solution iff det A ≠ 0. If det A = 0, then either none o
 
 Cost: inversion Θ(n³); solving Ax = b by computing A^-1 then multiplying is wasteful versus elimination or LU.
 
-## 4. LU decomposition
+## 4. LU decomposition [PYQ: Medium]
 
 **Idea.** Gaussian elimination turns A into upper triangular U. Recording the multipliers used gives a lower triangular L with A = LU. **Elimination is factorisation.** Factor once (Θ(n³)), then solve for many right-hand sides b at Θ(n²) each.
 

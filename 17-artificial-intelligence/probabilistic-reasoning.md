@@ -2,9 +2,11 @@
 
 > **Paper:** DA · **Priority:** P0 · **Plan topics:** Conditional independence; Representation of conditional independence; Exact inference via variable elimination; Approximate inference via sampling
 > **Prerequisites:** [Probability basics](../02-probability-statistics/probability-basics.md) · [Random variables and moments](../02-probability-statistics/random-variables-and-moments.md) · [Naive Bayes](../16-machine-learning/classification-methods.md) · **Leads to:** [CHECKPOINT](CHECKPOINT.md)
+> **PYQ weightage:** Medium · 3 Qs (DA 2024–2026 only) · Trend: steady · Most asked: Conditional independence & d-separation, Bayesian Network factorization & CPTs, Exact inference
 
 ## Quick glance
 
+- **Exam focus:** In GATE DA, probabilistic reasoning questions focus on Bayesian Networks: conditional independence and d-separation relations in DAGs, joint probability calculation from Conditional Probability Tables (CPTs), and variable elimination exact inference, as MCQs and NATs.
 - **Joint distribution** over $n$ binary variables has $2^n-1$ free numbers. Everything is computable from it by **marginalisation** (sum out) and **conditioning** ($P(X\mid e)=P(X,e)/P(e)$).
 - $X\perp Y\mid Z$ iff $P(X,Y\mid Z)=P(X\mid Z)P(Y\mid Z)$ (equivalently $P(X\mid Y,Z)=P(X\mid Z)$). Marginal independence and conditional independence are **different**: neither implies the other.
 - **Bayesian network** = DAG + CPT $P(X_i\mid\text{Parents}(X_i))$ per node. Joint $=\prod_iP(X_i\mid\text{Pa}(X_i))$. Parameters for binary nodes: $\sum_i2^{|\text{Pa}(X_i)|}$.
@@ -14,13 +16,13 @@
 - **Approximate inference**: prior sampling, **rejection sampling** (discard samples inconsistent with evidence), **likelihood weighting** (fix evidence, weight by evidence likelihood), **Gibbs sampling** (MCMC, resample one variable given its Markov blanket).
 - #1 trap: **observing a collider (or its descendant) makes its parents dependent**; observing a chain/fork middle makes ends independent.
 
-## 1. Probability toolkit
+## 1. Probability toolkit [PYQ: Low]
 
 **Joint, marginal, conditional.** $P(X)=\sum_yP(X,y)$ (marginalisation). $P(X\mid e)=\alpha\,P(X,e)$ with $\alpha=1/P(e)$ (normalisation). **Chain rule**: $P(X_1,\dots,X_n)=\prod_iP(X_i\mid X_1,\dots,X_{i-1})$. **Bayes**: $P(H\mid E)=P(E\mid H)P(H)/P(E)$.
 
 **Cost of the full joint** for $n$ binary variables: $2^n$ entries ($2^n-1$ free). For $n=30$ that is over $10^9$: we need structure.
 
-## 2. Conditional independence
+## 2. Conditional independence [PYQ: Medium]
 
 **Definition.** $X\perp Y\mid Z$ if $P(x,y\mid z)=P(x\mid z)P(y\mid z)$ for all values with $P(z)>0$. Equivalent: $P(x\mid y,z)=P(x\mid z)$: once $Z$ is known, $Y$ tells nothing more about $X$.
 
@@ -31,7 +33,7 @@
 
 **Conversely**, independent causes can become dependent given a common effect (section 3). Conditional independence is what lets us factor the joint: it is the engine behind naive Bayes (features independent given class) and Bayesian networks.
 
-## 3. Representing conditional independence: Bayesian networks
+## 3. Representing conditional independence: Bayesian networks [PYQ: High]
 
 **Definition.** A Bayesian network is a **directed acyclic graph** with one node per random variable and, for each node, a **conditional probability table (CPT)** $P(X_i\mid\text{Pa}(X_i))$. The semantics:
 
@@ -89,7 +91,7 @@ $X$ and $Y$ are **d-separated** by a set $Z$ (hence $X\perp Y\mid Z$ in every di
 
 **Equivalent networks**: $A\to B\to C$, $A\leftarrow B\to C$, $A\leftarrow B\leftarrow C$ encode the same independencies; the collider $A\to B\leftarrow C$ differs.
 
-## 4. Exact inference
+## 4. Exact inference [PYQ: Medium]
 
 **Task.** Query variable $X$, evidence $e$, hidden variables $Y$: $P(X\mid e)=\alpha\sum_yP(X,e,y)$.
 
@@ -140,7 +142,7 @@ Each of the two values sums $2\times2=4$ terms over $(E,A)$; enumeration repeats
 
 **Irrelevant variables.** A hidden leaf that is neither query nor evidence can be dropped (it sums to 1). Example: for $P(J\mid b)$, $M$ is irrelevant.
 
-## 5. Approximate inference by sampling
+## 5. Approximate inference by sampling [PYQ: Low]
 
 When exact inference is too expensive, estimate probabilities from random samples. Error shrinks as $1/\sqrt N$ regardless of network size.
 
@@ -181,7 +183,7 @@ Fix evidence. Start with a random assignment of the non-evidence variables. Repe
 | --- | --- | --- |
 | Conditional independence | $P(x,y\mid z)=P(x\mid z)P(y\mid z)$ | definition checks |
 | BN joint | $\prod_iP(x_i\mid\text{pa}_i)$ | all numeric questions |
-| BN parameters (binary) | $\sum_i2^{|\text{Pa}_i|}$ | counting |
+| BN parameters (binary) | $\sum_i2^{\vert \text{Pa}_i\vert }$ | counting |
 | Full joint | $2^n-1$ free values | comparison |
 | Collider rule | blocked unless it or a descendant is observed | d-separation |
 | Chain/fork rule | blocked iff the middle node is observed | d-separation |

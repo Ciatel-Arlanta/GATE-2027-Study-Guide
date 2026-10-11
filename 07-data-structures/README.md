@@ -3,6 +3,8 @@
 > **Paper:** CS+DA (the DA syllabus lists the same structures plus hash tables, whose analysis lives in [hashing](../08-algorithms/hashing.md))
 > **Prerequisites:** [C programming](../05-c-programming/README.md) (CS) or [Python programming](../06-python-programming/README.md) (DA) · **Leads to:** [Algorithms](../08-algorithms/README.md), [Databases (indexing)](../14-databases/file-organization-and-indexing.md), [Operating systems](../13-operating-systems/README.md)
 
+**PYQ weightage:** ~3.4 Qs per CSE paper (2021–26), trend falling; DA: 6 Qs in 2024–26.
+
 ## Weightage
 
 Together with C programming, "Programming and Data Structures" is worth about **8-12 marks** in the CS paper every year; in the DA paper data structures appear as 2-5 marks (stacks, queues, trees, heaps, graphs, complexity). Typical questions: output/trace of a stack or queue program, infix/postfix, BST/AVL insertion and traversal, heap construction, linked-list code completion, tree counting properties, representation and operation costs.
@@ -15,14 +17,23 @@ Mental model: for every structure, memorise (1) its **invariant** (LIFO; sorted 
 
 ## Reading order
 
-| # | Chapter | Priority | Plan topics covered |
-|---|---|---|---|
-| 1 | [Arrays, stacks, queues](arrays-stacks-queues.md) | P0 | Arrays; Stacks; Queues |
-| 2 | [Linked lists](linked-lists.md) | P0 | Linked lists |
-| 3 | [Trees and BST](trees-and-bst.md) | P0 | Trees; Binary search trees (incl. AVL) |
-| 4 | [Heaps](heaps.md) | P0 | Binary heaps (priority queues) |
-| 5 | [Graphs](graphs.md) | P0 | Graphs (terminology, representations) |
-| 6 | [Complexity reference](complexity-reference.md) | P0 | Data-structure operations and complexity |
+| # | Chapter | Priority | Plan topics covered | PYQ weightage |
+|---|---|---|---|---|
+| 1 | [Arrays, stacks, queues](arrays-stacks-queues.md) | P0 | Arrays; Stacks; Queues | High · 24 |
+| 2 | [Linked lists](linked-lists.md) | P0 | Linked lists | Medium · 9 |
+| 3 | [Trees and BST](trees-and-bst.md) | P0 | Trees; Binary search trees (incl. AVL) | High · 43 |
+| 4 | [Heaps](heaps.md) | P0 | Binary heaps (priority queues) | High · 20 |
+| 5 | [Graphs](graphs.md) | P0 | Graphs (terminology, representations) | Medium · 9 |
+| 6 | [Complexity reference](complexity-reference.md) | P0 | Data-structure operations and complexity | Medium · 10 |
+
+## Study priority
+
+- [Trees and BST](trees-and-bst.md) (High · 43) — the heaviest chapter: master BST insertion/deletion search paths, traversals and reconstruction, node counting ($n_0 = n_2 + 1$) and AVL rotations first.
+- [Arrays, stacks, queues](arrays-stacks-queues.md) (High · 24) — master stack applications (infix/postfix, valid permutations), circular-queue full/empty conditions and array address formulas.
+- [Heaps](heaps.md) (High · 20) — master heapify/sift-down, build-heap complexity ($O(n)$) and min/max heap insertion and deletion.
+- [Complexity reference](complexity-reference.md) (Medium · 10) — master comparative operation costs and amortised analysis; treat it as a revision table rather than a first read.
+- [Linked lists](linked-lists.md) (Medium · 9) — master pointer rewiring (reversal, deletion without head, cycle detection) and traversal tracing.
+- [Graphs](graphs.md) (Medium · 9) — master matrix-versus-list trade-offs, walks via powers of the adjacency matrix and degree counting; most graph questions are asked under [08 Algorithms](../08-algorithms/README.md).
 
 Revision aids: [CHEATSHEET](CHEATSHEET.md) · [CHECKPOINT](CHECKPOINT.md)
 

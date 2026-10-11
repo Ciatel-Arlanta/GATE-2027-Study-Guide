@@ -2,9 +2,11 @@
 
 > **Paper:** DA · **Priority:** P0 · **Plan topics:** Uninformed search; Informed search; Adversarial search
 > **Prerequisites:** [Graph traversals](../08-algorithms/graph-traversals.md) · [Shortest paths](../08-algorithms/shortest-paths.md) · [Heaps](../07-data-structures/heaps.md) · **Leads to:** [Logic and inference](logic-and-inference.md) · [Probabilistic reasoning](probabilistic-reasoning.md)
+> **PYQ weightage:** High · 4 Qs (DA 2024–2026 only) · Trend: steady · Most asked: A* search & heuristic admissibility/consistency, Minimax & Alpha-Beta pruning
 
 ## Quick glance
 
+- **Exam focus:** A major component of AI in GATE DA: questions heavily test A* evaluation $f(n) = g(n) + h(n)$ with admissible/consistent heuristics, and adversarial game trees using Minimax evaluation and Alpha-Beta pruning cutoff counts, as NAT and MSQ questions.
 - A **search problem** = initial state, actions, transition model, goal test, path cost. A solution is an action sequence; an optimal one has least path cost.
 - **Uninformed**: BFS (shallowest first, queue), UCS (least $g$, priority queue), DFS (stack, $O(bm)$ space), DLS, IDS (DFS with growing limit: BFS's completeness and optimality with DFS's $O(bd)$ space), bidirectional ($O(b^{d/2})$).
 - **Informed**: greedy best-first orders by $h(n)$ (not optimal); **A\*** orders by $f=g+h$; optimal if $h$ is **admissible** ($h\le h^*$) for tree search and **consistent** ($h(n)\le c(n,n')+h(n')$) for graph search. Consistent $\Rightarrow$ admissible.
@@ -13,7 +15,7 @@
 - Local search (hill climbing, simulated annealing) keeps one state and ignores the path.
 - #1 trap: apply the **goal test when a node is expanded** (popped), not when generated, for UCS/A\*; and know the tie-breaking rule used in a trace question.
 
-## 1. Problem formulation
+## 1. Problem formulation [PYQ: Low]
 
 **State space** (graph of states), **actions** $A(s)$, **transition** $\text{Result}(s,a)$, **step cost** $c(s,a,s')\ge0$, **goal test**. Branching factor $b$, solution depth $d$ (shallowest goal), maximum depth $m$.
 
@@ -29,7 +31,7 @@
 
 **Measures**: completeness (finds a solution if one exists), optimality (least cost), time and space complexity (nodes generated/stored).
 
-## 2. Uninformed search
+## 2. Uninformed search [PYQ: Medium]
 
 | Algorithm | Complete? | Optimal? | Time | Space |
 | --- | --- | --- | --- | --- |
@@ -65,7 +67,7 @@ flowchart LR
 *UCS (expand lowest $g$).* $S(0)$; then $A(1)$, $B(4)$; expand $A$: $B$ improves to $g=3$, $C(6)$; expand $B(3)$: $C$ improves to $4$, $D(8)$; expand $C(4)$: $G(7)$; expand $G(7)$.
 **Order: S, A, B, C, G; optimal cost 7 via $S\to A\to B\to C\to G$.**
 
-## 3. Informed search
+## 3. Informed search [PYQ: High]
 
 **Heuristic** $h(n)$ = estimated cost from $n$ to a goal, $h(\text{goal})=0$.
 - **Admissible**: $h(n)\le h^*(n)$ (never overestimates the true remaining cost).
@@ -110,7 +112,7 @@ A\* expands every node with $f<C^*$, some with $f=C^*$, none with $f>C^*$. Space
 - **Simulated annealing**: accept a worse move with probability $e^{\Delta E/T}$ ($\Delta E<0$), lowering $T$ over time. E.g. $\Delta E=-2$, $T=1$: $e^{-2}=0.135$. A slow enough cooling schedule reaches the global optimum with probability $\to1$.
 - **Beam search**: keep the best $k$ states per level; incomplete.
 
-## 4. Adversarial search (games)
+## 4. Adversarial search (games) [PYQ: High]
 
 **Setting.** Two players, **zero-sum**, perfect information, alternating moves. **MAX** maximises the utility, **MIN** minimises it. Game tree with terminal utilities.
 

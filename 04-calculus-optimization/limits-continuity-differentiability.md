@@ -2,8 +2,10 @@
 
 > **Paper:** CS+DA · **Priority:** P0 · **Plan topics:** Functions of a single variable; Limits; Continuity; Differentiability
 > **Prerequisites:** [Sets, relations, functions](../01-discrete-mathematics/sets-relations-functions.md) · **Leads to:** [Mean value theorems and Taylor series](mean-value-theorems-and-taylor.md) · [Maxima, minima, optimisation](maxima-minima-optimization.md) · [Integration](integration.md)
+> **PYQ weightage:** High · 33 Qs since 2015 (18 since 2021) · DA: 8 · Trend: steady · Most asked: Limits, Differentiation, Continuity
 
 ## Quick glance
+- **Exam focus:** Evaluating indeterminate limits (0/0, ∞/∞ via L'Hôpital/series, and 1^∞ via e^{lim g(f - 1)}), testing continuity of piecewise functions (lim_{x→a} f(x) = f(a)), and differentiability at corners/cusps (left vs right derivative matching). Highest-yield Calculus topic in both CS and DA, asked every year as 1-mark and 2-mark NATs and MCQs.
 - **Limit** lim_{x→a} f(x) = L exists iff the left limit and right limit both exist and equal L. The value f(a) is irrelevant.
 - **Continuous at a** iff lim_{x→a} f(x) = f(a) (three things: f(a) defined, limit exists, they are equal).
 - **Differentiable at a** iff lim_{h→0} (f(a + h) - f(a))/h exists (left derivative = right derivative). **Differentiable ⇒ continuous; the converse is false** (|x| at 0).
@@ -13,7 +15,7 @@
 - Discontinuities: **removable** (limit exists ≠ f(a)), **jump** (both one-sided limits exist, differ), **infinite**, **oscillatory**.
 - #1 trap: L'Hôpital applied to a non-indeterminate form (e.g. at 1/0 or 2/3) gives a wrong answer; check the form first.
 
-## 1. Functions of a single variable
+## 1. Functions of a single variable [PYQ: Low]
 
 A function f: D → R assigns one output to each input in the domain D. Vocabulary GATE assumes:
 
@@ -31,7 +33,7 @@ Common functions and their domains: polynomial (R); 1/x (x ≠ 0); √x (x ≥ 0
 
 **Worked example 1 — even/odd.** f(x) = x³ + sin x is odd (sum of odd functions); g(x) = x² cos x is even (even × even); h(x) = x + x² is neither (f(-x) = -x + x²). The product of two odd functions is even; odd × even = odd.
 
-## 2. Limits
+## 2. Limits [PYQ: High]
 
 **Intuition.** lim_{x→a} f(x) = L says: as x gets close to a (but not equal to a), f(x) gets close to L. It describes the **trend**, not the value at a.
 
@@ -93,7 +95,7 @@ If f/g has the form **0/0 or ∞/∞** at a (a may be ±∞), f and g differenti
 
 **Taylor-series method (often faster).** Replace each function by its series: sin x = x - x³/6 + ..., cos x = 1 - x²/2 + ..., e^x = 1 + x + x²/2 + ... . Example: (tan x - x)/x³ with tan x = x + x³/3 + ... gives **1/3**. See [Taylor series](mean-value-theorems-and-taylor.md).
 
-## 3. Continuity
+## 3. Continuity [PYQ: High]
 
 **Definition.** f is **continuous at a** iff (1) f(a) is defined, (2) lim_{x→a} f(x) exists, (3) lim f(x) = f(a). Continuous on an interval means continuous at every point (one-sided at the endpoints).
 
@@ -122,7 +124,7 @@ Jump, removable: **discontinuity of the first kind**; infinite, oscillatory: sec
 
 **Worked example 11.** x³ - x - 1 = 0 has a root in (1, 2): f(1) = -1 < 0, f(2) = 5 > 0, f continuous.
 
-## 4. Differentiability
+## 4. Differentiability [PYQ: High]
 
 **Definition.** f'(a) = lim_{h→0} (f(a + h) - f(a))/h = lim_{x→a} (f(x) - f(a))/(x - a). Geometrically the slope of the tangent at a. Differentiable at a ⇔ the left derivative f'(a⁻) and right derivative f'(a⁺) exist and are equal.
 

@@ -2,9 +2,11 @@
 
 > **Paper:** CS · **Priority:** P0 · **Plan topics:** Parsing
 > **Prerequisites:** [Context-free languages and PDA](../11-theory-of-computation/context-free-languages-and-pda.md) · [Lexical analysis](lexical-analysis.md) · **Leads to:** [Syntax-directed translation](syntax-directed-translation.md)
+> **PYQ weightage:** High · 33 Qs since 2015 (18 since 2021) · DA: 0 · Trend: steady · Most asked: LR Parser, Grammar, First and Follow, Parsing
 
 ## Quick glance
 
+- **Exam focus:** LR item sets and conflicts (SLR vs LALR vs CLR), FIRST and FOLLOW computation, LL(1) parsing conditions, and operator-precedence relations; tested via NAT (state/action counts) and MCQ/MSQ (conflict analysis and grammar classification).
 - A **parser** checks that the token stream is derivable from the grammar's start symbol and builds the parse tree. **Top-down** builds it from the root (leftmost derivation); **bottom-up** from the leaves (a rightmost derivation in reverse).
 - **FIRST(α)** = terminals that can begin a string derived from α (plus ε if α ⇒* ε). **FOLLOW(A)** = terminals that can appear immediately after A in some sentential form (always contains `$` for the start symbol; never contains ε).
 - **LL(1):** left-to-right scan, leftmost derivation, 1 lookahead. A grammar is LL(1) iff for every A → α | β: FIRST(α) ∩ FIRST(β) = ∅, at most one alternative derives ε, and if β ⇒* ε then FIRST(α) ∩ FOLLOW(A) = ∅. Not LL(1) if **left-recursive, ambiguous, or not left-factored**.
@@ -15,7 +17,7 @@
 - Operator-precedence parsing handles operator grammars (no ε, no two adjacent nonterminals) with precedence relations ⋖, ≐, ⋗ between terminals.
 - #1 trap: computing FOLLOW from the wrong place or forgetting that FIRST of a nullable nonterminal makes the next symbol's FIRST count too (`S → ABC` with A, B nullable has FIRST(S) ⊇ FIRST(C)).
 
-## 1. Parsing basics
+## 1. Parsing basics [PYQ: Low]
 
 **Intuition.** The grammar is the specification; the parser is the matching algorithm. Parsing = finding the derivation. The parse tree is the same whether you build it top-down or bottom-up (for an unambiguous grammar).
 
@@ -30,7 +32,7 @@
 
 Sentential form: any string derivable from S. Right sentential form: arises in a rightmost derivation. A **sentence** has only terminals.
 
-## 2. Preparing a grammar for top-down parsing
+## 2. Preparing a grammar for top-down parsing [PYQ: Medium]
 
 ### 2.1 Left recursion
 
@@ -49,7 +51,7 @@ When two alternatives share a prefix, the parser cannot choose with one lookahea
 
 **Worked example (dangling else).** S → i E t S | i E t S e S | a becomes S → i E t S S' | a; S' → e S | ε; E → b. This is still **not LL(1)** because the grammar is ambiguous (see §3.3): the standard resolution is to match `e` with the nearest `i`.
 
-## 3. FIRST and FOLLOW
+## 3. FIRST and FOLLOW [PYQ: High]
 
 **Rules for FIRST.**
 1. FIRST(a) = {a} for a terminal a; FIRST(ε) = {ε}.
@@ -75,19 +77,19 @@ F  -> ( E ) | id
 FIRST: F = {(, id}; T' = {*, ε}; T = FIRST(F) = {(, id}; E' = {+, ε}; E = FIRST(T) = {(, id}.
 
 FOLLOW, step by step:
-- E: start, so $. F → ( E ): `)` follows E. FOLLOW(E) = {$, )}.
-- E': appears at the end of E → T E' and E' → + T E', so FOLLOW(E') = FOLLOW(E) = {$, )}.
-- T: in E → T E': FIRST(E') − ε = {+}; E' nullable so add FOLLOW(E). In E' → + T E': same. FOLLOW(T) = {+, $, )}.
-- T': at the end of T → F T' and T' → * F T': FOLLOW(T') = FOLLOW(T) = {+, $, )}.
-- F: in T → F T': FIRST(T') − ε = {*}; T' nullable, add FOLLOW(T). In T' → * F T': same. FOLLOW(F) = {*, +, $, )}.
+- E: start, so \$. F → ( E ): `)` follows E. FOLLOW(E) = {\$, )}.
+- E': appears at the end of E → T E' and E' → + T E', so FOLLOW(E') = FOLLOW(E) = {\$, )}.
+- T: in E → T E': FIRST(E') − ε = {+}; E' nullable so add FOLLOW(E). In E' → + T E': same. FOLLOW(T) = {+, \$, )}.
+- T': at the end of T → F T' and T' → * F T': FOLLOW(T') = FOLLOW(T) = {+, \$, )}.
+- F: in T → F T': FIRST(T') − ε = {*}; T' nullable, add FOLLOW(T). In T' → * F T': same. FOLLOW(F) = {*, +, \$, )}.
 
 | Nonterminal | FIRST | FOLLOW |
 | --- | --- | --- |
-| E | ( id | $ ) |
-| E' | + ε | $ ) |
-| T | ( id | + $ ) |
-| T' | * ε | + $ ) |
-| F | ( id | * + $ ) |
+| E | ( id | \$ ) |
+| E' | + ε | \$ ) |
+| T | ( id | + \$ ) |
+| T' | * ε | + \$ ) |
+| F | ( id | * + \$ ) |
 
 (Table computed independently by a program.)
 
@@ -97,7 +99,7 @@ S → A B C; A → a | ε; B → b | ε; C → c.
 
 - FIRST(A) = {a, ε}; FIRST(B) = {b, ε}; FIRST(C) = {c}.
 - FIRST(S) = (FIRST(A) − ε) ∪ (FIRST(B) − ε) ∪ FIRST(C) = {a, b, c} (A and B are nullable, so c can come first; ε is not added because C is not nullable).
-- FOLLOW(S) = {$}. FOLLOW(A) = (FIRST(B) − ε) ∪ FIRST(C) = {b, c} (B nullable, so C's first symbol also follows A). FOLLOW(B) = FIRST(C) = {c}. FOLLOW(C) = FOLLOW(S) = {$}.
+- FOLLOW(S) = {\$}. FOLLOW(A) = (FIRST(B) − ε) ∪ FIRST(C) = {b, c} (B nullable, so C's first symbol also follows A). FOLLOW(B) = FIRST(C) = {c}. FOLLOW(C) = FOLLOW(S) = {\$}.
 
 ### 3.3 LL(1) parsing table and the LL(1) condition
 
@@ -105,7 +107,7 @@ S → A B C; A → a | ε; B → b | ε; C → c.
 
 **G1's table** (blank = error):
 
-| | id | + | * | ( | ) | $ |
+| | id | + | * | ( | ) | \$ |
 | --- | --- | --- | --- | --- | --- | --- |
 | E | E → T E' | | | E → T E' | | |
 | E' | | E' → + T E' | | | E' → ε | E' → ε |
@@ -165,7 +167,7 @@ void F()  { if (look == '(') { match('('); E(); match(')'); } else match(ID); }
 
 The call stack plays the role of the parse stack. With backtracking, a recursive-descent parser can handle non-LL(1) grammars but may take exponential time.
 
-## 4. Bottom-up parsing: shift-reduce
+## 4. Bottom-up parsing: shift-reduce [PYQ: Medium]
 
 **Intuition.** Read tokens left to right pushing them on a stack (**shift**); whenever the top of the stack matches the right side of a production *and that is the right moment*, replace it by the left side (**reduce**). Reductions undo a rightmost derivation. The **handle** is the substring to reduce next.
 
@@ -191,7 +193,7 @@ The reductions in order are C→d, C→cC, C→d, S→CC; read backwards: S ⇒ 
 
 **Viable prefixes.** Prefixes of right sentential forms that do not extend beyond the right end of the handle. The set of viable prefixes is a regular language, recognised by the DFA of LR(0) item sets: the stack contents always form a viable prefix.
 
-## 5. LR parsers
+## 5. LR parsers [PYQ: High]
 
 **LR parsing algorithm.** Stack of (state) entries (symbols implied). Look at the state s on top and the next token a. ACTION[s, a] is one of: shift t (push state t), reduce A → β (pop |β| states, let t be the new top, push GOTO[t, A]), accept, error. Linear time, no backtracking.
 
@@ -204,7 +206,7 @@ An **LR(0) item** is a production with a dot marking how much has been seen: A �
 | State | Items | Transitions |
 | --- | --- | --- |
 | I0 | S' → ·S; S → ·CC; C → ·cC; C → ·d | S→I1, C→I2, c→I3, d→I4 |
-| I1 | S' → S· | – (accept on $) |
+| I1 | S' → S· | – (accept on \$) |
 | I2 | S → C·C; C → ·cC; C → ·d | C→I5, c→I3, d→I4 |
 | I3 | C → c·C; C → ·cC; C → ·d | C→I6, c→I3, d→I4 |
 | I4 | C → d· | – |
@@ -233,9 +235,9 @@ Seven LR(0) states. This is also the number of SLR(1) and LALR(1) states for thi
 
 ### 5.2 SLR(1)
 
-Same states as LR(0), but reduce A → α only on terminals in **FOLLOW(A)**. FOLLOW(S) = {$}, FOLLOW(C) = {c, d, $}. Productions numbered 1: S → CC, 2: C → cC, 3: C → d.
+Same states as LR(0), but reduce A → α only on terminals in **FOLLOW(A)**. FOLLOW(S) = {\$}, FOLLOW(C) = {c, d, \$}. Productions numbered 1: S → CC, 2: C → cC, 3: C → d.
 
-| State | ACTION c | ACTION d | ACTION $ | GOTO S | GOTO C |
+| State | ACTION c | ACTION d | ACTION \$ | GOTO S | GOTO C |
 | --- | --- | --- | --- | --- | --- |
 | 0 | s3 | s4 | | 1 | 2 |
 | 1 | | | acc | | |
@@ -245,18 +247,18 @@ Same states as LR(0), but reduce A → α only on terminals in **FOLLOW(A)**. FO
 | 5 | | | r1 | | |
 | 6 | r2 | r2 | r2 | | |
 
-Parsing `c d d`: states stack [0] —c→ [0,3] —d→ [0,3,4]; lookahead d, r3 (pop 1, GOTO[3,C] = 6) → [0,3,6]; r2 on d (pop 2, GOTO[0,C] = 2) → [0,2]; s4 → [0,2,4]; lookahead $, r3 → GOTO[2,C] = 5 → [0,2,5]; r1 (pop 2, GOTO[0,S] = 1) → [0,1]; accept. Total actions 8 (3 shifts, 4 reductions, accept).
+Parsing `c d d`: states stack [0] —c→ [0,3] —d→ [0,3,4]; lookahead d, r3 (pop 1, GOTO[3,C] = 6) → [0,3,6]; r2 on d (pop 2, GOTO[0,C] = 2) → [0,2]; s4 → [0,2,4]; lookahead \$, r3 → GOTO[2,C] = 5 → [0,2,5]; r1 (pop 2, GOTO[0,S] = 1) → [0,1]; accept. Total actions 8 (3 shifts, 4 reductions, accept).
 
-**Where SLR fails.** S → L = R | R; L → * R | id; R → L. State I2 = {S → L · = R, R → L ·}. FOLLOW(R) = {$, =} contains `=`, so on `=` the SLR table has shift (to item S → L = · R) **and** reduce R → L: a **shift-reduce conflict**. Yet this grammar is not ambiguous; the conflict comes from SLR using the coarse FOLLOW set. In reality `=` can never follow R when R → L is reduced at this point. LR(1)/LALR lookaheads (just $ here) resolve it.
+**Where SLR fails.** S → L = R | R; L → * R | id; R → L. State I2 = {S → L · = R, R → L ·}. FOLLOW(R) = {\$, =} contains `=`, so on `=` the SLR table has shift (to item S → L = · R) **and** reduce R → L: a **shift-reduce conflict**. Yet this grammar is not ambiguous; the conflict comes from SLR using the coarse FOLLOW set. In reality `=` can never follow R when R → L is reduced at this point. LR(1)/LALR lookaheads (just \$ here) resolve it.
 
 ### 5.3 Canonical LR(1) (CLR)
 
 An LR(1) item is [A → α · β, a] with a lookahead terminal a (what may follow the item's whole production). Closure: for [A → α · B β, a], for each B → γ add [B → · γ, b] for every b ∈ FIRST(βa). Reduce only on the item's lookahead.
 
 **Worked example (same grammar):**
-- J0: [S' → ·S, $]; [S → ·CC, $]; [C → ·cC, c/d]; [C → ·d, c/d] (lookaheads c/d come from FIRST(C $) = {c, d}).
-- J2 = goto(J0, C): [S → C·C, $]; [C → ·cC, $]; [C → ·d, $] (lookahead $ now).
-- J3 = goto(J0, c): [C → c·C, c/d]; [C → ·cC, c/d]; [C → ·d, c/d]. And J6 = goto(J2, c) has the same core but lookahead $. Likewise J4/J7 = [C → d·, c/d] / [C → d·, $], and J8/J9 = [C → cC·, c/d] / [C → cC·, $].
+- J0: [S' → ·S, \$]; [S → ·CC, \$]; [C → ·cC, c/d]; [C → ·d, c/d] (lookaheads c/d come from FIRST(C \$) = {c, d}).
+- J2 = goto(J0, C): [S → C·C, \$]; [C → ·cC, \$]; [C → ·d, \$] (lookahead \$ now).
+- J3 = goto(J0, c): [C → c·C, c/d]; [C → ·cC, c/d]; [C → ·d, c/d]. And J6 = goto(J2, c) has the same core but lookahead \$. Likewise J4/J7 = [C → d·, c/d] / [C → d·, \$], and J8/J9 = [C → cC·, c/d] / [C → cC·, \$].
 
 Ten states: J0, J1 (S'→S·), J2, J3, J4, J5 (S→CC·), J6, J7, J8, J9. **CLR(1) has 10 states, LR(0)/SLR/LALR have 7.**
 
@@ -292,16 +294,16 @@ Every ambiguous grammar is not LR(k) for any k. Every LL(1) grammar is LR(1).
 - **Reduce-reduce:** choose the production listed first in the grammar file.
 - With these rules an ambiguous grammar such as E → E + E | E * E | id works as a parser: `%left '+'` then `%left '*'` gives `*` higher precedence.
 
-## 6. Operator-precedence parsing
+## 6. Operator-precedence parsing [PYQ: Medium]
 
 For **operator grammars** (no ε-productions, no two adjacent nonterminals on any right side), parsing can use only the relations between *terminals*: a ⋖ b (a yields precedence to b), a ≐ b, a ⋗ b (a takes precedence over b).
 
-| | id | + | * | $ |
+| | id | + | * | \$ |
 | --- | --- | --- | --- | --- |
 | **id** | | ⋗ | ⋗ | ⋗ |
 | **+** | ⋖ | ⋗ | ⋖ | ⋗ |
 | **\*** | ⋖ | ⋗ | ⋗ | ⋗ |
-| **$** | ⋖ | ⋖ | ⋖ | accept |
+| **\$** | ⋖ | ⋖ | ⋖ | accept |
 
 (Row = terminal on top of the stack, column = next input.) Algorithm: compare the top terminal of the stack with the input; ⋖ or ≐ ⇒ shift; ⋗ ⇒ pop the handle (the string between the last ⋖ and the top ⋗) and reduce. Parse of `id + id * id`:
 
@@ -322,7 +324,7 @@ $ E            $                $ with $          accept
 
 `*` binds tighter than `+` because + ⋖ * and * ⋗ +. Operator-precedence parsers are small and fast but accept a restricted class of grammars and may accept some invalid strings (they only check relations between terminals). An operator-precedence parser can also use *precedence functions* f, g (numbers) instead of the table to save space.
 
-## 7. Error recovery in parsers
+## 7. Error recovery in parsers [PYQ: Low]
 
 | Strategy | Idea |
 | --- | --- |
@@ -374,12 +376,12 @@ LR parsers detect an error at the earliest possible point (a viable-prefix prope
 ## Practice
 
 **Q1 (MCQ).** For the grammar S → A B C; A → a | ε; B → b | ε; C → c, FOLLOW(A) is
-(A) {b} (B) {b, c} (C) {b, c, $} (D) {c}
+(A) {b} (B) {b, c} (C) {b, c, \$} (D) {c}
 
 <details><summary>Answer</summary>
 
 **Answer:** (B)  
-**Solution:** FOLLOW(A) = FIRST(B C) = (FIRST(B) − ε) ∪ FIRST(C) (since B is nullable) = {b, c}. $ does not follow A because C is not nullable.
+**Solution:** FOLLOW(A) = FIRST(B C) = (FIRST(B) − ε) ∪ FIRST(C) (since B is nullable) = {b, c}. \$ does not follow A because C is not nullable.
 
 </details>
 
@@ -388,7 +390,7 @@ LR parsers detect an error at the earliest possible point (a viable-prefix prope
 <details><summary>Answer</summary>
 
 **Answer:** 4  
-**Solution:** FOLLOW(F) = {*, +, ), $}.
+**Solution:** FOLLOW(F) = {*, +, ), \$}.
 
 </details>
 
@@ -398,7 +400,7 @@ LR parsers detect an error at the earliest possible point (a viable-prefix prope
 <details><summary>Answer</summary>
 
 **Answer:** (B)  
-**Solution:** In (B), FOLLOW(A) ⊇ FIRST(B) = {a, b}, and a ∈ FIRST(aA), so M[A, a] has two productions. (A): FIRST(aSb) = {a}, FOLLOW(S) = {b, $}: no conflict. (C) and (D) are fine.
+**Solution:** In (B), FOLLOW(A) ⊇ FIRST(B) = {a, b}, and a ∈ FIRST(aA), so M[A, a] has two productions. (A): FIRST(aSb) = {a}, FOLLOW(S) = {b, \$}: no conflict. (C) and (D) are fine.
 
 </details>
 
@@ -427,7 +429,7 @@ LR parsers detect an error at the earliest possible point (a viable-prefix prope
 <details><summary>Answer</summary>
 
 **Answer:** B, C  
-**Solution:** The grammar is unambiguous. State {S → L · = R, R → L ·} has a shift-reduce conflict on `=` under SLR because FOLLOW(R) contains `=`. LR(1)/LALR(1) lookahead for R → L there is only $, so it is LALR(1) (the program's LALR table has no conflicts). Not LR(0) (the state mixes a complete and a non-complete item).
+**Solution:** The grammar is unambiguous. State {S → L · = R, R → L ·} has a shift-reduce conflict on `=` under SLR because FOLLOW(R) contains `=`. LR(1)/LALR(1) lookahead for R → L there is only \$, so it is LALR(1) (the program's LALR table has no conflicts). Not LR(0) (the state mixes a complete and a non-complete item).
 
 </details>
 

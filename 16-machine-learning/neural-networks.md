@@ -2,9 +2,11 @@
 
 > **Paper:** DA · **Priority:** P1 · **Plan topics:** Multi-layer perceptron; Feed-forward neural networks
 > **Prerequisites:** [Linear and logistic regression](linear-and-logistic-regression.md) · [Maxima and minima](../04-calculus-optimization/maxima-minima-optimization.md) (chain rule, gradients) · **Leads to:** [Clustering](clustering.md) (end of supervised methods) · [CHECKPOINT](CHECKPOINT.md)
+> **PYQ weightage:** High · 4 Qs (DA 2024–2026 only) · Trend: steady · Most asked: Activation functions (ReLU, Sigmoid properties & gradients), Feedforward propagation numericals
 
 ## Quick glance
 
+- **Exam focus:** In GATE DA, neural networks questions test properties of activation functions (ReLU derivative and non-differentiability at 0, sigmoid derivative $\sigma(1-\sigma)$, vanishing gradients) and step-by-step forward pass evaluation with ReLU/Sigmoid units, as MSQ and NAT questions.
 - **Neuron**: $a = \phi(w^Tx+b)$ — a weighted sum then a nonlinearity $\phi$. A **perceptron** uses a step $\phi$.
 - **Perceptron rule**: if prediction $\hat y\ne y$, $w\leftarrow w+\eta(y-\hat y)x$, $b\leftarrow b+\eta(y-\hat y)$. Converges **iff data are linearly separable**. A single perceptron **cannot learn XOR**.
 - **MLP / feed-forward network**: layers of neurons, signals flow input $\to$ hidden $\to$ output with no cycles. Forward pass: $a^{(l)}=\phi(W^{(l)}a^{(l-1)}+b^{(l)})$.
@@ -15,7 +17,7 @@
 - Universal approximation: one hidden layer with enough nonlinear units approximates any continuous function on a compact set.
 - #1 trap: confusing the number of *layers* (does the input count?) with the number of *weight matrices*; count parameters as $(\text{inputs}+1)\times\text{units}$ per layer.
 
-## 1. The perceptron
+## 1. The perceptron [PYQ: Medium]
 
 **Intuition.** A perceptron draws one hyperplane and says "positive side / negative side".
 
@@ -48,7 +50,7 @@ Final $w=(1,1)$, $b=-1$: check $(0,0)\to-1\to0$ ✓, $(0,1)\to0\to1$ ✓, $(1,0)
 
 **XOR is not linearly separable**: $(0,0),(1,1)\to0$ and $(0,1),(1,0)\to1$. No single line separates them, so no perceptron works. A hidden layer fixes it (next section).
 
-## 2. Multi-layer perceptron (MLP) and the feed-forward architecture
+## 2. Multi-layer perceptron (MLP) and the feed-forward architecture [PYQ: High]
 
 **Intuition.** Hidden units compute new features of the input; the next layer draws a line in that *feature space*. Stacking nonlinear layers lets the network carve curved regions.
 
@@ -81,19 +83,53 @@ So 2 hidden units solve XOR: "OR but not AND".
 
 **Universal approximation theorem.** A feed-forward network with one hidden layer of enough units and a non-polynomial (e.g. sigmoid) activation can approximate any continuous function on a compact set arbitrarily well. It says nothing about how many units are needed or whether gradient descent will find the weights.
 
-## 3. Activation functions
+## 3. Activation functions [PYQ: High]
 
-| Name | $\phi(z)$ | $\phi'(z)$ | Range | Notes |
+**Intuition.** Without nonlinear activation functions, composing multiple layers collapses into a single affine transformation:
+$$a^{(2)} = W^{(2)}(W^{(1)}x + b^{(1)}) + b^{(2)} = (W^{(2)}W^{(1)})x + (W^{(2)}b^{(1)} + b^{(2)})$$
+Depth without nonlinearity cannot compute non-linear decision boundaries (such as XOR). Activation functions introduce the curvature required to approximate complex functions.
+
+| Name | Formula $\phi(z)$ | Derivative $\phi'(z)$ | Output Range | Key properties & GATE points |
 | --- | --- | --- | --- | --- |
-| Step | $1[z\ge0]$ | 0 a.e. | $\{0,1\}$ | not differentiable: no gradient training |
-| Sigmoid | $\dfrac1{1+e^{-z}}$ | $\sigma(1-\sigma)$ | $(0,1)$ | max slope $0.25$ at $z=0$; saturates |
-| tanh | $\dfrac{e^z-e^{-z}}{e^z+e^{-z}}$ | $1-\tanh^2z$ | $(-1,1)$ | zero-centred; max slope 1 |
-| ReLU | $\max(0,z)$ | $1[z>0]$ | $[0,\infty)$ | cheap; does not saturate for $z>0$; "dead" units if $z<0$ always |
-| Softmax | $e^{z_k}/\sum_je^{z_j}$ | $s_k(\delta_{kj}-s_j)$ | outputs sum to 1 | multiclass probabilities |
+| **Sigmoid** | $\dfrac{1}{1 + e^{-z}}$ | $\sigma(z)(1 - \sigma(z))$ | $(0, 1)$ | Smooth, monotonic; max derivative is $0.25$ at $z = 0$; saturates for large $\vert z\vert$ causing **vanishing gradients**; output not zero-centered. |
+| **tanh** | $\dfrac{e^z - e^{-z}}{e^z + e^{-z}}$ | $1 - \tanh^2(z)$ | $(-1, 1)$ | Smooth, monotonic, **zero-centered**; max derivative is $1.0$ at $z = 0$; still suffers from vanishing gradients for $\vert z\vert \gg 0$. |
+| **ReLU** | $\max(0, z)$ | $\begin{cases} 1 & z > 0 \\ 0 & z < 0 \\ \text{undefined} & z = 0 \end{cases}$ | $[0, \infty)$ | Piecewise linear; non-saturating for $z > 0$ (prevents vanishing gradient); non-differentiable at $z = 0$ (subgradient $[0, 1]$, conventionally 0); vulnerable to **dying ReLU**. |
+| **Leaky ReLU** | $\max(\alpha z, z)$, $\alpha \approx 0.01$ | $\begin{cases} 1 & z > 0 \\ \alpha & z < 0 \end{cases}$ | $(-\infty, \infty)$ | Avoids dying units: small non-zero slope $\alpha$ on negative inputs keeps gradient flowing. |
+| **Softmax** | $\dfrac{e^{z_k}}{\sum_{j=1}^K e^{z_j}}$ | $s_k(\delta_{kj} - s_j)$ | $(0, 1), \sum s_k = 1$ | Multi-class generalization of sigmoid; turns logits into a valid probability distribution. |
 
-**Vanishing gradients.** Backprop multiplies one activation derivative per layer. Sigmoid derivatives are $\le0.25$, so across $L$ layers the gradient shrinks like $0.25^L$ and early layers barely learn. ReLU (derivative 1 on the active side) mitigates it.
+### 3.1 Mathematical analysis of core activation functions
 
-## 4. Forward pass and backpropagation worked by hand
+**Sigmoid derivative derivation:**
+$$\sigma(z) = (1 + e^{-z})^{-1} \implies \frac{d\sigma}{dz} = -(1 + e^{-z})^{-2}(-e^{-z}) = \frac{1}{1 + e^{-z}} \cdot \frac{e^{-z}}{1 + e^{-z}} = \sigma(z)(1 - \sigma(z))$$
+- At $z = 0$: $\sigma(0) = 0.5$, $\sigma'(0) = 0.5(1 - 0.5) = \mathbf{0.25}$ (the global maximum of $\sigma'$).
+- For large positive or negative $z$: $\sigma'(z) \to 0$ (saturation). In deep networks, multiplying $L$ such derivatives causes gradients to scale as $(0.25)^L \to 0$ (**vanishing gradient problem**).
+
+**ReLU and the dying ReLU problem:**
+- $\phi(z) = \max(0, z)$.
+- For $z > 0$, the derivative is strictly $1$, so gradient signals pass through without shrinkage regardless of network depth.
+- At $z = 0$, the function has a sharp corner and is technically non-differentiable; optimization algorithms use a subgradient $\in [0, 1]$ (by convention set to $0$ in standard libraries).
+- If large gradient updates cause a neuron's weights to update such that $w^T x + b < 0$ for **all** data points in the training set, then $\phi'(z) = 0$ permanently: the neuron never activates and its weights never change again (**dead neuron**). Leaky ReLU and ELU resolve this by ensuring $\phi'(z) > 0$ for $z < 0$.
+
+### 3.2 Worked example: activation and derivative calculations
+
+A single neuron has weight vector $w = [-2, 3]^T$, bias $b = -1$. Consider inputs $x_1 = [1, 1]^T$ and $x_2 = [2, 1]^T$.
+
+1. **Pre-activations ($z = w^T x + b$):**
+   - For $x_1$: $z_1 = (-2)(1) + (3)(1) - 1 = 0$.
+   - For $x_2$: $z_2 = (-2)(2) + (3)(1) - 1 = -2$.
+
+2. **Under Sigmoid activation $\sigma(z)$:**
+   - At $x_1$: $a_1 = \sigma(0) = \mathbf{0.5000}$; derivative $\sigma'(0) = 0.5(1 - 0.5) = \mathbf{0.2500}$.
+   - At $x_2$: $a_2 = \sigma(-2) = \frac{1}{1 + e^2} \approx \frac{1}{1 + 7.3891} = \mathbf{0.1192}$; derivative $\sigma'(-2) = 0.1192(1 - 0.1192) = \mathbf{0.1050}$.
+
+3. **Under ReLU activation $\phi(z) = \max(0, z)$:**
+   - At $x_1$: $a_1 = \max(0, 0) = \mathbf{0}$; derivative at $0$ is taken as $\mathbf{0}$ (subgradient).
+   - At $x_2$: $a_2 = \max(0, -2) = \mathbf{0}$; derivative is strictly $\mathbf{0}$. The unit is inactive.
+
+4. **Under Leaky ReLU ($\alpha = 0.1$):**
+   - At $x_2$: $a_2 = \max(0.1(-2), -2) = \mathbf{-0.2}$; derivative is $\mathbf{0.1000}$ (gradient flows back).
+
+## 4. Forward pass and backpropagation worked by hand [PYQ: Medium]
 
 **Network.** $2\to2\to1$, sigmoid everywhere, squared loss $L=\tfrac12(\hat y-t)^2$. Input $x=(1,\,0.5)$, target $t=1$.
 

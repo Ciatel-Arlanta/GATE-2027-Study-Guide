@@ -3,18 +3,27 @@
 > **Paper:** CS · **Approximate GATE weightage:** 4–6 marks (usually 2–3 questions, mix of 1- and 2-mark, MCQ and NAT)
 > **Prerequisites:** [Propositional logic](../01-discrete-mathematics/propositional-logic.md), [Posets and lattices](../01-discrete-mathematics/posets-and-lattices.md) (Boolean algebra as a lattice)
 
+**PYQ weightage:** ~4.5 Qs per CSE paper (2021–26), trend steady; DA: 0 Qs in 2024–26.
+
 ## Why this subject matters / mental model
 
 Digital logic is the bottom layer of every computer: wires carry 0 or 1, gates compute Boolean functions, flip-flops remember bits. Two kinds of circuits cover everything. **Combinational** circuits are pure functions of their inputs (adders, multiplexers, decoders). **Sequential** circuits add memory, so the output depends on history (counters, registers, state machines). Number representation tells you what the bits *mean*: integers, fractions and IEEE 754 floats. In GATE the questions are formulaic and fast once the patterns are internalised: count prime implicants, implement a function with a MUX, trace a counter, find an IEEE 754 value, detect overflow.
 
 ## Reading order
 
-| # | Chapter | Priority | Plan topics covered |
-|---|---|---|---|
-| 1 | [Boolean algebra and minimization](boolean-algebra-and-minimization.md) | P0 | Boolean algebra; Boolean minimization: algebraic technique; Karnaugh maps; Tabular minimization method |
-| 2 | [Combinational circuits](combinational-circuits.md) | P0 | Combinational circuit design |
-| 3 | [Sequential circuits](sequential-circuits.md) | P0 | Sequential circuit design |
-| 4 | [Number representation and arithmetic](number-representation-and-arithmetic.md) | P0 | Number representation; Fixed-point arithmetic; Floating-point arithmetic |
+| # | Chapter | Priority | Plan topics covered | PYQ weightage |
+|---|---|---|---|---|
+| 1 | [Boolean algebra and minimization](boolean-algebra-and-minimization.md) | P0 | Boolean algebra; Boolean minimization: algebraic technique; Karnaugh maps; Tabular minimization method | High · 27 |
+| 2 | [Combinational circuits](combinational-circuits.md) | P0 | Combinational circuit design | High · 15 |
+| 3 | [Sequential circuits](sequential-circuits.md) | P0 | Sequential circuit design | Medium · 12 |
+| 4 | [Number representation and arithmetic](number-representation-and-arithmetic.md) | P0 | Number representation; Fixed-point arithmetic; Floating-point arithmetic | High · 31 |
+
+## Study priority
+
+- [Number representation and arithmetic](number-representation-and-arithmetic.md) (High · 31) — master IEEE 754 and fixed-point representation and Booth's algorithm first; the largest single block of marks in the section.
+- [Boolean algebra and minimization](boolean-algebra-and-minimization.md) (High · 27) — master minimisation (algebraic, K-map, tabular) and functional completeness.
+- [Combinational circuits](combinational-circuits.md) (High · 15) — master multiplexer, adder and decoder design.
+- [Sequential circuits](sequential-circuits.md) (Medium · 12) — master flip-flops and ripple-counter operation to finish the section.
 
 Final revision: [CHEATSHEET.md](CHEATSHEET.md). Self-test: [CHECKPOINT.md](CHECKPOINT.md).
 

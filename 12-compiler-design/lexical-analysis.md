@@ -2,9 +2,11 @@
 
 > **Paper:** CS · **Priority:** P0 · **Plan topics:** Lexical analysis
 > **Prerequisites:** [Regular languages and finite automata](../11-theory-of-computation/regular-languages-and-finite-automata.md) · **Leads to:** [Parsing](parsing.md) · [Syntax-directed translation](syntax-directed-translation.md)
+> **PYQ weightage:** Medium · 12 Qs since 2015 (6 since 2021) · DA: 0 · Trend: steady · Most asked: Compilation Phases, Lexical Analysis, Compiler tokenization, Symbol Table
 
 ## Quick glance
 
+- **Exam focus:** Compiler phases and error classification (lexical vs syntactic vs semantic), token counting via maximal munch in C snippets, and symbol table responsibilities; tested via NAT (token counts) and MCQ/MSQ (phase error detection).
 - A compiler is a pipeline: **lexical analysis → syntax analysis → semantic analysis → intermediate code → optimisation → code generation**, all sharing a **symbol table** and an **error handler**. The first three are the *front end* (analysis), the last two the *back end* (synthesis).
 - The **lexer (scanner)** reads characters and produces **tokens**. **Token** = a category (id, number, keyword, operator…). **Lexeme** = the actual character sequence matched ("count", "3.14"). **Pattern** = the rule (a regular expression) describing the lexemes of a token.
 - Patterns are **regular expressions**; the lexer is a DFA built from them (regex → NFA → DFA). A lexer cannot check nesting or matching brackets (needs a CFG).
@@ -14,7 +16,7 @@
 - Lexical errors: illegal characters, malformed numbers, unterminated string/comment. Recovery: **panic mode** (skip characters until a valid token start). Undeclared variables, type mismatches and unbalanced brackets are **not** lexical errors.
 - #1 trap: counting tokens by whitespace. Tokens are decided by the longest-match rule, not by spaces (`i+++j`, `x=y/*c*/z`).
 
-## 1. Phases of a compiler
+## 1. Phases of a compiler [PYQ: High]
 
 ```mermaid
 flowchart TD
@@ -50,7 +52,7 @@ flowchart TD
 
 **Passes.** A *pass* reads the whole program (or its IR) once. Phases may be grouped into fewer passes; *single-pass* compilers interleave phases (needs declare-before-use). Front end depends on the source language; back end on the target machine; mix-and-match gives m × n compilers from m front ends and n back ends via a common IR (m + n components instead of m × n).
 
-## 2. Tokens, lexemes, patterns
+## 2. Tokens, lexemes, patterns [PYQ: Low]
 
 | Token | Pattern (informal) | Sample lexemes |
 | --- | --- | --- |
@@ -67,7 +69,7 @@ flowchart TD
 
 **Why a separate lexer?** Simpler design (the grammar need not mention whitespace and comments), efficiency (a specialised DFA with buffering is fast), portability (device-specific peculiarities isolated).
 
-## 3. From regular expressions to a lexer
+## 3. From regular expressions to a lexer [PYQ: Low]
 
 **Pipeline:** regex for each token pattern → NFA for each (Thompson) → combine with a new start state with ε-edges to each NFA → subset construction to a DFA (each DFA final state remembers the *earliest* pattern among the NFA finals it contains) → minimise optionally → table-driven scanner. See [Regular languages and finite automata](../11-theory-of-computation/regular-languages-and-finite-automata.md) for the constructions.
 
@@ -94,7 +96,7 @@ Result: T3("aab") T1("a"). Input `abb`: T2 matches "abb" (3) and T3 also matches
 
 Reading character-by-character from disk is slow, so lexers read in blocks. **Buffer pairs** (two halves of N characters each, e.g. a disk block) with two pointers: `lexemeBegin` and `forward`. **Sentinels:** put a special `eof` marker at the end of each half so that the forward pointer needs only one test per character instead of two (end of half or actual character). When `forward` hits the sentinel in the middle, reload the other half; a real `eof` at the end of the input ends the scan. A lexeme must fit within the lookahead capacity of the two buffers.
 
-## 4. Counting tokens (a GATE favourite)
+## 4. Counting tokens (a GATE favourite) [PYQ: Medium]
 
 **Rules.** (1) Apply maximal munch left to right. (2) Whitespace separates tokens but is not itself a token; tokens may also be adjacent without whitespace. (3) Comments count 0, even though they contain spaces and symbols. (4) A string literal `"..."` is **one** token, whatever it contains (including `//`, `%d`, `,`). A char literal `'a'` is one token. (5) A number like `3.14e-2` is one token. (6) Multi-character operators (`++ -- -> << >> <= >= == != && || += -= *= /= %= <<= >>= &= |= ^=`) are one token each. (7) Each of `( ) { } [ ] ; , . ? :` is one token. (8) `#include <stdio.h>` is usually excluded (handled by the preprocessor); if counted as plain text it is `# include < stdio . h >` = 7 tokens.
 
@@ -123,7 +125,7 @@ Row 13 shows a subtle point: the comment produces no token, so `b` and `d` remai
 
 **Worked trace for row 6:** `x` `=` then `y>>=2`: at `>`, candidates `>`, `>>`, `>>=`; the longest is `>>=` (3 chars), so tokens x, =, y, >>=, 2, ; = 6.
 
-## 5. Lexical errors and recovery
+## 5. Lexical errors and recovery [PYQ: Medium]
 
 | Situation | Lexical error? |
 | --- | --- |
@@ -136,7 +138,7 @@ Row 13 shows a subtle point: the comment produces no token, so `b` and `d` remai
 
 **Recovery strategies.** *Panic mode:* delete characters until a token can be formed. *Delete* one extra character, *insert* a missing character, *replace* a character, *transpose* two adjacent characters: choose the one needing the fewest edits (minimum-distance repair). Lexers rarely need more than panic mode.
 
-## 6. Lex/Flex (brief)
+## 6. Lex/Flex (brief) [PYQ: Low]
 
 A Lex specification has three sections separated by `%%`: definitions, rules (`pattern  { action }`), and user code. Example:
 

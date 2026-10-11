@@ -2,9 +2,11 @@
 
 > **Paper:** CS+DA · **Priority:** P0 · **Plan topics:** Counting: permutations and combinations; Probability axioms; Sample spaces and events; Independent events; Mutually exclusive events; Marginal probability; Conditional probability; Joint probability; Bayes theorem
 > **Prerequisites:** [Combinatorics](../01-discrete-mathematics/combinatorics.md) · [Sets, relations, functions](../01-discrete-mathematics/sets-relations-functions.md) · **Leads to:** [Random variables and moments](random-variables-and-moments.md)
+> **PYQ weightage:** High · 29 Qs since 2015 (20 since 2021) · DA: 9 · Trend: rising · Most asked: Combinatorial probability, Conditional probability, Bayes' theorem, Independent events
 
 ## Quick glance
 
+- **Exam focus:** Conditional probability ($P(A \mid B)$), Bayes' theorem (disease-test and multi-source setups), independence vs mutual exclusivity, and combinatorial probability; heavily tested in both CS and DA as 1-mark and 2-mark MCQ/NAT.
 - **Classical probability:** if all outcomes of a finite sample space $S$ are equally likely, $P(A)=|A|/|S|$. The whole battle is choosing a sample space in which outcomes really are equally likely.
 - **Axioms:** $P(A)\ge 0$, $P(S)=1$, and $P(\cup A_i)=\sum P(A_i)$ for pairwise disjoint events.
 - **Union:** $P(A\cup B)=P(A)+P(B)-P(A\cap B)$; complement: $P(A^c)=1-P(A)$ (use it for "at least one").
@@ -14,7 +16,7 @@
 - **Bayes:** $P(B_j\mid A)=\dfrac{P(A\mid B_j)P(B_j)}{\sum_i P(A\mid B_i)P(B_i)}$.
 - **#1 trap:** confusing $P(A\mid B)$ with $P(B\mid A)$ (the disease-test paradox: a 95%-accurate test on a 1%-prevalence disease gives only 16% positive predictive value).
 
-## 1. Counting for probability
+## 1. Counting for probability [PYQ: High]
 
 Probability on a finite sample space reduces to counting. The toolkit (full treatment in [Combinatorics](../01-discrete-mathematics/combinatorics.md)):
 
@@ -47,7 +49,7 @@ For $n=23$: $\prod_{i=0}^{22}\frac{365-i}{365}\approx 0.4927$, so $P(\text{some 
 
 **Worked example 4 — "at least one" via the complement.** Roll a die 4 times; $P(\text{at least one six})=1-(5/6)^4=1-0.4823=\mathbf{0.5177}$.
 
-## 2. Sample spaces, events and the axioms
+## 2. Sample spaces, events and the axioms [PYQ: Medium]
 
 - **Experiment:** a process with uncertain outcome. **Sample space $S$** (or $\Omega$): the set of all outcomes. **Event:** a subset of $S$. **Elementary event:** one outcome.
 - Event operations are set operations: $A\cup B$ (A or B), $A\cap B$ (A and B), $A^c$ (not A), $A\setminus B=A\cap B^c$. De Morgan: $(A\cup B)^c=A^c\cap B^c$.
@@ -86,7 +88,7 @@ In general: add singles, subtract pairs, add triples, … alternating.
 
 **Worked example 6 — recovering an intersection.** $P(A)=0.5$, $P(B)=0.4$, $P(A\cup B)=0.7$. Then $P(A\cap B)=0.5+0.4-0.7=0.2$. Since $0.5\times0.4=0.2$, $A$ and $B$ are independent.
 
-## 3. Joint, marginal and conditional probability
+## 3. Joint, marginal and conditional probability [PYQ: High]
 
 - **Joint:** $P(A\cap B)$, written $P(A,B)$ — both happen.
 - **Marginal:** $P(A)$ on its own; obtained from a joint table by summing the other variable out: $P(A)=P(A\cap B)+P(A\cap B^c)$.
@@ -118,7 +120,7 @@ $$P(A_1\cap\cdots\cap A_n)=P(A_1)\,P(A_2\mid A_1)\,P(A_3\mid A_1\cap A_2)\cdots 
 
 The wording of the condition changes the answer; always write the conditioning event explicitly.
 
-## 4. Independence and mutual exclusivity
+## 4. Independence and mutual exclusivity [PYQ: Medium]
 
 **Independent events:** $P(A\cap B)=P(A)P(B)$, equivalently $P(A\mid B)=P(A)$ — learning $B$ tells nothing about $A$. If $A,B$ independent then so are $(A,B^c)$, $(A^c,B)$, $(A^c,B^c)$.
 
@@ -143,7 +145,7 @@ The wording of the condition changes the answer; always write the conditioning e
 
 **Conditional independence.** $A\perp B\mid C$ means $P(A\cap B\mid C)=P(A\mid C)P(B\mid C)$. Neither implies the other direction: independent events can become dependent given $C$ and vice versa. This is the engine of [naive Bayes](../16-machine-learning/classification-methods.md) and [Bayesian networks](../17-artificial-intelligence/probabilistic-reasoning.md).
 
-## 5. Total probability and Bayes' theorem
+## 5. Total probability and Bayes' theorem [PYQ: Medium]
 
 **Law of total probability.** If $B_1,\dots,B_k$ is a partition of $S$ with each $P(B_i)>0$:
 
@@ -238,7 +240,7 @@ Each extra head multiplies the odds by 2 (odds went from $1:1$ to $8:1$).
 
 ## Practice
 
-**Q1 (MCQ).** Two fair dice are rolled. The probability that the sum is divisible by 3 is
+**Q1 (MCQ).** Two fair dice are rolled. The probability that the sum is divisible by 3 is  
 (A) 1/6 (B) 1/4 (C) 1/3 (D) 5/12
 
 <details><summary>Answer</summary>
@@ -257,7 +259,7 @@ Each extra head multiplies the odds by 2 (odds went from $1:1$ to $8:1$).
 
 </details>
 
-**Q3 (MCQ).** Events $A,B$ with $P(A)=0.5$, $P(B)=0.4$, $P(A\cup B)=0.7$. Which is true?
+**Q3 (MCQ).** Events $A,B$ with $P(A)=0.5$, $P(B)=0.4$, $P(A\cup B)=0.7$. Which is true?  
 (A) $A,B$ mutually exclusive (B) $A,B$ independent (C) $P(A\mid B)=0.4$ (D) $P(B\mid A)=0.5$
 
 <details><summary>Answer</summary>
@@ -267,10 +269,10 @@ Each extra head multiplies the odds by 2 (odds went from $1:1$ to $8:1$).
 
 </details>
 
-**Q4 (MSQ).** Let $A,B$ be events with $P(A)>0$ and $P(B)>0$. Select all statements that are TRUE.
-(A) If $A,B$ are mutually exclusive, they are independent.
-(B) If $A,B$ are independent, then $A$ and $B^c$ are independent.
-(C) If $A,B$ are mutually exclusive, $P(A\cup B)=P(A)+P(B)$.
+**Q4 (MSQ).** Let $A,B$ be events with $P(A)>0$ and $P(B)>0$. Select all statements that are TRUE.  
+(A) If $A,B$ are mutually exclusive, they are independent.  
+(B) If $A,B$ are independent, then $A$ and $B^c$ are independent.  
+(C) If $A,B$ are mutually exclusive, $P(A\cup B)=P(A)+P(B)$.  
 (D) If $A,B$ are independent, they cannot be mutually exclusive.
 
 <details><summary>Answer</summary>
@@ -289,7 +291,7 @@ Each extra head multiplies the odds by 2 (odds went from $1:1$ to $8:1$).
 
 </details>
 
-**Q6 (MCQ).** A test detects a condition with sensitivity 90% and false-positive rate 10%. The prevalence is 5%. If a person tests positive, the probability of having the condition is closest to
+**Q6 (MCQ).** A test detects a condition with sensitivity 90% and false-positive rate 10%. The prevalence is 5%. If a person tests positive, the probability of having the condition is closest to  
 (A) 0.90 (B) 0.32 (C) 0.05 (D) 0.50
 
 <details><summary>Answer</summary>
@@ -308,10 +310,10 @@ Each extra head multiplies the odds by 2 (odds went from $1:1$ to $8:1$).
 
 </details>
 
-**Q8 (MCQ).** Three events $A,B,C$ satisfy $P(A\cap B)=P(A)P(B)$, $P(B\cap C)=P(B)P(C)$, $P(A\cap C)=P(A)P(C)$. Which conclusion is guaranteed?
-(A) $A,B,C$ are mutually independent
-(B) $P(A\cap B\cap C)=P(A)P(B)P(C)$
-(C) $A,B,C$ are pairwise independent
+**Q8 (MCQ).** Three events $A,B,C$ satisfy $P(A\cap B)=P(A)P(B)$, $P(B\cap C)=P(B)P(C)$, $P(A\cap C)=P(A)P(C)$. Which conclusion is guaranteed?  
+(A) $A,B,C$ are mutually independent  
+(B) $P(A\cap B\cap C)=P(A)P(B)P(C)$  
+(C) $A,B,C$ are pairwise independent  
 (D) $A,B,C$ are mutually exclusive
 
 <details><summary>Answer</summary>

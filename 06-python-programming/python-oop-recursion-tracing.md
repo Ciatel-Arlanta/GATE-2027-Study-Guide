@@ -2,9 +2,11 @@
 
 > **Paper:** DA · **Priority:** P0 · **Plan topics:** Classes/basic OOP; Recursion; Tracing Python programs
 > **Prerequisites:** [Python basics](python-basics.md) · [Python collections](python-collections.md) · **Leads to:** [Data structures](../07-data-structures/linked-lists.md) · [Algorithms](../08-algorithms/divide-and-conquer.md)
+> **PYQ weightage:** Low · 3 Qs since 2015 (3 since 2021) · DA: 3 · Trend: steady · Note: Python is tested only in the DA paper (introduced 2024); recursive tracing and container state are the primary source of NAT questions in DA · Most asked: Recursive function tracing, dictionary-based tree recursion, mutable class/instance attribute shadowing
 
 ## Quick glance
 
+- **Exam focus:** Tracing recursive functions (especially mathematical recurrences and container/dict recursion) and object state mutation; tested as high-value NAT and MCQ in GATE DA.
 - A **class** is a blueprint; an **object** is an instance. `__init__(self, ...)` initialises a new instance; `self` is the instance, passed implicitly: `obj.m(a)` is `Class.m(obj, a)`.
 - **Class attribute** (defined in the class body) is shared by all instances; **instance attribute** (`self.x = ...`) is per object. Reading `obj.x` looks in the instance first, then the class, then the base classes. **Assigning `obj.x = v` always creates/updates an *instance* attribute**, shadowing the class one.
 - **Mutating** a shared class-level list (`obj.tags.append`) affects every instance; **rebinding** (`obj.tags = [...]`) only that instance.
@@ -14,7 +16,7 @@
 - **Memoization** turns exponential recursion like naive Fibonacci into linear: `fib(10)` takes **177 calls** naively, **19** with a memo.
 - **Tracing method:** write a table of variable values after each statement; for recursion, draw the call tree and note what is printed *before* and *after* the recursive call.
 
-## 1. Classes and objects
+## 1. Classes and objects [PYQ: Low]
 
 **Intuition.** Bundle data (attributes) and the functions that act on it (methods) under one name. `self` is just the first parameter; Python fills it in with the object before the dot.
 
@@ -101,7 +103,7 @@ Cnt.inc(); Cnt.inc()
 print(Cnt.calls, Cnt.cm())     # 2 Cnt
 ```
 
-## 2. Dunder (special) methods
+## 2. Dunder (special) methods [PYQ: Low]
 
 | Method | Triggered by | Notes |
 | --- | --- | --- |
@@ -141,7 +143,7 @@ print((a + b).x)           # 2                (calls __add__, builds A(2))
 
 **`__eq__` without `__hash__`.** After defining only `__eq__`, `{obj}` or `d[obj]` raises `TypeError: unhashable type`. `obj1 != obj2` automatically becomes `not (obj1 == obj2)` in Python 3.
 
-## 3. Inheritance and method resolution
+## 3. Inheritance and method resolution [PYQ: Low]
 
 A subclass inherits attributes and methods; it may **override** them. Lookup follows the class's **MRO**.
 
@@ -220,7 +222,7 @@ print([c.__name__ for c in W.__mro__])        # ['W', 'Y', 'Z', 'X', 'object']
 
 `super()` inside `Y` goes to the **next in W's MRO**, which is `Z` (not `X`), hence `WYZX` and each `who` runs exactly once.
 
-## 4. Recursion
+## 4. Recursion [PYQ: Low]
 
 **Intuition.** Solve a problem by assuming you can already solve a smaller copy of it. Two parts: a **base case** that stops the recursion, and a **recursive case** that reduces the input. Each call gets its own frame (locals), stacked on the **call stack**. See [functions and recursion in C](../05-c-programming/functions-recursion-structures.md).
 
@@ -363,7 +365,7 @@ print(f2(3), f2(2))      # 4 7
 
 `f2(3)` appends 3, 2, 1, 0 to the shared default list (length 4). `f2(2)` reuses that list and appends 2, 1, 0 for length 7.
 
-## 5. Tracing programs systematically
+## 5. Tracing programs systematically [PYQ: Low]
 
 A repeatable method for output-prediction questions:
 

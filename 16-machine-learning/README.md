@@ -5,6 +5,8 @@
 **Prerequisites:** [02 Probability & Statistics](../02-probability-statistics/README.md) (Bayes, Gaussian, expectation, MLE flavour) · [03 Linear Algebra](../03-linear-algebra/README.md) (projections, eigenvectors, SVD) · [04 Calculus & Optimization](../04-calculus-optimization/README.md) (gradients, minima) · [06 Python Programming](../06-python-programming/README.md) (tracing code that calls models).
 **Leads to:** [17 Artificial Intelligence](../17-artificial-intelligence/README.md) (naive Bayes is a Bayesian network; search and probabilistic reasoning).
 
+**PYQ weightage:** DA paper only (since 2024): 21 Qs across 2024–26 papers.
+
 ## Why this subject matters / mental model
 
 Machine learning is **function fitting under uncertainty**: choose a model family, define a loss that measures disagreement with data, minimise it, then check on unseen data whether you learned the pattern or memorised noise. Every chapter here is an instance of that loop:
@@ -17,14 +19,23 @@ GATE asks for hand computation on tiny datasets (a regression line, a k-NN vote,
 
 ## Reading order
 
-| Chapter | Priority | Plan topics covered |
-| --- | --- | --- |
-| [ml-foundations.md](ml-foundations.md) | P0 | Regression vs classification problems; Bias-variance trade-off; Leave-one-out cross-validation; k-fold cross-validation |
-| [linear-and-logistic-regression.md](linear-and-logistic-regression.md) | P0 | Simple linear regression; Multiple linear regression; Ridge regression; Logistic regression |
-| [classification-methods.md](classification-methods.md) | P0 | k-nearest neighbours; Naive Bayes classifier; Linear discriminant analysis; Support vector machines; Decision trees |
-| [neural-networks.md](neural-networks.md) | P1 | Multi-layer perceptron; Feed-forward neural networks |
-| [clustering.md](clustering.md) | P0 | Clustering; k-means; k-medoids; Hierarchical clustering: top-down; Hierarchical clustering: bottom-up; Single-linkage clustering; Multiple-linkage clustering |
-| [dimensionality-reduction-pca.md](dimensionality-reduction-pca.md) | P0 | Dimensionality reduction; Principal component analysis |
+| Chapter | Priority | Plan topics covered | PYQ weightage |
+| --- | --- | --- | --- |
+| [ml-foundations.md](ml-foundations.md) | P0 | Regression vs classification problems; Bias-variance trade-off; Leave-one-out cross-validation; k-fold cross-validation | Medium · 2 |
+| [linear-and-logistic-regression.md](linear-and-logistic-regression.md) | P0 | Simple linear regression; Multiple linear regression; Ridge regression; Logistic regression | Medium · 3 |
+| [classification-methods.md](classification-methods.md) | P0 | k-nearest neighbours; Naive Bayes classifier; Linear discriminant analysis; Support vector machines; Decision trees | High · 7 |
+| [neural-networks.md](neural-networks.md) | P1 | Multi-layer perceptron; Feed-forward neural networks | High · 4 |
+| [clustering.md](clustering.md) | P0 | Clustering; k-means; k-medoids; Hierarchical clustering: top-down; Hierarchical clustering: bottom-up; Single-linkage clustering; Multiple-linkage clustering | Medium · 3 |
+| [dimensionality-reduction-pca.md](dimensionality-reduction-pca.md) | P0 | Dimensionality reduction; Principal component analysis | Low · 1 |
+
+## Study priority
+
+- [classification-methods.md](classification-methods.md) (High · 7 DA Qs) — master naive Bayes posteriors, SVM margins and support vectors, decision-tree information gain and k-NN votes first.
+- [neural-networks.md](neural-networks.md) (High · 4 DA Qs) — master activation-function properties and gradients plus feed-forward numericals.
+- [linear-and-logistic-regression.md](linear-and-logistic-regression.md) (Medium · 3 DA Qs) — master OLS parameter estimation and logistic-regression loss and decision boundaries.
+- [clustering.md](clustering.md) (Medium · 3 DA Qs) — master one k-means iteration, single/complete linkage merges and dissimilarity metrics.
+- [ml-foundations.md](ml-foundations.md) (Medium · 2 DA Qs) — master supervised vs unsupervised taxonomy, linear separability and evaluation metrics.
+- [dimensionality-reduction-pca.md](dimensionality-reduction-pca.md) (Low · 1 DA Q) — master covariance matrices, eigenvalues/variance explained and principal-component projection.
 
 ## Dependencies inside the section
 

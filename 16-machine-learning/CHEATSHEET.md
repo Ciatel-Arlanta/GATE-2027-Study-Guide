@@ -38,7 +38,7 @@ Final-revision page. Chapters: [foundations](ml-foundations.md) · [regression](
 | SVM | margin $2/\|w\|$; constraints $y_i(w^Tx_i+b)\ge1$; soft margin $\frac12\|w\|^2+C\sum\xi$; large $C$ = narrow margin; only support vectors matter |
 | Kernels | linear $x^Tz$; poly $(x^Tz+c)^p$; RBF $e^{-\gamma\|x-z\|^2}$ |
 | Entropy / Gini | $-\sum p\log_2p$ / $1-\sum p^2$; 50-50 binary: 1 / 0.5 |
-| Information gain | $H(S)-\sum\frac{|S_v|}{|S|}H(S_v)$; gain ratio divides by SplitInfo |
+| Information gain | $H(S)-\sum\frac{\vert S_v\vert }{\vert S\vert }H(S_v)$; gain ratio divides by SplitInfo |
 | Ensembles | bagging/random forest: variance down; boosting: bias down |
 
 ## Neural networks

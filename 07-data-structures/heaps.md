@@ -2,9 +2,11 @@
 
 > **Paper:** CS+DA · **Priority:** P0 · **Plan topics:** Binary heaps; Data-structure operations and complexity (priority queues)
 > **Prerequisites:** [Trees and BST](trees-and-bst.md) (complete binary trees), [Arrays](arrays-stacks-queues.md) · **Leads to:** [Searching and sorting (heap sort)](../08-algorithms/searching-and-sorting.md), [Shortest paths](../08-algorithms/shortest-paths.md), [Minimum spanning trees](../08-algorithms/minimum-spanning-trees.md)
+> **PYQ weightage:** High · 20 Qs since 2015 (7 since 2021) · DA: 0 · Trend: falling · Most asked: Heapify/sift-down operations, build-heap complexity ($O(n)$) & swap counting, min/max heap insertions & deletions, d-ary heaps
 
 ## Quick glance
 
+- **Exam focus:** Step-by-step heap operations (sift-up on insert, sift-down on extract-max/delete), build-heap linear time proof and swap count, and array index arithmetic (1-based vs 0-based); tested mostly as NAT and MCQ.
 - A **binary heap** is a **complete binary tree** stored in an array with the **heap property**: max-heap: `parent ≥ children`; min-heap: `parent ≤ children`. It is *not* sorted: only parent-child order is guaranteed.
 - **Index formulas, 1-based:** parent `⌊i/2⌋`, children `2i`, `2i+1`. **0-based:** parent `⌊(i-1)/2⌋`, children `2i+1`, `2i+2`.
 - Height = `⌊log₂ n⌋`; leaves occupy positions `⌊n/2⌋+1 .. n` (1-based): there are `⌈n/2⌉` leaves and `⌊n/2⌋` internal nodes.
@@ -16,7 +18,7 @@
 - Distinct max-heaps on keys `1..n`: n = 1..7 → 1, 1, 2, 3, 8, 20, 80.
 - **d-ary heap:** height `log_d n`; insert O(log_d n), extract O(d·log_d n).
 
-## 1. Priority queue and the heap
+## 1. Priority queue and the heap [PYQ: Medium]
 
 A **priority queue** supports `insert(x)`, `findMax/Min`, `extractMax/Min`, often `decreaseKey` and `delete`. A heap is the standard implementation.
 
@@ -48,7 +50,7 @@ Max-heap on indices 1..10:        array: [16, 14, 10, 8, 7, 9, 3, 2, 4, 1]
 
 **Levels.** Level `l` (root = 0) occupies positions `2^l .. 2^(l+1) - 1` (1-based). Height of the heap with n = 10: 3; n = 1000: 9 (positions 512..1000 are on level 9).
 
-## 2. Operations
+## 2. Operations [PYQ: High]
 
 ### 2.1 Sift-up (insert / increase key)
 
@@ -109,7 +111,7 @@ Returned 16, new array **`[14, 8, 10, 4, 7, 9, 3, 2, 1]`**, 3 swaps (= height). 
 - **Delete arbitrary element at position `i`:** replace it with the last element, then sift up or down as needed: O(log n). (You must already know `i`: *finding* an element is O(n).)
 - **Merge two heaps:** concatenate and rebuild: O(n); special structures (binomial, Fibonacci, leftist heaps) merge faster.
 
-## 3. Building a heap
+## 3. Building a heap [PYQ: High]
 
 **Method A (Floyd's bottom-up):** the leaves are already heaps; for `i = ⌊n/2⌋` down to 1, `siftDown(i)`.
 
@@ -135,7 +137,7 @@ Intuition: half of the nodes are leaves (cost 0), a quarter sift at most 1, an e
 
 **Worked example 5 (counting nodes by height).** `n = 15` perfect tree: 8 nodes of height 0, 4 of height 1, 2 of height 2, 1 of height 3. Maximum sift-down swaps: `4·1 + 2·2 + 1·3 = 11` < n.
 
-## 4. Heap sort
+## 4. Heap sort [PYQ: Medium]
 
 1. Build a max-heap: O(n).
 2. For `i = n` down to 2: swap `a[1]` and `a[i]`, decrease the heap size, `siftDown(1)`. Each of the `n - 1` extractions is O(log n).
@@ -144,7 +146,7 @@ Total **Θ(n log n)** in best, average and worst case (the best case for distinc
 
 **Worked example 6.** Heap `[16, 14, 10, 8, 7, 9, 3, 2, 4, 1]`: swap root with last → `[1, 14, 10, 8, 7, 9, 3, 2, 4 | 16]`; sift down → `[14, 8, 10, 4, 7, 9, 3, 2, 1 | 16]`; swap again → `[1, 8, 10, 4, 7, 9, 3, 2 | 14, 16]`, sift down → `[10, 8, 9, 4, 7, 1, 3, 2 | 14 16]`: the sorted suffix grows (`...14 16`). More in [searching and sorting](../08-algorithms/searching-and-sorting.md).
 
-## 5. Uses and facts
+## 5. Uses and facts [PYQ: Medium]
 
 - **Largest/smallest k elements:** build a min-heap of size k and scan the rest: O(n log k). **k-th smallest** by building a min-heap (O(n)) and `k` extract-mins (O(k log n)): O(n + k log n).
 - **Merging k sorted lists:** keep a min-heap of k heads: O(N log k).

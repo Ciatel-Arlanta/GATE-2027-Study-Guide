@@ -2,9 +2,11 @@
 
 > **Paper:** CS+DA · **Priority:** P0 · **Plan topics:** Arrays; Stacks; Queues; Data-structure operations and complexity
 > **Prerequisites:** [Pointers, arrays, strings](../05-c-programming/pointers-arrays-strings.md) · **Leads to:** [Linked lists](linked-lists.md), [Heaps](heaps.md), [Graph traversals](../08-algorithms/graph-traversals.md)
+> **PYQ weightage:** High · 24 Qs since 2015 (11 since 2021) · DA: 2 · Trend: steady · Most asked: Stack applications (infix/postfix, valid permutations), circular queue full/empty conditions, array address formulas (row/column-major, triangular)
 
 ## Quick glance
 
+- **Exam focus:** Stack applications (infix-to-postfix conversion, postfix evaluation, valid push/pop permutations via Catalan numbers), circular queue empty/full arithmetic, and 2D row/column-major array address calculations; tested frequently as NAT and MCQ.
 - **1-D address:** `A[i]` (lower bound `L`) is at `base + (i - L) * w`.
 - **2-D row-major** with bounds `[L1..U1][L2..U2]`: `base + ((i-L1)*N2 + (j-L2)) * w`, `N2 = U2-L2+1` (number of **columns**). **Column-major:** `base + ((j-L2)*N1 + (i-L1)) * w`, `N1` = number of rows.
 - **Lower-triangular** (1-based, row-major, store `i >= j`): offset `i(i-1)/2 + (j-1)`; total `n(n+1)/2` cells.
@@ -15,7 +17,7 @@
 - **Queue from two stacks** gives amortised O(1) per operation (each element moves at most twice); a single dequeue can cost O(n).
 - A **deque** allows insertion/deletion at both ends; a **priority queue** removes the highest-priority element, usually a [heap](heaps.md).
 
-## 1. Arrays
+## 1. Arrays [PYQ: Medium]
 
 An **array** is a block of equal-sized cells in consecutive memory, reached by index. Because the address is computed by arithmetic, **access by index is O(1)**; search is O(n) unless sorted (then O(log n) by binary search); inserting or deleting in the middle shifts elements, **O(n)**.
 
@@ -86,7 +88,7 @@ Check tridiagonal formula: `n = 4`, `a[2][1]`: rows before row 2 hold 2 elements
 
 **Sparse matrix.** If most entries are zero, store only non-zeros as triplets (row, column, value) or in compressed row form. A matrix with `t` non-zeros uses about `3t` numbers; it beats a dense array when `t < mn/3`. Transpose of a triplet list is O(t + n) with the counting approach.
 
-## 2. Stacks
+## 2. Stacks [PYQ: High]
 
 A **stack** is a collection with **last-in, first-out (LIFO)** access, like a pile of plates: you can only touch the top. Operations: `push(x)`, `pop()`, `peek()/top()`, `isEmpty()`, `isFull()` (array version). **All O(1).**
 
@@ -212,7 +214,7 @@ For n = 3 the valid ones are `123, 132, 213, 231, 321`; **`312` is impossible**:
 
 Each call pushes a frame; the maximum depth equals the maximum stack height. Any recursion can be simulated by an explicit stack (iterative DFS, tree traversals). See [functions and recursion](../05-c-programming/functions-recursion-structures.md).
 
-## 3. Queues
+## 3. Queues [PYQ: High]
 
 A **queue** is **first-in, first-out (FIFO)**: insert at the **rear**, remove at the **front**. Operations `enqueue`, `dequeue`, `front`, `isEmpty`, `isFull`.
 

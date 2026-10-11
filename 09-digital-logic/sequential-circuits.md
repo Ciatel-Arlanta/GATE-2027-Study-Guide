@@ -2,9 +2,11 @@
 
 > **Paper:** CS · **Priority:** P0 · **Plan topics:** Sequential circuit design
 > **Prerequisites:** [Combinational circuits](combinational-circuits.md) · **Leads to:** [ALU and control unit](../10-computer-organization/alu-and-control-unit.md), [Pipelining](../10-computer-organization/pipelining.md)
+> **PYQ weightage:** Medium · 12 Qs since 2015 (5 since 2021) · DA: 0 · Trend: falling · Most asked: Digital Counter, Flip Flop, Ripple Counter Operation
 
 ## Quick glance
 
+- **Exam focus:** Synchronous and ripple (asynchronous) counter state sequences, MOD numbers, flip-flop characteristic/excitation equations, setup and hold time timing margins, and FSM state transition tracing. Common formats: NAT for counter cycle length (MOD) or maximum clock frequency; MCQ for next-state sequences and flip-flop conversions.
 - **Sequential circuit** = combinational logic + memory (flip-flops). Output depends on inputs **and stored state**. Synchronous circuits change state only on a clock edge.
 - **Latch** is level-sensitive (transparent while enable is high); **flip-flop** is edge-triggered (samples on the edge).
 - Characteristic equations: **SR** $Q^+ = S + R'Q$ ($SR=0$), **D** $Q^+ = D$, **JK** $Q^+ = JQ' + K'Q$, **T** $Q^+ = T\oplus Q$.
@@ -16,7 +18,7 @@
 - **Mealy** output depends on state and input (fewer states, output can change between clocks); **Moore** output depends on state only (one more state typical, glitch-free).
 - #1 trap: unused states of ring/Johnson/mod-$N$ counters: self-starting? Also confusing excitation tables with characteristic tables.
 
-## 1. Latches
+## 1. Latches [PYQ: Low]
 
 A latch stores one bit using cross-coupled gates (feedback). It is **level-sensitive**.
 
@@ -33,7 +35,7 @@ An SR latch built from **NAND** gates has active-low inputs: $\bar S=\bar R=0$ i
 
 **Gated SR / D latch:** add an enable $E$ so that changes happen only while $E=1$. **D latch:** $S = D$, $R = D'$ removes the forbidden state: $Q^+ = D$ while $E=1$, holds when $E=0$. A D latch is **transparent**: $Q$ follows $D$ throughout the enable-high interval.
 
-## 2. Flip-flops
+## 2. Flip-flops [PYQ: Medium]
 
 A flip-flop samples its inputs **only at a clock edge**. Master-slave: two latches back to back with opposite enables; master follows input while clock is high, slave copies on the falling edge, so the output changes once per cycle. Edge-triggered flip-flops (positive/negative edge) are the modern form.
 
@@ -77,7 +79,7 @@ Method: write the excitation inputs of the **given** FF in terms of the new FF's
 
 **Worked example: derive $T = JQ' + KQ$ for JK from T.** Need $Q^+ = JQ'+K'Q$. Toggle is needed exactly when $Q^+\ne Q$: when $Q=0$ and $Q^+=1$ ($J=1$), or $Q=1$ and $Q^+=0$ ($K=1$). So $T = Q'J + QK$. Consistent with the table.
 
-## 3. Timing: setup, hold and maximum clock frequency
+## 3. Timing: setup, hold and maximum clock frequency [PYQ: Low]
 
 - **Setup time $t_{su}$:** data must be stable this long **before** the active edge.
 - **Hold time $t_{h}$:** data must stay stable this long **after** the edge.
@@ -93,7 +95,7 @@ $f_{max} = 1/T_{clk,min}$. **Hold violations cannot be fixed by slowing the cloc
 
 **Worked example (pipeline-flavoured).** Three stages with delays 4, 6, 5 ns, register overhead ($t_{cq}+t_{su}$) = 1 ns each. Clock period set by slowest stage: $6+1 = 7$ ns, $f = 142.9$ MHz.
 
-## 4. Registers and shift registers
+## 4. Registers and shift registers [PYQ: Low]
 
 A **register** is a group of FFs sharing a clock (and often load enable).
 
@@ -106,7 +108,7 @@ A **register** is a group of FFs sharing a clock (and often load enable).
 
 **Worked example.** A 4-bit right-shift register initially $Q_3Q_2Q_1Q_0 = 1011$, serial-in $=0$ at $Q_3$. After 1 clock: $0101$; 2: $0010$; 3: $0001$; 4: $0000$. Shifting right with 0 fill divides an unsigned value by 2 (11, 5, 2, 1, 0). Time to shift out an $n$-bit word serially: $n$ clock cycles.
 
-## 5. Counters
+## 5. Counters [PYQ: High]
 
 A counter steps through a sequence of states on each clock pulse. $n$ flip-flops give at most $2^n$ states; a **mod-$N$ counter** has $N$ states and needs $\lceil\log_2 N\rceil$ FFs.
 
@@ -138,7 +140,7 @@ All FFs share the clock; next-state logic decides which toggle. A synchronous bi
 | Ring | $N$ | $N$ | $n$ |
 | Johnson | $\lceil N/2\rceil$ | $N$ (even) | $2n$ |
 
-## 6. Synchronous counter design from a state diagram
+## 6. Synchronous counter design from a state diagram [PYQ: Medium]
 
 Procedure: (1) state diagram / table; (2) choose FF type; (3) from the excitation table write each FF's input for every present state, treat unused states as don't-cares; (4) minimise by K-map; (5) draw.
 
@@ -163,7 +165,7 @@ Check (python-verified): $T_1=Q_2'Q_0$ toggles only in $001,011$; $T_2$ toggles 
 
 **Worked example: mod-$N$ counter size.** A mod-12 counter needs $\lceil\log_2 12\rceil = 4$ FFs; a mod-12 Johnson counter needs 6 FFs; a mod-12 ring counter needs 12 FFs.
 
-## 7. Finite state machines: Mealy and Moore
+## 7. Finite state machines: Mealy and Moore [PYQ: Low]
 
 - **Moore:** output = $f(\text{state})$. Output changes only at clock edges (after the state changes).
 - **Mealy:** output = $f(\text{state}, \text{input})$. Output can change as soon as the input changes (within the cycle). Typically needs fewer states; outputs can glitch with input glitches.
@@ -195,7 +197,7 @@ stateDiagram-v2
     S2 --> S1: 1/1
 ```
 
-## 8. Analysis: finding the state sequence of a circuit
+## 8. Analysis: finding the state sequence of a circuit [PYQ: Medium]
 
 Procedure: write FF input equations, substitute into characteristic equations to get next-state equations, build a trace (state) table, and read the cycle.
 

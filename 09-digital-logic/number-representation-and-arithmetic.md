@@ -2,9 +2,11 @@
 
 > **Paper:** CS · **Priority:** P0 · **Plan topics:** Number representation; Fixed-point arithmetic; Floating-point arithmetic
 > **Prerequisites:** [Combinational circuits](combinational-circuits.md) · **Leads to:** [ALU and control unit](../10-computer-organization/alu-and-control-unit.md), [Instruction sets and addressing](../10-computer-organization/instruction-sets-and-addressing.md)
+> **PYQ weightage:** High · 31 Qs since 2015 (19 since 2021) · DA: 0 · Trend: rising · Most asked: Number Representation, IEEE Representation, Fixed Point Representation, Booths Algorithm
 
 ## Quick glance
 
+- **Exam focus:** 2's complement range, representation, overflow conditions, and arithmetic; IEEE 754 single-precision floating-point conversion, special values (NaN, infinities, denormals), and precision; base conversions and Booth's multiplication. Common formats: NAT for bit patterns, decimal values, exponent/fraction fields; MCQ/MSQ for representation ranges and arithmetic properties.
 - Base conversion: integer part by repeated division, fraction by repeated multiplication; binary $\leftrightarrow$ octal/hex by grouping 3/4 bits from the point.
 - **$n$-bit ranges:** unsigned $0..2^n-1$; sign-magnitude and 1's complement $-(2^{n-1}-1)..2^{n-1}-1$ (two zeros); **2's complement $-2^{n-1}..2^{n-1}-1$** (one zero, one extra negative).
 - 2's complement negate = invert and add 1; subtract = add the 2's complement. **Overflow** (signed): operands same sign, result different sign, equivalently $C_{in,MSB}\oplus C_{out,MSB}$.
@@ -15,7 +17,7 @@
 - Float add: align exponents (shift smaller), add, normalise, round. Float addition is **not associative**.
 - #1 trap: bias vs actual exponent, and the **hidden leading 1**.
 
-## 1. Number systems and base conversion
+## 1. Number systems and base conversion [PYQ: Medium]
 
 Position value: a digit $d_i$ in base $b$ contributes $d_i\,b^i$ (negative $i$ after the point).
 
@@ -35,7 +37,7 @@ $0.375$: $0.375\times2=0.75\to0$; $0.75\times2=1.5\to1$; $0.5\times2=1.0\to1$. S
 
 **Base-$r$ digit counting:** an $n$-digit base-$r$ number holds $r^n$ values; to represent $N$ distinct values need $\lceil\log_r N\rceil$ digits. Number of bits for decimal $d$ digits $=\lceil d\log_210\rceil\approx 3.32\,d$.
 
-## 2. Signed integer representations ($n$ bits)
+## 2. Signed integer representations ($n$ bits) [PYQ: High]
 
 | Scheme | Negation | Range | Zeros |
 |---|---|---|---|
@@ -77,7 +79,7 @@ Example $6 + (-3)$ in 4 bits: $0110 + 1100 = 1\,0010$; end-around: $0010+1 = 001
 ### Flags
 Z (zero), N (negative = MSB), C (carry), V (overflow). Signed comparison after $A-B$: $A<B$ iff $N\oplus V = 1$; unsigned $A<B$ iff borrow (C=0 in subtract-as-add convention).
 
-## 3. BCD, excess-3 and Gray codes
+## 3. BCD, excess-3 and Gray codes [PYQ: Low]
 
 **BCD (8421):** each decimal digit in 4 bits $0000..1001$; $1010..1111$ invalid. $59_{10} = 0101\,1001$. Uses more bits than binary ($4d$ vs $3.32d$).
 
@@ -102,7 +104,7 @@ Applications: K-map axes, rotary encoders (no glitch between adjacent positions)
 
 **Decimal addition in BCD:** add as binary; if the digit sum $>9$ or a carry out occurs, add $0110$ (see the BCD adder in [Combinational circuits](combinational-circuits.md)). Example: $27+35$: $0010\,0111 + 0011\,0101$: low digit $0111+0101 = 1100>9\to+0110 = 1\,0010$: digit 2, carry 1; high digit $0010+0011+1 = 0110$: $62$. ✓
 
-## 4. Fixed-point representation and arithmetic
+## 4. Fixed-point representation and arithmetic [PYQ: Medium]
 
 A fixed-point number is an integer scaled by a constant power of the base; the binary point is implicit at a fixed position.
 
@@ -125,7 +127,7 @@ $A = 2.5 = 0010.1000$ (raw $40$), $B = 1.25 = 0001.0100$ (raw $20$).
 
 **Worked example (range).** Signed 16-bit Q1.15 ($1$ sign, $15$ fraction): range $-1\ldots1-2^{-15}$, resolution $2^{-15}=3.05\times10^{-5}$. Number of distinct values $=2^{16}$.
 
-## 5. IEEE 754 floating point
+## 5. IEEE 754 floating point [PYQ: High]
 
 ### Format
 

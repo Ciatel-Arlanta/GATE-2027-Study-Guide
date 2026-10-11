@@ -2,9 +2,11 @@
 
 > **Paper:** CS · **Priority:** P0 · **Plan topics:** Boolean algebra; Boolean minimization: algebraic technique; Karnaugh maps; Tabular minimization method
 > **Prerequisites:** [Propositional logic](../01-discrete-mathematics/propositional-logic.md) · **Leads to:** [Combinational circuits](combinational-circuits.md), [Sequential circuits](sequential-circuits.md)
+> **PYQ weightage:** High · 27 Qs since 2015 (13 since 2021) · DA: 0 · Trend: steady · Most asked: Boolean Algebra, Min Sum of Products Form, Canonical Normal Form, Functional Completeness
 
 ## Quick glance
 
+- **Exam focus:** Minimization of boolean functions into minimal SOP/POS, identifying essential prime implicants and prime implicants via K-maps, canonical minterm/maxterm expressions, and functional completeness tests. Common formats: NAT for count of prime implicants or minterms; MCQ/MSQ for equivalent boolean expressions and gate completeness.
 - A Boolean function of $n$ variables has a truth table of $2^n$ rows, so there are **$2^{2^n}$ distinct functions** ($n=2$: 16, $n=3$: 256, $n=4$: 65536).
 - Canonical forms: **SOP** = OR of minterms ($\Sigma m$), **POS** = AND of maxterms ($\Pi M$). Minterm $m_i$ and maxterm $M_i$ are complements: $M_i = m_i'$.
 - Duality: swap AND/OR and 0/1 (keep literals). **De Morgan:** $(AB)' = A'+B'$, $(A+B)' = A'B'$.
@@ -15,7 +17,7 @@
 - Quine–McCluskey = K-map made algorithmic: group minterms by number of 1s, combine pairs differing in one bit, then pick PIs from a chart (EPIs first, Petrick's method for cyclic leftovers).
 - #1 trap: **number of minimal expressions is not the number of PIs**, and a minimal SOP uses EPIs + a smallest set of other PIs, not all PIs.
 
-## 1. Boolean algebra basics
+## 1. Boolean algebra basics [PYQ: High]
 
 A Boolean algebra works on $\{0,1\}$ with AND ($\cdot$), OR ($+$), NOT ($'$). Think of it as logic where every wire is either low or high.
 
@@ -57,7 +59,7 @@ $A\oplus B = A'B + AB'$, $A \odot B = (A\oplus B)' = AB + A'B'$.
 | Parity | $A_1\oplus\cdots\oplus A_n = 1$ iff an **odd** number of inputs are 1 |
 | XNOR parity | $n$-input XNOR chain: depends on $n$ even/odd; for even $n$ it is 1 on an even number of 1s |
 
-## 2. Canonical forms: minterms and maxterms
+## 2. Canonical forms: minterms and maxterms [PYQ: High]
 
 A **minterm** is an AND of all $n$ variables, each in true or complemented form, which is 1 on exactly one input row. Row number $i$ (binary of $ABC$) gives $m_i$: use $A$ if the bit is 1 and $A'$ if 0. A **maxterm** is an OR of all variables that is 0 on exactly one row: use $A'$ if the bit is 1 and $A$ if the bit is 0 (opposite of minterm).
 
@@ -84,7 +86,7 @@ Counting facts (all for $n$ variables):
 | Functions that depend only on $A$ (of 3 variables) | 4 ($0,1,A,A'$) |
 | Number of minterms in a product with $k$ literals | $2^{n-k}$ |
 
-## 3. Functional completeness
+## 3. Functional completeness [PYQ: Low]
 
 A set of gates is **functionally complete** if every Boolean function can be built from it.
 
@@ -96,7 +98,7 @@ A set of gates is **functionally complete** if every Boolean function can be bui
 
 **Checking a given set in GATE:** try to produce NOT and one of AND/OR. If you have a gate with constants available, e.g. a MUX with inputs tied to 0/1, you can get NOT directly: MUX with select $A$, data $(1,0)$ gives $A'$. A 2:1 MUX with constants alone is complete.
 
-## 4. Algebraic minimization
+## 4. Algebraic minimization [PYQ: Medium]
 
 No algorithm: apply the laws to merge terms, absorb terms, remove redundant (consensus) terms. Strategies: factor, use $A+A'B=A+B$, add redundant term then remove two others, check with a truth table.
 
@@ -121,7 +123,7 @@ No algorithm: apply the laws to merge terms, absorb terms, remove redundant (con
 
 Literal counts are how GATE measures "minimal" in SOP; an alternative is gate count or gate-input count, so read the question.
 
-## 5. Karnaugh maps
+## 5. Karnaugh maps [PYQ: High]
 
 A K-map is a truth table arranged so that **adjacent cells differ in exactly one variable**. Hence grouping adjacent 1s applies $XY + XY' = X$ geometrically. Rows and columns use **Gray code order: 00, 01, 11, 10** (not 00, 01, 10, 11). The map wraps around: left edge touches right edge, top touches bottom (a torus), and the four corners of a 4-variable map are adjacent.
 
@@ -248,7 +250,7 @@ To get the minimal POS, group the **0s**, write each group as a sum term with va
 
 Example: $F = \Sigma m(1,3,4,5)$ over $A,B,C$ (Section 2). Zeros: 0, 2, 6, 7. Groups of zeros: $\{0,2\}$: $A=0,C=0$: sum term $(A+C)$. $\{6,7\}$: $A=1,B=1$: sum term $(A'+B')$. **$F = (A+C)(A'+B')$**. Check minterm 4 ($A=1,B=0,C=0$): $(1+0)(0+1) = 1$ ok. Minterm 0: $(0+0)=0$ ok.
 
-## 6. Quine–McCluskey (tabular) method
+## 6. Quine–McCluskey (tabular) method [PYQ: Low]
 
 The same job as a K-map but systematic, so it works for any number of variables. Steps:
 
@@ -332,7 +334,7 @@ Two minimal covers of 3 PIs exist: $\{P_1, P_3, P_5\}$ = $A'B' + AC + BC'$ and $
 
 With don't-cares in QM, include them in column 1 so PIs can grow, but **do not list them as columns of the PI chart**.
 
-## 7. Choosing a method in the exam
+## 7. Choosing a method in the exam [PYQ: Low]
 
 | Situation | Method |
 |---|---|

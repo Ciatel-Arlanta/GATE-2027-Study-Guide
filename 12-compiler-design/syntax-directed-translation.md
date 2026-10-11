@@ -2,9 +2,11 @@
 
 > **Paper:** CS · **Priority:** P0 · **Plan topics:** Syntax-directed translation
 > **Prerequisites:** [Parsing](parsing.md) · **Leads to:** [Intermediate code generation](intermediate-code-generation.md) · [Runtime environments](runtime-environments.md)
+> **PYQ weightage:** Medium · 11 Qs since 2015 (7 since 2021) · DA: 0 · Trend: rising · Most asked: Syntax Directed Translation, Abstract Syntax Tree
 
 ## Quick glance
 
+- **Exam focus:** Evaluating annotated parse trees / SDTs (desk calculators, custom operator semantics), S-attributed vs L-attributed definitions, and translation scheme action output order; tested heavily via NAT (numerical values, printed output sequences) and MCQ/MSQ.
 - **Syntax-directed definition (SDD):** a CFG where each grammar symbol has **attributes** and each production has **semantic rules** that compute them. **Syntax-directed translation scheme (SDT):** a CFG with **semantic actions** `{...}` embedded in the right sides; the action runs when the parser reaches that position.
 - **Synthesised attribute:** computed from the attributes of the node's **children** (and its own). **Inherited attribute:** computed from the **parent and left/right siblings**.
 - **S-attributed SDD:** only synthesised attributes. Evaluated bottom-up in any bottom-up parser, rules run at reduction time, in post-order. **L-attributed SDD:** each inherited attribute of X_i depends only on the parent's inherited attributes and attributes of the siblings **to the left** of X_i (and X_i's own attributes), never on a right sibling. Every S-attributed SDD is L-attributed. L-attributed suits one-pass depth-first left-to-right evaluation (and LL parsing).
@@ -13,7 +15,7 @@
 - Classic uses: evaluating expressions, translating infix to postfix, building syntax trees and DAGs, passing declared types to identifiers (inherited), generating three-address code.
 - #1 trap: tracing the wrong order. For `E → E + T {print '+'}` the `+` is printed **after** both operands' actions (post-order), so infix becomes postfix; a print action placed **before** the children produces pre-order (prefix) output.
 
-## 1. Attributes and semantic rules
+## 1. Attributes and semantic rules [PYQ: Medium]
 
 **Intuition.** A parse tree says *what the program is made of*; attributes say *what it means* (value, type, code, address). Synthesised attributes flow **up** the tree (a node's value from its children's values); inherited attributes flow **down or sideways** (a declaration's type reaches each declared identifier; the left operand's context reaches the right).
 
@@ -37,7 +39,7 @@ An SDD with only synthesised attributes is **S-attributed**. An SDD where, for e
 - A.s = X.s + Y.s : synthesised.
 - X.i = Y.s : inherited from the right sibling: not L-attributed.
 
-## 2. Worked SDDs and annotated parse trees
+## 2. Worked SDDs and annotated parse trees [PYQ: High]
 
 ### 2.1 Desk calculator (S-attributed)
 
@@ -98,7 +100,7 @@ Grammar: E → E₁ # T {E.val = E₁.val × T.val} | T {E.val = T.val}; T → T
 
 (Parse structure: E(E(E(T=2) # T=8) # T=10).)
 
-## 3. Syntax-directed translation schemes (SDT)
+## 3. Syntax-directed translation schemes (SDT) [PYQ: High]
 
 A **translation scheme** embeds actions `{…}` in the right sides. The action runs when the parser reaches that position. Rules for actions in L-attributed schemes: an inherited attribute of a symbol must be computed by an action placed **immediately before** that symbol; an action must not refer to a synthesised attribute of a symbol to its right; the synthesised attribute of the left side is computed after (at the end of) the right side.
 
@@ -153,7 +155,7 @@ Trace for `()`: S → ( S ) … : the inner S sees `)` so picks ε and prints 2;
 
 Bottom-up parsers cannot place an action in the middle of a production without a **marker nonterminal** M → ε that forces a reduction at that point. For D → T {L.in = T.type} L, rewrite as D → T M L; M → ε {…}. The marker's rule can read the value stack below it (the attribute of T) and push L.in. Every L-attributed SDD can be converted to a form usable by an LR parser this way. Left-recursion removal likewise rewrites the SDD to keep the attribute flow correct.
 
-## 4. Building syntax trees and DAGs
+## 4. Building syntax trees and DAGs [PYQ: Medium]
 
 **Syntax tree** (abstract syntax tree): operators as interior nodes, operands as children; no parentheses or unit-production nodes. Construction is S-attributed:
 
@@ -173,7 +175,7 @@ Bottom-up parsers cannot place an action in the middle of a production without a
 
 The DAG feeds code generation and local common-subexpression elimination ([Intermediate code generation](intermediate-code-generation.md), [Optimization and data flow](optimization-and-dataflow.md)).
 
-## 5. Where SDT is used
+## 5. Where SDT is used [PYQ: Low]
 
 | Task | Attributes |
 | --- | --- |

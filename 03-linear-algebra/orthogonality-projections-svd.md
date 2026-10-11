@@ -2,8 +2,10 @@
 
 > **Paper:** CS+DA · **Priority:** P1 · **Plan topics:** Orthogonal matrices; Projection matrices; Projections; Idempotent matrices; Singular value decomposition
 > **Prerequisites:** [Eigenvalues and eigenvectors](eigenvalues-and-eigenvectors.md) · [Vector spaces](vector-spaces.md) · [Matrices and determinants](matrices-and-determinants.md) · **Leads to:** [PCA](../16-machine-learning/dimensionality-reduction-pca.md) · [Linear and logistic regression](../16-machine-learning/linear-and-logistic-regression.md)
+> **PYQ weightage:** Low · 3 Qs since 2015 (3 since 2021) · DA: 3 · Trend: rising · Most asked: Orthonormality, Singular Value Decomposition, Projections
 
 ## Quick glance
+- **Exam focus:** Orthonormality conditions, orthogonal matrices (Q^T Q = I, length preservation, det = ±1), projection matrix formula (P = A(A^T A)^-1 A^T, trace P = rank P), least-squares normal equations (A^T A x̂ = A^T b), and Singular Value Decomposition (σ_i = √(λ_i(A^T A)), low-rank approximation error). Essential high-yield topic in GATE DA (all 3 recent questions in DA 2024–2025).
 - **Inner product** x·y = x^T y; length ‖x‖ = √(x^T x); orthogonal means x·y = 0. Orthogonal non-zero vectors are independent.
 - **Orthogonal matrix Q:** Q^T Q = Q Q^T = I, so Q^-1 = Q^T. It preserves lengths and angles, **det Q = ±1**, all |λ| = 1. det +1: rotation; det -1: reflection.
 - **Projection of b onto a:** p = (a^T b / a^T a) a; matrix P = a a^T / (a^T a).
@@ -14,7 +16,7 @@
 - **Best rank-k approximation** (Eckart–Young): keep the k largest σ_i; error ‖A - A_k‖_F² = Σ_{i>k} σ_i². This is the mathematics of PCA.
 - **#1 trap:** P = A(A^T A)^-1 A^T needs independent columns; for a single vector use a a^T/(a^T a), not a a^T.
 
-## 1. Orthogonality
+## 1. Orthogonality [PYQ: Medium]
 
 **Intuition.** Two vectors at right angles share no direction, so each can be treated separately. Orthonormal bases make every computation trivial: coordinates are just dot products.
 
@@ -29,7 +31,7 @@
 
 **Worked example 1.** q1 = (1,1)/√2, q2 = (1,-1)/√2, x = (3,1). q1·x = 4/√2, q2·x = 2/√2. Check: (4/√2)(1,1)/√2 + (2/√2)(1,-1)/√2 = (2,2) + (1,-1) = (3,1) ✓.
 
-## 2. Orthogonal matrices
+## 2. Orthogonal matrices [PYQ: Medium]
 
 **Definition.** A square matrix Q is **orthogonal** if **Q^T Q = I** (columns orthonormal). Then Q^-1 = Q^T and the rows are orthonormal too.
 
@@ -50,7 +52,7 @@
 
 **Orthogonal vs. orthonormal wording.** GATE calls a matrix "orthogonal" only if its columns are orthonormal. A matrix with orthogonal but not unit columns satisfies Q^T Q = diagonal, not I.
 
-## 3. Projection onto a vector
+## 3. Projection onto a vector [PYQ: Low]
 
 **Intuition.** The shadow of b on the line through a. The error b - p must be perpendicular to a.
 
@@ -58,7 +60,7 @@
 
 **Worked example 4.** a = (1,2,2), b = (3,0,0). a^T a = 9, a^T b = 3, x̂ = 1/3, p = (1/3, 2/3, 2/3). Error e = b - p = (8/3, -2/3, -2/3); a·e = 8/3 - 4/3 - 4/3 = 0 ✓. P = (1/9)[[1,2,2],[2,4,4],[2,4,4]]; trace = 9/9 = 1 = rank. Distance from b to the line = ‖e‖ = √(64 + 4 + 4)/3 = √72/3 = 2√2.
 
-## 4. Projection onto a subspace; projection matrices
+## 4. Projection onto a subspace; projection matrices [PYQ: Medium]
 
 Let A be m × n with **independent columns**; the subspace is C(A). We seek p = A x̂ with b - A x̂ ⟂ every column: **A^T (b - A x̂) = 0**, i.e. the **normal equations**
 
@@ -83,7 +85,7 @@ A^T A is invertible exactly when A has independent columns (rank(A^T A) = rank A
 
 **Worked example 5.** A = [[1,1],[1,2],[1,3]] (columns 1 and t). A^T A = [[3,6],[6,14]], det = 42 - 36 = 6, (A^T A)^-1 = (1/6)[[14,-6],[-6,3]]. Then P = A (A^T A)^-1 A^T = (1/6)[[5,2,-1],[2,2,2],[-1,2,5]]. Checks: trace = (5 + 2 + 5)/6 = 2 = rank ✓; symmetric ✓; P·(1,1,1)^T = (1/6)(6,6,6) = (1,1,1) ✓ (the column is in C(A)). P² = P can be verified entrywise, e.g. row 1 · column 1 of the numerators: 25 + 4 + 1 = 30 = 6 · 5 ✓.
 
-## 5. Least squares
+## 5. Least squares [PYQ: Low]
 
 When Ax = b has no exact solution (m equations, n < m unknowns, b ∉ C(A)), choose x̂ minimising ‖b - Ax‖². The minimiser is the projection, so **x̂ solves A^T A x̂ = A^T b**; the minimum residual is ‖b - P b‖ and **the residual is orthogonal to every column of A**.
 
@@ -96,7 +98,7 @@ When Ax = b has no exact solution (m equations, n < m unknowns, b ∉ C(A)), cho
 
 **Link to ML.** [Linear regression](../16-machine-learning/linear-and-logistic-regression.md): design matrix X, weights w, the OLS solution is **w = (X^T X)^-1 X^T y**, exactly the normal equations. When X has dependent columns (collinear features) X^T X is singular and ridge regression uses (X^T X + λI)^-1, which is always invertible for λ > 0. Setting the gradient of ‖Xw - y‖² to zero gives 2 X^T (Xw - y) = 0, the same equations.
 
-## 6. Gram–Schmidt and QR
+## 6. Gram–Schmidt and QR [PYQ: Low]
 
 Turn independent a1,...,ak into orthonormal q1,...,qk spanning the same subspaces.
 - q1 = a1/‖a1‖.
@@ -111,7 +113,7 @@ Result: **A = Q R** with Q having orthonormal columns and R upper triangular wit
 3. q2 = (1,-1,2)/√6. Check q1·q2 = (1 - 1)/√12 = 0 ✓.
 4. R = [[√2, 1/√2],[0, √(3/2)]]; (QR check: Q R (1,2 entry) = (1/√2)·q1 + √(3/2) q2 = (1/2,1/2,0) + (1/2,-1/2,1) = (1,0,1) = a2 ✓).
 
-## 7. Singular value decomposition (SVD)
+## 7. Singular value decomposition (SVD) [PYQ: Low]
 
 **Intuition.** Any linear map A: R^n → R^m is a **rotation (V^T), then a stretch along the axes (Σ), then another rotation (U)**. Eigen-decomposition needs a square, diagonalisable matrix; SVD exists for **every** matrix.
 

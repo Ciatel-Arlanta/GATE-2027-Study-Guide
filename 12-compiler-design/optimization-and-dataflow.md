@@ -2,9 +2,11 @@
 
 > **Paper:** CS · **Priority:** P0 · **Plan topics:** Local optimization; Data-flow analysis; Constant propagation; Liveness analysis; Common subexpression elimination
 > **Prerequisites:** [Intermediate code generation](intermediate-code-generation.md) · [Graph theory](../01-discrete-mathematics/graph-theory.md) · **Leads to:** [Compiler design cheat sheet](CHEATSHEET.md)
+> **PYQ weightage:** Medium · 7 Qs since 2015 (5 since 2021) · DA: 0 · Trend: rising · Most asked: Code Optimization, Live Variable Analysis, Register Allocation
 
 ## Quick glance
 
+- **Exam focus:** Data-flow framework directions and meet operators (Liveness backward-union, Available expressions forward-intersection), local optimizations (DAG-based CSE, strength reduction), and register allocation via interference graph coloring; tested via MCQ/MSQ and NAT.
 - **Optimisation** transforms code to run faster or smaller **without changing its meaning**. It is *conservative*: if the compiler cannot prove a change is safe, it does not make it. Exact analysis of programs is undecidable (Rice), so analyses over-approximate.
 - **Local optimisation** works inside a basic block: constant folding, constant/copy propagation, common-subexpression elimination (CSE), dead-code elimination, algebraic simplification, strength reduction, peephole patterns. **Global** optimisation works across blocks using **data-flow analysis**.
 - A **data-flow problem** assigns each basic block B sets IN[B] and OUT[B], with **gen**/**kill** sets: OUT[B] = gen[B] ∪ (IN[B] − kill[B]) (forward), IN[B] = use[B] ∪ (OUT[B] − def[B]) (backward). The **meet** operator joins information at merge points: ∪ (may-analysis) or ∩ (must-analysis).
@@ -14,7 +16,7 @@
 - Initialisation matters: forward ∪ problems start with OUT = ∅; forward ∩ problems (available expressions) start with OUT = the universal set (except the entry node, where IN = ∅).
 - #1 trap: mixing up direction and meet. Live variables are **backward with union**; available expressions are **forward with intersection**.
 
-## 1. Local optimisations
+## 1. Local optimisations [PYQ: Medium]
 
 All examples are inside one basic block. Each transformation must preserve the value of every variable used later.
 
@@ -62,7 +64,7 @@ Saved one subtraction (4 operations → 3 operations plus a copy). Note that `c 
 
 **Dead-code via DAG:** if `a` is not live on exit, the node n₁ is still needed (it feeds n₂), but the label `a` can be dropped as an assignment target: only labels live on exit are written.
 
-## 2. Loop optimisation
+## 2. Loop optimisation [PYQ: Medium]
 
 A **natural loop** of a back edge n → d (d dominates n) is d plus all nodes that can reach n without passing through d. d is the **header**.
 
@@ -90,7 +92,7 @@ L: t1 = x * y                t1 = x * y        # hoisted: invariant
 
 Per iteration: two multiplications become zero (x*y computed once, i*4 replaced by an addition). A statement is loop-invariant if each operand is a constant, or defined outside the loop, or defined by an already-invariant statement. Hoisting is safe only if the statement's block dominates all loop exits (or the statement has no side effect/trap) and the variable is not otherwise defined in the loop.
 
-## 3. The data-flow framework
+## 3. The data-flow framework [PYQ: Medium]
 
 For each basic block B:
 
@@ -197,7 +199,7 @@ IN[B1] = ∅. Initialise OUT of all other blocks to U = {a+b, a*b, c+d}. Iterate
 
 **CSE:** in B4, `e = a + b` recomputes `a + b`, which is available at the entry of B4 (computed in B2, not killed on the path B2→B4): replace by `e = c`, valid as long as c still holds a+b (c is not redefined between B2's statement and B4: true). (Here e is dead anyway.) On the other path B3 kills a+b, so a+b is **not** available at B5, which is why the intersection at the join gives ∅.
 
-## 4. Constant propagation
+## 4. Constant propagation [PYQ: Low]
 
 A forward analysis over a **lattice**: each variable maps to one of
 - **⊤** (undefined / no information yet),
@@ -220,7 +222,7 @@ At the entry of B4: x = 2 on both paths → 2. y: B2 gives 10, B3 gives 3 → NA
 
 **Not distributive.** Constant propagation is *monotone* but not *distributive*, so the iterative solution (MFP) can be less precise than the ideal meet-over-all-paths (MOP). Example: path 1 sets x = 1, y = 2; path 2 sets x = 2, y = 1; at the join `z = x + y`: MFP merges first, so x = NAC and y = NAC, hence z = NAC. MOP evaluates each path separately: z = 3 on both, so z = 3. Reaching definitions, live variables and available expressions *are* distributive, so MFP = MOP for them.
 
-## 5. Liveness and register allocation
+## 5. Liveness and register allocation [PYQ: Medium]
 
 **Definition.** A variable is **live** at a point if its current value may be read later before being overwritten. Two variables **interfere** if they are live at the same time (more precisely: at a definition of v, v interferes with everything live immediately after that point, other than the source of a plain copy `v = u`).
 
@@ -246,7 +248,7 @@ Largest simultaneously live set: {a, b, c} (after instruction 3) or {b, c, d} (a
 
 **Beyond cliques.** χ can exceed the largest clique: a 5-cycle interference graph (odd cycle) has largest clique 2 but needs 3 colours.
 
-## 6. Putting the analyses to work
+## 6. Putting the analyses to work [PYQ: Low]
 
 | Goal | Analysis | Transformation |
 | --- | --- | --- |

@@ -2,11 +2,13 @@
 
 > **Paper:** CS+DA · **Priority:** P0 · **Plan topics:** Data-structure operations and complexity
 > **Prerequisites:** [Arrays, stacks, queues](arrays-stacks-queues.md), [Linked lists](linked-lists.md), [Trees and BST](trees-and-bst.md), [Heaps](heaps.md), [Graphs](graphs.md) · **Leads to:** [Asymptotic analysis](../08-algorithms/asymptotic-analysis.md), [Hashing](../08-algorithms/hashing.md), [Searching and sorting](../08-algorithms/searching-and-sorting.md)
+> **PYQ weightage:** Medium · 10 Qs since 2015 (4 since 2021) · DA: 1 · Trend: steady · Most asked: Comparative operation complexities (arrays vs lists vs trees vs heaps), amortised analysis (dynamic arrays, multipop), bulk construction time bounds
 
 This page is the one-stop table of "what does operation X cost on structure Y". Every entry is justified in the chapter named in the last column. `n` = number of stored elements, `m` = size of a second structure, `h` = tree height, `α = n/M` = load factor of a hash table with `M` slots, `deg` = vertex degree.
 
 ## Quick glance
 
+- **Exam focus:** Selecting optimal data structures given operation frequencies, worst-case vs average-case complexity comparisons across structures, and amortised bounds (dynamic array doubling, two-stack queues); tested primarily as MCQ and MSQ.
 - **Array:** O(1) access; O(n) search (O(log n) if sorted); O(n) insert/delete in the middle.
 - **Linked list:** O(1) at the head; O(n) to search or reach the i-th; delete a given node O(1) only if doubly linked (or via the copy trick).
 - **Stack/queue/deque:** push, pop, enqueue, dequeue = O(1); search O(n).
@@ -16,7 +18,7 @@ This page is the one-stop table of "what does operation X cost on structure Y". 
 - **Graph:** matrix O(n²) space, O(1) edge test; list O(n + e) space, O(deg) edge test; BFS/DFS O(n²) vs O(n + e).
 - **Rule:** to pick a structure, count the operation mix: frequent min-extraction → heap; frequent lookups → hash table; ordered traversal / range queries → balanced BST; O(1) LIFO/FIFO → stack/queue.
 
-## 1. Master table
+## 1. Master table [PYQ: High]
 
 Costs are **worst case unless marked (avg)**. "Insert" means insert at a position you must still locate unless stated.
 
@@ -57,7 +59,7 @@ Costs are **worst case unless marked (avg)**. "Insert" means insert at a positio
 | Heap | n·w | no pointers (complete tree in an array) |
 | Hash table | M slots + n entries | `M ≈ n/α` |
 
-## 2. Reading the table: the reasoning behind each row
+## 2. Reading the table: the reasoning behind each row [PYQ: Medium]
 
 - **Arrays** give O(1) access because the address is computed (`base + i·w`); the price is shifting for insertion/deletion. Binary search needs sortedness **and** random access.
 - **Linked lists** trade access for cheap relinking: no shifting, but no jumping. Binary search on a list is **not** O(log n) (reaching the middle costs O(n)).
@@ -66,7 +68,7 @@ Costs are **worst case unless marked (avg)**. "Insert" means insert at a positio
 - **Heap** orders only parent versus child, which is exactly enough for O(1) min and O(log n) updates; it cannot search quickly because siblings and cousins are unordered.
 - **Hash** trades order for speed: with a good function, expected chain length is α; the worst case is all keys in one slot ([hashing](../08-algorithms/hashing.md)).
 
-## 3. Amortised analysis and bulk construction
+## 3. Amortised analysis and bulk construction [PYQ: Medium]
 
 **Dynamic array (append with doubling).** When the array is full, allocate double the capacity and copy.
 
@@ -103,7 +105,7 @@ If extractions are replaced by searches, a hash table gives O(n) expected; for r
 
 **Worked example 4 (hashing load).** `n = 1000` keys, `M = 400` chained slots: `α = 2.5`; average chain length 2.5; expected comparisons ≈ `1 + α` ≈ 3.5 for an unsuccessful search, `1 + α/2` ≈ 2.25 for a successful one. For open addressing with `α = 0.5`: ≈ `1/(1 - α) = 2` probes (unsuccessful), `(1/α) ln(1/(1-α)) ≈ 1.39` probes (successful). Open addressing requires `α < 1`.
 
-## 4. Other quick results
+## 4. Other quick results [PYQ: Low]
 
 | Topic | Result |
 |---|---|

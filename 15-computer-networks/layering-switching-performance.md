@@ -2,9 +2,11 @@
 
 > **Paper:** CS · **Priority:** P1 · **Plan topics:** Principles of layering; Circuit switching; Packet switching; Virtual circuit switching; Network performance metrics
 > **Prerequisites:** [Computer Networks README](README.md) · **Leads to:** [Data link layer](data-link-layer.md), [Transport layer and TCP](transport-layer-tcp.md)
+> **PYQ weightage:** Medium · 6 Qs since 2015 (4 since 2021) · DA: 0 · Trend: rising · Most asked: Packet vs circuit switching delay, Transmission vs propagation delay, Bandwidth-Delay Product
 
 ## Quick glance
 
+- **Exam focus:** GATE tests numerical calculations of packet-switching store-and-forward delay with pipelining, transmission vs propagation delay tradeoffs, and Bandwidth-Delay Product (BDP) link utilisation, usually as NAT questions.
 - **Layering** splits a network into stacked services; each layer talks to its peer using a **protocol** and to the layer above/below through an **interface**. TCP/IP has 4 layers (5 in the teaching model), OSI has 7.
 - **Encapsulation:** each layer adds its own header (the link layer also a trailer). PDU names: application = message, transport = segment (TCP) / datagram (UDP), network = packet/datagram, link = frame, physical = bits.
 - **Devices:** hub/repeater = L1, bridge/switch = L2, router = L3, gateway = L7 (any layer above).
@@ -16,7 +18,7 @@
 
 ---
 
-## 1. Principles of layering
+## 1. Principles of layering [PYQ: Low] [PYQ: Low]
 
 **Intuition.** Sending a letter: you write it, the post office sorts it, trucks move bags, and nobody at the truck level reads the letter. Each stage uses the services of the stage below and hides its own details from the stage above. A network does the same: if each layer only depends on the service of the layer below, any layer can be swapped (Wi-Fi for Ethernet, IPv4 for IPv6) without touching the rest.
 
@@ -78,7 +80,7 @@ Header overhead $= 58$ B out of 158 B, so useful fraction $= 100/158 = 63.3\%$. 
 
 ---
 
-## 2. Switching: how data crosses a network of links
+## 2. Switching: how data crosses a network of links [PYQ: Medium] [PYQ: Medium]
 
 A source and destination are rarely directly connected. **Switching** decides how a path through intermediate nodes is used.
 
@@ -195,7 +197,7 @@ Packet switching is slower here because of header overhead; its advantage is sha
 
 ---
 
-## 3. Network performance metrics
+## 3. Network performance metrics [PYQ: Medium] [PYQ: Medium]
 
 ### 3.1 Bandwidth, throughput, goodput
 

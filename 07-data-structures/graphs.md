@@ -2,9 +2,11 @@
 
 > **Paper:** CS+DA · **Priority:** P0 · **Plan topics:** Graphs; Data-structure operations and complexity
 > **Prerequisites:** [Linked lists](linked-lists.md), [Arrays](arrays-stacks-queues.md), [Trees](trees-and-bst.md) · **Leads to:** [Graph traversals](../08-algorithms/graph-traversals.md), [Shortest paths](../08-algorithms/shortest-paths.md), [Minimum spanning trees](../08-algorithms/minimum-spanning-trees.md), [Graph theory](../01-discrete-mathematics/graph-theory.md)
+> **PYQ weightage:** Medium · 9 Qs since 2015 (4 since 2021) · DA: 1 · Trend: steady · Most asked: Adjacency matrix vs list complexity trade-offs, powers of adjacency matrix for walks, Handshaking lemma / degree counting
 
 ## Quick glance
 
+- **Exam focus:** Comparing space and operation complexity of adjacency matrix vs adjacency list (especially on BFS/DFS and neighbour queries), Handshaking lemma calculations, and powers of adjacency matrix ($A^k$) for walk counting; tested mostly as MCQ and NAT.
 - A **graph** `G = (V, E)`: vertices and edges. **Undirected**: edge `{u, v}`; **directed**: arc `(u, v)` from `u` to `v`. `n = |V|`, `e = |E|`.
 - **Handshake lemma:** `Σ deg(v) = 2e` (undirected), so the number of odd-degree vertices is even. Directed: `Σ indeg = Σ outdeg = e`.
 - **Maximum edges** (simple graph): undirected `n(n-1)/2`; directed `n(n-1)`. A **tree** has `n - 1` edges and is connected and acyclic.
@@ -14,7 +16,7 @@
 - Entry `(A^k)[i][j]` = number of **walks of length k** from `i` to `j`; for an undirected simple graph, `trace(A³)/6` = number of triangles.
 - **Incidence matrix:** `n × e`; an undirected graph's column has two 1's. **Edge list:** `e` pairs (+ weights); good for sorting edges (Kruskal).
 
-## 1. Terminology
+## 1. Terminology [PYQ: Medium]
 
 A graph models pairwise relationships: cities and roads, web pages and links, tasks and dependencies.
 
@@ -40,7 +42,7 @@ A graph models pairwise relationships: cities and roads, web pages and links, ta
 
 **Handshake lemma.** Every edge adds 1 to each of two degrees, so `Σ deg(v) = 2e`. Worked check: a graph on 5 vertices with degrees `3, 3, 2, 2, 2` has `e = 12/2 = 6`; degrees `3, 3, 3, 2, 2` sum to 13: **impossible** (odd).
 
-## 2. Representations
+## 2. Representations [PYQ: Medium]
 
 Running example, undirected, vertices `1..4`, edges `{1,2}, {1,3}, {2,3}, {2,4}, {3,4}` (K₄ without the edge `{1,4}`):
 
@@ -123,7 +125,7 @@ For the example, with edges in the order `e1 = 12, e2 = 13, e3 = 23, e4 = 24, e5
 
 **Rule of thumb:** matrix when `e = Θ(n²)` or constant-time edge tests are crucial; list when `e = O(n)`.
 
-## 3. Algorithm cost depends on the representation
+## 3. Algorithm cost depends on the representation [PYQ: Medium]
 
 | Algorithm | Adjacency matrix | Adjacency list |
 |---|---|---|
@@ -140,7 +142,7 @@ For the example, with edges in the order `e1 = 12, e2 = 13, e3 = 23, e4 = 24, e5
 
 **Dijkstra choice.** For dense graphs (`e ≈ n²`) the O(n²) array version beats the heap version (O(n² log n)); for sparse graphs the heap version (O(n log n)) wins. Details: [shortest paths](../08-algorithms/shortest-paths.md), [graph traversals](../08-algorithms/graph-traversals.md).
 
-## 4. Walks and the adjacency matrix
+## 4. Walks and the adjacency matrix [PYQ: Low]
 
 **Theorem.** `(A^k)[i][j]` equals the number of walks of length `k` from `i` to `j`. Reason: `(A^2)[i][j] = Σ_m A[i][m]·A[m][j]` counts intermediate vertices `m` with `i → m → j`; induct on `k`.
 
@@ -160,7 +162,7 @@ For the example, with edges in the order `e1 = 12, e2 = 13, e3 = 23, e4 = 24, e5
 
 **Degree facts from the matrix.** Undirected: `A·1 = degree vector`; `trace(A²) = Σ deg(v) = 2e`.
 
-## 5. Special graphs and quick facts
+## 5. Special graphs and quick facts [PYQ: Low]
 
 - **Complete bipartite `K_{m,n}`:** `mn` edges. **Bipartite ⇔ no odd cycle ⇔ 2-colourable** ([graph theory](../01-discrete-mathematics/graph-theory.md)).
 - **Tree facts:** `n - 1` edges; unique path between any two vertices; adding any edge creates exactly one cycle; removing any edge disconnects it; at least 2 leaves for `n ≥ 2`.

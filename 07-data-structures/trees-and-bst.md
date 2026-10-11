@@ -2,11 +2,13 @@
 
 > **Paper:** CS+DA · **Priority:** P0 · **Plan topics:** Trees; Binary search trees; Data-structure operations and complexity
 > **Prerequisites:** [Linked lists](linked-lists.md), [Recursion in C](../05-c-programming/functions-recursion-structures.md), [Stacks and queues](arrays-stacks-queues.md) · **Leads to:** [Heaps](heaps.md), [Graph traversals](../08-algorithms/graph-traversals.md), [B and B+ trees](../14-databases/file-organization-and-indexing.md)
+> **PYQ weightage:** High · 43 Qs since 2015 (16 since 2021) · DA: 2 · Trend: falling · Most asked: BST insertion/deletion & search paths, tree traversals & reconstruction, binary tree node/leaf counting ($n_0 = n_2 + 1$), AVL rotations & min node recurrence
 
 **Height convention used here:** the height of a tree is the number of **edges** on the longest root-to-leaf path, so a single node has height 0 and the empty tree has height -1. Many books (and some GATE questions) count **nodes** instead (single node = height 1); then add 1 to every height below and use `2^h - 1` for the maximum node count. Always read the question's convention.
 
 ## Quick glance
 
+- **Exam focus:** Tree traversals and unique reconstruction (inorder + preorder/postorder), BST search/insertion/deletion operations, counting properties ($n_0 = n_2 + 1$, Catalan number of BST shapes), and AVL rotations; asked every year as NAT and MCQ.
 - **Tree** = connected acyclic graph with a designated root; `n` nodes ⇒ `n - 1` edges.
 - **Binary tree:** each node has ≤ 2 children (left, right). Height `h` (edges): nodes between `h + 1` and `2^(h+1) - 1`; at most `2^l` nodes on level `l`.
 - **Leaves = nodes of degree 2 + 1:** `n0 = n2 + 1`. For a full k-ary tree with `i` internal nodes: leaves = `(k-1)i + 1`.
@@ -17,7 +19,7 @@
 - **AVL:** BST with `|height(L) - height(R)| ≤ 1` at every node; fixed by four rotations (LL, RR, LR, RL); height ≤ ~1.44 log₂ n; **min nodes `N(h) = N(h-1) + N(h-2) + 1`** with `N(0) = 1, N(1) = 2`: 1, 2, 4, 7, 12, 20, 33.
 - Complete binary tree with `n` nodes has height `floor(log₂ n)`.
 
-## 1. Terminology
+## 1. Terminology and tree counting [PYQ: High]
 
 | Term | Meaning |
 |---|---|
@@ -64,7 +66,7 @@ Heaps use complete trees ([heaps](heaps.md)). A complete tree with `n` nodes has
 
 **Level / index relations in a complete tree** (1-based array representation): node `i` has children `2i`, `2i + 1`, parent `floor(i/2)`.
 
-## 2. Traversals
+## 2. Traversals and tree reconstruction [PYQ: High]
 
 Depth-first orders differ in when the node `N` is visited relative to the left (`L`) and right (`R`) subtrees.
 
@@ -128,7 +130,7 @@ Postorder gives postfix `a b + c d - * e /`; preorder gives prefix `/ * + a b - 
 
 A binary tree with `n` nodes has `2n` child pointers, of which `n - 1` are used, so **`n + 1` are NULL**. A **threaded tree** reuses NULL right pointers to point to the inorder **successor** (and NULL left pointers to the inorder predecessor in a double-threaded tree), plus a flag per pointer to tell "child" from "thread". Inorder traversal then needs no stack and no recursion: O(n) time, O(1) space.
 
-## 3. Binary search trees (BST)
+## 3. Binary search trees (BST) [PYQ: High]
 
 **Definition.** For every node `x`: all keys in the left subtree are `< x.key` and all keys in the right subtree are `> x.key` (duplicates are excluded or placed consistently on one side). **The inorder traversal of a BST visits keys in sorted order**; this is the property most GATE questions use.
 
@@ -190,7 +192,7 @@ For `n` nodes the BST height lies in `[floor(log₂ n), n - 1]`.
 
 **BST from preorder.** Preorder `50 30 20 40 70 60 80` determines the BST: the first key is the root, the next smaller keys form the left subtree, the rest the right. Postorder: `20 40 30 60 80 70 50`. Given only a **BST's** preorder (or postorder), the tree is unique (sorting the preorder gives the inorder).
 
-## 4. AVL trees
+## 4. AVL trees [PYQ: Medium]
 
 A BST can degenerate. An **AVL tree** (Adelson-Velsky and Landis) keeps it balanced: for every node, **balance factor** `BF = height(left) - height(right) ∈ {-1, 0, +1}`. Then height is O(log n) and all operations are **O(log n) worst case**.
 

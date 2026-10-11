@@ -2,9 +2,11 @@
 
 > **Paper:** CS · **Priority:** P0 · **Plan topics:** Instruction pipelining; Pipeline hazards
 > **Prerequisites:** [ALU and control unit](alu-and-control-unit.md), [Instruction sets and addressing](instruction-sets-and-addressing.md), [Sequential circuits](../09-digital-logic/sequential-circuits.md) · **Leads to:** [Compiler optimization (instruction scheduling)](../12-compiler-design/optimization-and-dataflow.md)
+> **PYQ weightage:** High · 21 Qs since 2015 (12 since 2021) · DA: 0 · Trend: rising · Most asked: Pipelining, Speedup, Data Hazards, Hazards
 
 ## Quick glance
 
+- **Exam focus:** Pipeline clock cycle time $\tau$, speedup and throughput formulas with stage latch delays, stall cycle calculations for data hazards (RAW true dependence with and without operand forwarding), and branch penalties / branch target buffers. Common formats: NAT for execution time, speedup, and clock period; MCQ/MSQ for hazard classification and forwarding path identification.
 - **Pipelining** overlaps instruction execution like an assembly line: split into $k$ stages, start a new instruction every cycle. It raises **throughput**, not the latency of one instruction (which even grows slightly because of stage registers).
 - $n$ instructions, $k$ stages, equal stage delay: time $=(k+n-1)$ cycles; **speedup** $S=\dfrac{nk}{k+n-1}\to k$ as $n\to\infty$; **efficiency** $=S/k$; **throughput** $=n/((k+n-1)\tau)$.
 - Clock period $\tau=\max(\text{stage delay})+\text{latch/register overhead}$. Non-pipelined time per instruction $=\sum\text{stage delays}$.
@@ -14,7 +16,7 @@
 - Branch handling: stall, predict not-taken, predict taken, delayed branch, dynamic prediction (1-bit, 2-bit counters, BTB).
 - #1 trap: read the **convention** stated in the question (forwarding or not, same-cycle write/read of register file, where branch resolves) before counting stalls.
 
-## 1. The idea and the speedup formulas
+## 1. The idea and the speedup formulas [PYQ: High]
 
 Without pipelining, an instruction passes through fetch, decode, execute, memory, write-back one after another before the next starts. With pipelining, while instruction $i$ executes, $i+1$ is being decoded and $i+2$ fetched.
 
@@ -59,7 +61,7 @@ Stages: **IF** (fetch from memory, PC+4), **ID** (decode, read registers), **EX*
 | Store | IF ID EX MEM (WB idle) |
 | Branch | IF ID EX (MEM) |
 
-## 2. Structural hazards
+## 2. Structural hazards [PYQ: Low]
 
 Two instructions need the **same hardware resource** in the same cycle.
 
@@ -67,7 +69,7 @@ Two instructions need the **same hardware resource** in the same cycle.
 
 **Fixes:** separate instruction and data caches (Harvard-style L1), duplicate/pipeline the functional unit, register file with two read ports and one write port (split-cycle trick), stalls otherwise.
 
-## 3. Data hazards
+## 3. Data hazards [PYQ: High]
 
 Instruction $J$ needs data that instruction $I$ (earlier) has not yet produced/stored.
 
@@ -151,7 +153,7 @@ For distance 2 subtract one stall (no forwarding), distance $\ge3$ none. **Load-
 ### Software (compiler) fixes
 Reorder independent instructions to fill delay slots; insert NOPs where hardware does not interlock (MIPS I). See [Optimization and dataflow](../12-compiler-design/optimization-and-dataflow.md).
 
-## 4. Control hazards
+## 4. Control hazards [PYQ: Medium]
 
 A branch changes the PC; instructions fetched after it may be wrong. The branch outcome and target are known late: in **ID** (with early compare hardware) or in **EX/MEM** (basic pipeline).
 
@@ -202,7 +204,7 @@ Move `ADD` into the delay slot: `BEQ R4,R5,L ; ADD R1,R2,R3`. The ADD executes w
 
 **Worked example 9.** A loop branch executes TTTTTTTTTN (9 taken, 1 not taken) repeatedly. **1-bit:** mispredicts at N and then at the first T of the next round: 2 per 10 $=80\%$ accuracy. **2-bit** (steady state, entering round in state 11): N moves the state to 10 (still predict taken), the next T goes back to 11: only the N is mispredicted: 1 per 10 $=90\%$ accuracy.
 
-## 5. Performance summary
+## 5. Performance summary [PYQ: Medium]
 
 $$\text{Speedup from pipelining}=\frac{\text{CPI}_{unpipelined}\times\tau_{np}}{\text{CPI}_{pipelined}\times\tau_{p}},\qquad \text{ideal CPI}_{p}=1.$$
 For an equal-stage $k$-stage pipeline with the same clock ratio: $\text{Speedup}=\dfrac{k}{1+\text{stalls per instruction}}$.

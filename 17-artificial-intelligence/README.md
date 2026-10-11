@@ -5,6 +5,8 @@
 **Prerequisites:** [01 Discrete Mathematics](../01-discrete-mathematics/README.md) (propositional and first-order logic) · [02 Probability & Statistics](../02-probability-statistics/README.md) (Bayes, independence) · [07 Data Structures](../07-data-structures/README.md) and [08 Algorithms](../08-algorithms/README.md) (queues, heaps, BFS/DFS, Dijkstra) · [16 Machine Learning](../16-machine-learning/README.md) (naive Bayes).
 **Leads to:** end of the syllabus; it ties together logic, graph algorithms and probability.
 
+**PYQ weightage:** DA paper only (since 2024): 7 Qs across 2024–26 papers.
+
 ## Why this subject matters / mental model
 
 Classical AI is **an agent choosing actions with incomplete information**, in three flavours that match the three chapters:
@@ -17,11 +19,17 @@ GATE questions are mostly hand traces: node-expansion order, a heuristic's admis
 
 ## Reading order
 
-| Chapter | Priority | Plan topics covered |
-| --- | --- | --- |
-| [search.md](search.md) | P0 | Uninformed search; Informed search; Adversarial search |
-| [logic-and-inference.md](logic-and-inference.md) | P1 | Propositional logic; Predicate logic |
-| [probabilistic-reasoning.md](probabilistic-reasoning.md) | P0 | Conditional independence; Representation of conditional independence; Exact inference via variable elimination; Approximate inference via sampling |
+| Chapter | Priority | Plan topics covered | PYQ weightage |
+| --- | --- | --- | --- |
+| [search.md](search.md) | P0 | Uninformed search; Informed search; Adversarial search | High · 4 |
+| [logic-and-inference.md](logic-and-inference.md) | P1 | Propositional logic; Predicate logic | Medium · 2 |
+| [probabilistic-reasoning.md](probabilistic-reasoning.md) | P0 | Conditional independence; Representation of conditional independence; Exact inference via variable elimination; Approximate inference via sampling | Medium · 3 |
+
+## Study priority
+
+- [search.md](search.md) (High · 4 DA Qs) — master A\* traces with heuristic admissibility/consistency checks and minimax with alpha-beta pruning counts first.
+- [probabilistic-reasoning.md](probabilistic-reasoning.md) (Medium · 3 DA Qs) — master d-separation, Bayesian-network factorization with CPTs and exact inference.
+- [logic-and-inference.md](logic-and-inference.md) (Medium · 2 DA Qs) — master propositional satisfiability and equivalences plus first-order translation and inference.
 
 ## Dependencies inside the section
 

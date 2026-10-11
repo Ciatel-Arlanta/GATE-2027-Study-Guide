@@ -1,10 +1,12 @@
 # First-Order Logic
 
 > **Paper:** CS · **Priority:** P0 · **Plan topics:** First-order logic
-> **Prerequisites:** [Propositional logic](propositional-logic.md) · **Leads to:** [Sets, relations and functions](sets-relations-functions.md) · [Logic and inference for AI](../17-artificial-intelligence/logic-and-inference.md)
+> **Prerequisites:** [Propositional logic](propositional-logic.md) · [Sets, relations and functions](sets-relations-functions.md) · [Logic and inference for AI](../17-artificial-intelligence/logic-and-inference.md)
+> **PYQ weightage:** Medium · 12 Qs since 2015 (4 since 2021) · DA: 0 · Trend: falling · Most asked: English-to-FOL translation, Quantifier distribution & order, FOL validity & interpretations
 
 ## Quick glance
 
+- **Exam focus:** Translating natural language to predicate logic (pairing $\forall$ with $\to$ and $\exists$ with $\land$), quantifier order/commutativity rules, and invalidity testing via small counter-models; usually asked as 1-mark or 2-mark MCQ/MSQ.
 - FOL = propositional logic + **predicates** P(x, y), **quantifiers** ∀ (for all) and ∃ (there exists), over a stated **domain**.
 - **Negation flips the quantifier and negates the body:** ¬∀x P ≡ ∃x ¬P; ¬∃x P ≡ ∀x ¬P.
 - **∀ distributes over ∧, ∃ distributes over ∨.** ∀ does **not** distribute over ∨; ∃ does **not** distribute over ∧ (only one direction holds).
@@ -14,7 +16,7 @@
 - ∀x P(x) on an **empty domain** is true; ∃x P(x) on an empty domain is false.
 - FOL validity is **undecidable** (but semi-decidable); propositional validity is decidable.
 
-## 1. Predicates, domains and quantifiers
+## 1. Predicates, domains and quantifiers [PYQ: Low]
 
 **Intuition.** "x is even" is not true or false until x is given a value. A **predicate** P(x) is a function from the domain to {true, false}. Quantifiers convert a predicate into a proposition:
 
@@ -36,7 +38,7 @@ In ∀x (P(x, y) → ∃z Q(z, x)):
 - The same letter can be bound in one part and free in another: P(x) ∧ ∀x Q(x): the first x is free, the second bound.
 - Renaming a bound variable does not change meaning: ∀x P(x) ≡ ∀y P(y). **Free variables cannot be renamed freely.**
 
-## 2. Negation of quantified statements
+## 2. Negation of quantified statements [PYQ: Medium]
 
 | Statement | Negation |
 |-----------|----------|
@@ -55,7 +57,7 @@ In ∀x (P(x, y) → ∃z Q(z, x)):
 3. ≡ ∃s ∀f (Friend(s,f) → ¬Topper(f)).
 In English: **some student has no friend who is a topper** (every friend of theirs is a non-topper).
 
-## 3. Nested quantifiers and order
+## 3. Nested quantifiers and order [PYQ: Medium]
 
 **Intuition.** ∀x ∃y P(x,y): for each x, choose a y that may **depend on x**. ∃y ∀x P(x,y): a **single** y that works for all x. The second is stronger.
 
@@ -75,7 +77,7 @@ Same predicate, different quantifier order, different truth value.
 
 Brute-force check on all binary relations over a 3-element domain: the ∃∀ ⇒ ∀∃ implication holds in every one of the 512 interpretations, and the converse fails in some.
 
-## 4. Distribution of quantifiers over ∧ and ∨
+## 4. Distribution of quantifiers over ∧ and ∨ [PYQ: Medium]
 
 | Law | Holds? |
 |-----|--------|
@@ -98,7 +100,7 @@ All rows were verified by brute force over a 3-element domain with every pair of
 
 **Quantifiers and a variable not in the body.** If x does not occur free in B: ∀x (A(x) ∨ B) ≡ (∀x A(x)) ∨ B and ∃x (A(x) ∧ B) ≡ (∃x A(x)) ∧ B. This lets you pull a quantifier out of one disjunct/conjunct.
 
-## 5. Translating English to FOL (GATE favourite)
+## 5. Translating English to FOL (GATE favourite) [PYQ: High]
 
 **The two patterns.**
 
@@ -129,7 +131,7 @@ All rows were verified by brute force over a 3-element domain with every pair of
 1. ∀x (H(x) → M(x)) (premise); H(s) (premise).
 2. Instantiate x = s: H(s) → M(s). Modus ponens gives M(s). Valid.
 
-## 6. Inference rules for quantifiers
+## 6. Inference rules for quantifiers [PYQ: Low]
 
 | Rule | Form | Note |
 |------|------|------|
@@ -140,7 +142,7 @@ All rows were verified by brute force over a 3-element domain with every pair of
 
 **Common fallacy.** From ∃x P(x) and ∃x Q(x), you cannot instantiate both with the same c. From P(c) for one specific c you cannot generalise to ∀x.
 
-## 7. Satisfiability and validity of FOL sentences
+## 7. Satisfiability and validity of FOL sentences [PYQ: Medium]
 
 - **Valid:** true under every interpretation (e.g. ∀x P(x) → ∃x P(x), valid only if the domain is non-empty, which FOL assumes).
 - **Satisfiable:** true under some interpretation, e.g. ∀x ∃y (x < y) is satisfiable (integers) but false for a finite ordered domain: **it has no finite model**.
@@ -202,7 +204,7 @@ All rows were verified by brute force over a 3-element domain with every pair of
 
 <details><summary>Answer</summary>
 
-**Answer:** (b)
+**Answer:** (b)  
 **Solution:** ¬∀x (P → Q) ≡ ∃x ¬(P → Q) ≡ ∃x (P ∧ ¬Q).
 
 </details>
@@ -211,7 +213,7 @@ All rows were verified by brute force over a 3-element domain with every pair of
 
 <details><summary>Answer</summary>
 
-**Answer:** (a)
+**Answer:** (a)  
 **Solution:** "Some" uses ∧. (b) is true whenever a non-bird exists. (c) says no bird flies. (d) says not everything is a flying bird, much weaker.
 
 </details>
@@ -220,7 +222,7 @@ All rows were verified by brute force over a 3-element domain with every pair of
 
 <details><summary>Answer</summary>
 
-**Answer:** (a), (c)
+**Answer:** (a), (c)  
 **Solution:** (a) and (c) are the valid directions. (b): P = even, Q = odd over integers. (d): same P, Q: both exist but none is both.
 
 </details>
@@ -229,7 +231,7 @@ All rows were verified by brute force over a 3-element domain with every pair of
 
 <details><summary>Answer</summary>
 
-**Answer:** (a)
+**Answer:** (a)  
 **Solution:** (a) y = 0 works for every x. (b) fails at x = 0 (and for x = 2 no integer y). (c) no greatest integer. (d) is false as a claim because ∀x ∃y (y < x) is true (take y = x − 1), so the option "is false" is itself wrong.
 
 </details>
@@ -238,7 +240,7 @@ All rows were verified by brute force over a 3-element domain with every pair of
 
 <details><summary>Answer</summary>
 
-**Answer:** (b)
+**Answer:** (b)  
 **Solution:** (a) is "at least two"; (c) is satisfied by x = y, so only "at least one". (d) is false whenever some element satisfies P (take x = y). (b) adds the bound on all other elements.
 
 </details>
@@ -247,7 +249,7 @@ All rows were verified by brute force over a 3-element domain with every pair of
 
 <details><summary>Answer</summary>
 
-**Answer:** 9
+**Answer:** 9  
 **Solution:** A relation on {a,b} has 4 possible pairs, 16 relations. Each element needs at least one outgoing pair: each row (2 pairs) must be non-empty: 3 choices per row (not 00), so 3 × 3 = 9.
 
 </details>
@@ -256,7 +258,7 @@ All rows were verified by brute force over a 3-element domain with every pair of
 
 <details><summary>Answer</summary>
 
-**Answer:** (d)
+**Answer:** (d)  
 **Solution:** (a) valid, (b) same-type quantifiers commute, (c) take y = x. (d) fails on R = {(a,b),(b,a)} over {a,b}.
 
 </details>
@@ -265,7 +267,7 @@ All rows were verified by brute force over a 3-element domain with every pair of
 
 <details><summary>Answer</summary>
 
-**Answer:** (b)
+**Answer:** (b)  
 **Solution:** "No student failed" = ¬∃x (S(x) ∧ F(x)); its negation is ∃x (S(x) ∧ F(x)), some student failed. (a) is far too strong.
 
 </details>

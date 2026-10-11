@@ -2,9 +2,11 @@
 
 > **Paper:** DA · **Priority:** P0 · **Plan topics:** Regression vs classification problems; Bias-variance trade-off; Leave-one-out cross-validation; k-fold cross-validation
 > **Prerequisites:** [Probability basics](../02-probability-statistics/probability-basics.md) · [Random variables and moments](../02-probability-statistics/random-variables-and-moments.md) · **Leads to:** [Linear and logistic regression](linear-and-logistic-regression.md) · [Classification methods](classification-methods.md) · [Clustering](clustering.md)
+> **PYQ weightage:** Medium · 2 Qs (DA 2024–2026 only) · Trend: steady · Most asked: Supervised vs unsupervised taxonomy, Linear separability, Evaluation metrics
 
 ## Quick glance
 
+- **Exam focus:** In GATE DA, foundations are tested via matching classifications (supervised, unsupervised, reinforcement), linear separability geometric criteria, and evaluation metrics (confusion matrix, precision/recall, $F_1$-score), as MCQs and MSQs.
 - **Supervised** learning: data are pairs $(x_i, y_i)$; learn $f$ with $f(x) \approx y$. **Unsupervised**: only $x_i$; find structure (clusters, low-dimensional directions).
 - **Regression**: $y$ is a real number. **Classification**: $y$ is a discrete label.
 - Split data into **train** (fit parameters), **validation** (choose hyper-parameters), **test** (touch once, report final error).
@@ -14,7 +16,7 @@
 - Training error always falls with complexity; **test error is U-shaped**.
 - #1 trap: **tuning on the test set** (or scaling/selecting features using all data before splitting) leaks information.
 
-## 1. What problem are we solving?
+## 1. What problem are we solving? [PYQ: Medium]
 
 **Intuition.** A learner is handed examples and must generalise to new cases. Whether it is given the right answers decides the family of methods.
 
@@ -28,7 +30,7 @@
 
 A **model** is a function $f_\theta$ with parameters $\theta$ (weights). **Hyper-parameters** (k in k-NN, $\lambda$ in ridge, tree depth, C in SVM, number of clusters) are set *outside* the fitting procedure, typically by validation.
 
-## 2. Loss functions and empirical risk
+## 2. Loss functions and empirical risk [PYQ: Low]
 
 A **loss** $\ell(y, \hat{y})$ scores one prediction. The **empirical risk** is the average loss on the training set, and learning (empirical risk minimisation) picks $\theta$ minimising it:
 
@@ -50,7 +52,7 @@ $$\hat{R}(\theta) = \frac{1}{n}\sum_{i=1}^{n} \ell\big(y_i, f_\theta(x_i)\big)$$
 
 **MLE view.** Many losses are negative log-likelihoods. If $y = f(x) + \varepsilon$ with $\varepsilon \sim N(0,\sigma^2)$, maximising likelihood = minimising squared error. If $y \sim \text{Bernoulli}(p(x))$, maximising likelihood = minimising cross-entropy. Naive Bayes and LDA estimate their parameters by MLE too (class frequencies, class means). See [probability basics](../02-probability-statistics/probability-basics.md).
 
-## 3. Overfitting, underfitting, and the three data splits
+## 3. Overfitting, underfitting, and the three data splits [PYQ: Low]
 
 - **Underfitting**: model too simple; high error on training *and* test data.
 - **Overfitting**: model memorises noise; very low training error, high test error.
@@ -74,7 +76,7 @@ error
 
 Typical fixes for overfitting: more data, simpler model, regularisation (ridge/lasso, early stopping, dropout), pruning (trees), larger k (k-NN), larger margin (smaller C in SVM). Fixes for underfitting: richer features, more flexible model, less regularisation.
 
-## 4. Bias-variance decomposition
+## 4. Bias-variance decomposition [PYQ: Low]
 
 **Intuition.** Imagine drawing many training sets of the same size and training the same model on each. At a fixed input $x_0$ the predictions $\hat f(x_0)$ scatter. **Bias** = how far the *average* prediction is from the truth (systematic error from wrong assumptions). **Variance** = how much predictions *scatter* around their own average (sensitivity to the particular training set).
 
@@ -102,7 +104,7 @@ How the knobs move each term:
 
 **Irreducible noise $\sigma^2$ is unaffected by any model choice.** The total expected error therefore is a U-shape in complexity, with the minimum where the two reducible terms balance.
 
-## 5. Cross-validation
+## 5. Cross-validation [PYQ: Low]
 
 **Why.** One validation split wastes data and is noisy. Cross-validation reuses every point for both training and validation.
 
@@ -136,7 +138,7 @@ How the knobs move each term:
 - leave out 9: mean of $\{2,4\} = 3$, error $36$
 - LOOCV $= (20.25 + 2.25 + 36)/3 = 58.5/3 = \mathbf{19.5}$ (3 fits).
 
-## 6. Evaluation metrics for classification
+## 6. Evaluation metrics for classification [PYQ: Medium]
 
 Confusion matrix (positive = class of interest):
 

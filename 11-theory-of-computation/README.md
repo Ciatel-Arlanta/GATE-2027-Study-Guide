@@ -4,6 +4,8 @@
 
 **Prerequisites:** [Sets, relations, functions](../01-discrete-mathematics/sets-relations-functions.md) (languages are sets, Myhill–Nerode is an equivalence relation) · [Propositional logic](../01-discrete-mathematics/propositional-logic.md) (proof style) · [Graph theory](../01-discrete-mathematics/graph-theory.md) (automata are labelled digraphs; emptiness is reachability).
 
+**PYQ weightage:** ~4.7 Qs per CSE paper (2021–26), trend steady; DA: 0 Qs in 2024–26.
+
 ## Why this subject matters / mental model
 
 Theory of Computation asks: *what can a machine with a given kind of memory do?* The whole subject is one ladder, climbed one memory type at a time.
@@ -19,12 +21,19 @@ Every GATE question is one of: (1) **count or design** (states of a minimal DFA,
 
 ## Reading order
 
-| # | Chapter | Priority | Plan topics covered |
-| --- | --- | --- | --- |
-| 1 | [Regular languages and finite automata](regular-languages-and-finite-automata.md) | P0 | Regular expressions; Finite automata; Regular languages |
-| 2 | [Context-free languages and PDA](context-free-languages-and-pda.md) | P0 | Context-free grammars; Push-down automata; Context-free languages |
-| 3 | [Pumping lemma](pumping-lemma.md) | P0 | Pumping lemma (regular and context-free) |
-| 4 | [Turing machines and undecidability](turing-machines-and-undecidability.md) | P0 | Turing machines; Undecidability |
+| # | Chapter | Priority | Plan topics covered | PYQ weightage |
+| --- | --- | --- | --- | --- |
+| 1 | [Regular languages and finite automata](regular-languages-and-finite-automata.md) | P0 | Regular expressions; Finite automata; Regular languages | High · 42 |
+| 2 | [Context-free languages and PDA](context-free-languages-and-pda.md) | P0 | Context-free grammars; Push-down automata; Context-free languages | High · 23 |
+| 3 | [Pumping lemma](pumping-lemma.md) | P0 | Pumping lemma (regular and context-free) | Low · 1 |
+| 4 | [Turing machines and undecidability](turing-machines-and-undecidability.md) | P0 | Turing machines; Undecidability | High · 17 |
+
+## Study priority
+
+- [Regular languages and finite automata](regular-languages-and-finite-automata.md) (High · 42) — master minimal-DFA construction, regular-expression conversion and closure properties first; the largest block of marks in the section.
+- [Context-free languages and PDA](context-free-languages-and-pda.md) (High · 23) — master CFG design, PDA construction and CFL closure/decision properties.
+- [Turing machines and undecidability](turing-machines-and-undecidability.md) (High · 17) — master decidability, recursive versus recursively enumerable languages, and reductions.
+- [Pumping lemma](pumping-lemma.md) (Low · 1) — rarely asked directly: master the regular and CFL pumping arguments last, mainly for closure proofs.
 
 Finish with [CHEATSHEET.md](CHEATSHEET.md) for revision and [CHECKPOINT.md](CHECKPOINT.md) to test yourself.
 

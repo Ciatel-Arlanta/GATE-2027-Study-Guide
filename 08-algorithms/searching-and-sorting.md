@@ -2,9 +2,11 @@
 
 > **Paper:** CS+DA · **Priority:** P0 · **Plan topics:** Linear search; Binary search; Selection sort; Bubble sort; Insertion sort; Merge sort; Quicksort (plus heap, counting, radix sort, selection problems)
 > **Prerequisites:** [Asymptotic analysis](asymptotic-analysis.md) · [Arrays, stacks, queues](../07-data-structures/arrays-stacks-queues.md) · [Heaps](../07-data-structures/heaps.md) · **Leads to:** [Divide and conquer](divide-and-conquer.md) · [Hashing](hashing.md)
+> **PYQ weightage:** High · 34 Qs since 2015 (21 since 2021) · DA: 9 · Trend: rising · Most asked: Sorting, Quick Sort, Binary Search, Searching, Merge Sort
 
 ## Quick glance
 
+- **Exam focus:** Quicksort recursion trees and pivot behaviour, binary search variants and comparisons, merge sort inversions/recurrence, comparison lower bounds, and stability/in-place properties. Common formats: NAT for comparison counts, passes, or inversions; MCQ/MSQ for worst/best-case complexities and sorting properties.
 - **Linear search:** $\le n$ comparisons, works on anything. **Binary search:** needs sorted array, $\lfloor\log_2n\rfloor+1$ comparisons worst case.
 - **Selection sort:** always $\Theta(n^2)$ comparisons, at most $n-1$ swaps, not stable.
 - **Bubble sort** (with early exit): best $n-1$ comparisons on sorted input, $\Theta(n^2)$ worst; **swaps = inversions**.
@@ -15,7 +17,7 @@
 - **Lower bound:** any comparison sort needs $\Omega(n\log n)$ comparisons ($\log_2 n!$ by the decision tree). **Counting/radix** beat it by not comparing.
 - **#1 trap:** stability and in-place-ness differ across algorithms; "best case $O(n)$" holds only for bubble (with flag) and insertion sort.
 
-## 1. Linear search
+## 1. Linear search [PYQ: Low]
 
 Scan from the left until the key is found or the list ends. No ordering needed.
 
@@ -36,7 +38,7 @@ int linear(int a[], int n, int x) {
 
 Time $\Theta(n)$ worst, space $O(1)$. With a **sentinel** (put $x$ at $a[n]$) the loop drops the bound test.
 
-## 2. Binary search
+## 2. Binary search [PYQ: Medium]
 
 **Intuition:** guess the middle of a sorted list; one comparison throws away half the candidates. Like finding a word in a dictionary.
 
@@ -69,7 +71,7 @@ For a full tree with $n=2^k-1$ elements, successful search average is $\frac{(k-
 
 **Binary search on a linked list** is not $O(\log n)$: reaching the middle costs $O(n)$. On an unsorted array it is simply wrong.
 
-## 3. Elementary sorts
+## 3. Elementary sorts [PYQ: Low]
 
 An **inversion** is a pair $i<j$ with $a[i]>a[j]$. A sorted array has $0$ inversions; a reversed array of $n$ distinct items has the maximum, $\binom n2=\frac{n(n-1)}2$. The average over random permutations is $\frac{n(n-1)}4$.
 
@@ -149,7 +151,7 @@ Total shifts $=1+1+0+4+3=9$ = inversions of the input. **Number of shifts (inner
 
 If every element is at most $k$ places from its final position, insertion sort runs in $O(nk)$.
 
-## 4. Merge sort
+## 4. Merge sort [PYQ: Medium]
 
 **Idea:** split in half, sort each half recursively, **merge** two sorted halves with two pointers.
 
@@ -180,7 +182,7 @@ void msort(int a[], int l, int r) {
 
 Space $O(n)$ for the buffer plus $O(\log n)$ stack. **Stable** if the merge takes from the left list on ties. Good for linked lists (no buffer needed) and external sorting. Bottom-up merge sort avoids recursion.
 
-## 5. Quicksort
+## 5. Quicksort [PYQ: High]
 
 **Idea:** pick a pivot, **partition** so smaller elements go left and larger go right (the pivot lands in its final position), then recurse on both sides.
 
@@ -247,7 +249,7 @@ The pivot value is **not** necessarily at index $j$; the array is split into $[0
 
 **Randomised quicksort** picks a uniformly random pivot, so no input is bad: **expected** time $O(n\log n)$ for every input (the worst case still exists but has probability $\to0$). Recursion depth: $\Theta(\log n)$ expected, $\Theta(n)$ worst; recursing on the smaller side first bounds stack at $O(\log n)$. Not stable; in place.
 
-## 6. Heap sort
+## 6. Heap sort [PYQ: Low]
 
 Uses a **max-heap** in an array (children of $i$ at $2i+1,2i+2$, 0-indexed). See [Heaps](../07-data-structures/heaps.md).
 
@@ -258,7 +260,7 @@ Uses a **max-heap** in an array (children of $i$ at $2i+1,2i+2$, 0-indexed). See
 
 Total $\Theta(n\log n)$ in every case, space $O(1)$, not stable, not adaptive.
 
-## 7. Non-comparison sorts
+## 7. Non-comparison sorts [PYQ: Low]
 
 ### 7.1 Counting sort (keys are integers in $0..k$)
 
@@ -281,7 +283,7 @@ Sort by the least significant digit first, then the next, using a **stable** sor
 
 Sorting $n$ numbers in range $0..n^c-1$: choose base $n$, $d=c$ digits, $\Theta(cn)=\Theta(n)$. **Bucket sort:** uniform keys in $[0,1)$ distributed to $n$ buckets, expected $\Theta(n)$.
 
-## 8. Lower bound for comparison sorting
+## 8. Lower bound for comparison sorting [PYQ: Low]
 
 A comparison sort on $n$ distinct items is a **binary decision tree**: each internal node is a comparison, each leaf an output permutation. It needs $\ge n!$ leaves. A binary tree of height $h$ has $\le2^h$ leaves, so
 $$2^h\ge n!\ \Rightarrow\ h\ge\log_2(n!)=\Theta(n\log n).$$
@@ -290,7 +292,7 @@ $$2^h\ge n!\ \Rightarrow\ h\ge\log_2(n!)=\Theta(n\log n).$$
 
 Average-case lower bound is also $\Omega(n\log n)$.
 
-## 9. Selection problems
+## 9. Selection problems [PYQ: Low]
 
 ### 9.1 k-th smallest: quickselect
 
@@ -308,7 +310,7 @@ Knockout tournament: $n-1$ comparisons to find the max; the second largest must 
 $$n+\lceil\log_2n\rceil-2.$$
 For $n=8$: $9$.
 
-## 10. Master comparison table
+## 10. Master comparison table [PYQ: High]
 
 | Algorithm | Best | Average | Worst | Space | Stable | In place | Adaptive | Swaps/writes |
 |---|---|---|---|---|---|---|---|---|

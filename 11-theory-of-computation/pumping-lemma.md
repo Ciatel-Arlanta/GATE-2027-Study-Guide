@@ -2,9 +2,11 @@
 
 > **Paper:** CS · **Priority:** P0 · **Plan topics:** Pumping lemma
 > **Prerequisites:** [Regular languages and finite automata](regular-languages-and-finite-automata.md) · [Context-free languages and PDA](context-free-languages-and-pda.md) · **Leads to:** [Turing machines and undecidability](turing-machines-and-undecidability.md)
+> **PYQ weightage:** Low · 1 Q since 2015 (0 since 2021) · DA: 0 · Trend: falling · Most asked: Pumping Lemma
 
 ## Quick glance
 
+- **Exam focus:** Identifying non-regular and non-context-free languages via pumping lemma conditions (pumping down with i=0 vs pumping up with i=2, length constraints |xy| ≤ p and |vwx| ≤ p); tested via MCQ/MSQ conceptual questions.
 - **Regular pumping lemma.** If L is regular there is a p ≥ 1 such that every w ∈ L with |w| ≥ p splits as w = xyz with **|xy| ≤ p, |y| ≥ 1**, and **xy^i z ∈ L for all i ≥ 0**. (One pumpable chunk; p = number of DFA states works.)
 - **CFL pumping lemma.** If L is context-free there is a p ≥ 1 such that every z ∈ L with |z| ≥ p splits as z = uvwxy with **|vwx| ≤ p, |vx| ≥ 1**, and **uv^i w x^i y ∈ L for all i ≥ 0**. (Two chunks pumped together.)
 - Both lemmas are **necessary conditions only**. They can **prove a language is NOT regular/CFL, never that it is**. A language that satisfies the lemma may still be non-regular.
@@ -14,7 +16,7 @@
 - Fast alternatives: closure properties (intersect with a regular language, then use complement/homomorphism) and Myhill–Nerode.
 - #1 trap: **choosing the split yourself**. The split is chosen by the adversary, so your argument must cover every split allowed by |xy| ≤ p (regular) or |vwx| ≤ p (CFL).
 
-## 1. Why pumping works (intuition)
+## 1. Why pumping works (intuition) [PYQ: Low]
 
 A DFA with p states reading a string of length ≥ p must repeat a state within the first p symbols: it went around a loop. The loop's label is y. Going around the loop again (or skipping it) leads to the same state, so xy^i z is accepted for every i. That is the whole proof: **pigeonhole on states**.
 
@@ -27,7 +29,7 @@ A DFA with p states reading a string of length ≥ p must repeat a state within 
 
 For CFLs the analogue is a parse tree so deep that along some root-to-leaf path a variable A repeats: A ⇒* vAx and A ⇒* w. Repeating the A ⇒* vAx part pumps v and x together. Because the pumped parts v and x are on the two sides of w, **a CFL can pump two places at once but they stay "in sync"**, which is why a single stack comparison (a^n b^n) works but three-way equalities do not.
 
-## 2. Statements
+## 2. Statements [PYQ: Low]
 
 **Pumping lemma for regular languages.** If L is regular, ∃ p ≥ 1 such that ∀ w ∈ L with |w| ≥ p, ∃ x, y, z with w = xyz, (1) |y| ≥ 1, (2) |xy| ≤ p, (3) ∀ i ≥ 0: xy^i z ∈ L.
 
@@ -42,7 +44,7 @@ For CFLs the analogue is a parse tree so deep that along some root-to-leaf path 
 | Non-empty | \|y\| ≥ 1 | \|vx\| ≥ 1 (v or x may be empty, not both) |
 | Quantifier shape | ∃p ∀w ∃split ∀i | ∃p ∀s ∃split ∀i |
 
-## 3. The adversarial-game proof template
+## 3. The adversarial-game proof template [PYQ: Low]
 
 1. Assume L is regular (CFL). Let p be the pumping length given by the lemma.
 2. **Choose** a specific string w ∈ L that **depends on p** and has |w| ≥ p.
@@ -54,7 +56,7 @@ For CFLs the analogue is a parse tree so deep that along some root-to-leaf path 
 
 **Bad choice example.** For L = {a^i b^j : i > j}, the choice w = a^{2p} b^p ∈ L fails: the adversary picks y = a^k and pumping down gives a^{2p−k} b^p, which still has 2p − k ≥ p a's and may still be in L for small k, so no contradiction is reached. The choice w = a^{p+1} b^p works (pumping down leaves at most p a's). Always check that w ∈ L and that |xy| ≤ p confines y to a region where pumping must hurt.
 
-## 4. Worked proofs: non-regular
+## 4. Worked proofs: non-regular [PYQ: Low]
 
 ### 4.1 L = {a^n b^n : n ≥ 0}
 
@@ -97,7 +99,7 @@ w = a^{2^p}, y = a^k with 1 ≤ k ≤ p < 2^p. xy²z has length 2^p + k with 2^p
 
 So the lemma holds, yet L is **not regular**: L ∩ ab*c* = {a b^j c^j}, which is not regular.
 
-## 5. Worked proofs: non-context-free
+## 5. Worked proofs: non-context-free [PYQ: Low]
 
 ### 5.1 L = {a^n b^n c^n : n ≥ 0}
 
@@ -129,14 +131,14 @@ Unary alphabet: vx = a^k with 1 ≤ k ≤ p, and the pumped length is |s| + (i �
 
 s = a^p b^p c^p d^p. A window of length ≤ p touches at most two adjacent blocks; pumping changes one or two adjacent blocks. The crossing pairs are (a, c) and (b, d), neither adjacent, so a changed block always keeps its unchanged partner and equality breaks. Not CFL. (Nested pairs a^n b^m c^m d^n **are** CFL; crossing pairs are not.)
 
-## 6. What the lemma cannot do
+## 6. What the lemma cannot do [PYQ: Low]
 
 - **It cannot prove a language is regular (or CFL).** The conditions are necessary, not sufficient. §4.8 gives a non-regular language that obeys the lemma. Similar examples exist for the CFL lemma.
 - It cannot be applied by choosing p or the decomposition yourself. If you "find a good split", that proves nothing.
 - A finite language always satisfies the lemma (take p larger than the longest word; no string of length ≥ p exists). Hence finite ⇒ regular (and CFL).
 - **To show regular, build an automaton/regex or use closure properties.** To show non-regular, use the lemma, Myhill–Nerode, or closure ("if L were regular then L ∩ a*b* would be").
 
-## 7. Closure as a shortcut
+## 7. Closure as a shortcut [PYQ: Low]
 
 | Claim | Argument |
 | --- | --- |

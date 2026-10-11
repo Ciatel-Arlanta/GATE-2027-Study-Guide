@@ -2,9 +2,11 @@
 
 > **Paper:** CS · **Priority:** P0 · **Plan topics:** Combinational circuit design
 > **Prerequisites:** [Boolean algebra and minimization](boolean-algebra-and-minimization.md) · **Leads to:** [Sequential circuits](sequential-circuits.md), [ALU and control unit](../10-computer-organization/alu-and-control-unit.md)
+> **PYQ weightage:** High · 15 Qs since 2015 (8 since 2021) · DA: 0 · Trend: steady · Most asked: Multiplexer, Adder, Combinational Circuit, Decoder
 
 ## Quick glance
 
+- **Exam focus:** Multiplexer trees and boolean function implementation using MUXes, carry-lookahead vs ripple-carry adder delays, decoder-based logic synthesis, and propagation delay / hazard calculations. Common formats: NAT for propagation delays, number of MUXes/gates needed; MCQ/MSQ for output function expressions of combinational blocks.
 - A **combinational circuit** has no memory: outputs depend only on the present inputs. No feedback, no clock.
 - **Half adder:** $S = A\oplus B$, $C = AB$. **Full adder:** $S = A\oplus B\oplus C_{in}$, $C_{out} = AB + C_{in}(A\oplus B)$ (majority of the three inputs).
 - **Ripple-carry adder:** delay grows linearly, about $2$ gate delays per bit for the carry. **Carry-lookahead:** $P_i = A_i\oplus B_i$, $G_i = A_iB_i$, $C_{i+1} = G_i + P_iC_i$; carries computed in parallel, constant depth.
@@ -15,7 +17,7 @@
 - **Static-1 hazard** in an SOP network is removed by adding the consensus (redundant) prime implicant that bridges the adjacent groups.
 - #1 trap: carry delay vs sum delay and the **gate-delay convention** (state what a gate delay is, count XOR as one gate unless told otherwise).
 
-## 1. Adders and subtractors
+## 1. Adders and subtractors [PYQ: Medium]
 
 ### Half adder (HA)
 Adds two bits. Truth table:
@@ -79,7 +81,7 @@ M ---+--XOR XOR XOR XOR
 
 **Overflow (signed):** $V = C_{n-1}\oplus C_n$ (carry into MSB XOR carry out of MSB). Equivalent: two same-sign operands give a different-sign result. Unsigned overflow/borrow: just the carry-out (for subtraction, unsigned $A<B$ gives carry-out $=0$ because of the complemented addition).
 
-## 2. Ripple-carry adder: delay
+## 2. Ripple-carry adder: delay [PYQ: Medium]
 
 Chain $n$ full adders, carry of FA$_i$ feeds FA$_{i+1}$. The carry has to ripple through all stages.
 
@@ -95,7 +97,7 @@ Many textbooks simply say "carry propagates through $2$ gates per stage so total
 
 **The cure is to compute carries without waiting:** carry-lookahead.
 
-## 3. Carry-lookahead adder (CLA)
+## 3. Carry-lookahead adder (CLA) [PYQ: Low]
 
 Define for each bit
 - **Generate** $G_i = A_iB_i$ (this stage creates a carry by itself),
@@ -139,7 +141,7 @@ For a 4-bit block define group $P^* = P_3P_2P_1P_0$ and $G^* = G_3 + P_3G_2 + P_
 
 **Carry-skip / carry-select (just the idea):** carry-select computes each block for both $C_{in}=0$ and $C_{in}=1$ and a MUX chooses when the real carry arrives.
 
-## 4. Multiplexers (MUX)
+## 4. Multiplexers (MUX) [PYQ: High]
 
 A **$2^n{:}1$ MUX** passes one of $2^n$ data inputs $I_0..I_{2^n-1}$ to the output, chosen by $n$ select lines $S$. Output $Y = \sum_i m_i(S)\cdot I_i$. Intuition: a rotary switch.
 
@@ -192,7 +194,7 @@ Data inputs: $I_0..I_7 = D, D, D', 0, D, D, 0, 1$.
 
 **Universal property:** a $2{:}1$ MUX plus constants $0$ and $1$ is functionally complete: NOT: $S=A$, $I_0=1$, $I_1=0$; AND: $S=A$, $I_0=0$, $I_1=B$.
 
-## 5. Demultiplexers, decoders and encoders
+## 5. Demultiplexers, decoders and encoders [PYQ: Low]
 
 ### Demultiplexer (DEMUX)
 Reverse of a MUX: one input $D$ routed to one of $2^n$ outputs chosen by $n$ select lines; others are 0. $Y_i = D\cdot m_i(S)$. **A $1{:}2^n$ DEMUX is the same circuit as an $n$-to-$2^n$ decoder with enable $=D$.**
@@ -223,7 +225,7 @@ Resolves simultaneous inputs by priority (highest index wins), with a valid outp
 
 $Y_1 = I_3 + I_2$, $Y_0 = I_3 + I_2'I_1$. Used in interrupt controllers ([I/O and interrupts](../10-computer-organization/io-interrupts-dma.md)).
 
-## 6. Comparators and code converters
+## 6. Comparators and code converters [PYQ: Low]
 
 ### Magnitude comparator
 1-bit: $A>B$: $AB'$; $A<B$: $A'B$; $A=B$: $A\odot B$.
@@ -240,14 +242,14 @@ Binary to Gray: $g_{n-1} = b_{n-1}$, $g_i = b_{i+1}\oplus b_i$ (each Gray bit is
 $$C_{BCD} = K + Z_3Z_2 + Z_3Z_1.$$
 Verified: for every binary sum $0..19$, $C_{BCD}=1$ exactly when sum $>9$. Example: $8+7 = 15 = 01111$, $Z_3Z_2=1$ so $C=1$, add $0110$: $1111+0110 = 1\,0101$, BCD $= 1\;5$. Correct. A BCD adder uses 2 four-bit adders and 3 extra gates (two ANDs and an OR).
 
-## 7. ROM, PLA and PAL as combinational logic
+## 7. ROM, PLA and PAL as combinational logic [PYQ: Low]
 
 - **ROM $2^n\times m$:** fixed AND plane (an $n$-to-$2^n$ decoder) + programmable OR plane; stores a lookup table, so any $m$ functions of $n$ variables.
 - **PLA:** both AND and OR planes programmable; a function needs only its product terms. Sizing: programmable points $=2n\cdot p + p\cdot m$ (for $p$ product terms, $m$ outputs).
 - **PAL:** programmable AND plane, fixed OR plane.
 - A ROM of $2^n$ words ($n$ address bits, $m$ output bits) implements any set of $m$ functions of $n$ variables; capacity $2^n\times m$ bits.
 
-## 8. Gate-count and delay questions
+## 8. Gate-count and delay questions [PYQ: Medium]
 
 Typical patterns:
 1. **"Minimum number of $2{:}1$ MUXes / NAND gates"**: use the formulas above; count NAND gates by NAND-NAND conversion of a minimal SOP (gates = number of product terms with $\ge2$ literals + 1 for the output, plus inverters for complemented inputs if not available).
@@ -257,7 +259,7 @@ Typical patterns:
 
 **Worked example.** A 4-input AND built from 2-input ANDs: 3 gates, 2 levels. An 8-input OR: 7 gates, 3 levels.
 
-## 9. Hazards (brief)
+## 9. Hazards (brief) [PYQ: Low]
 
 A **hazard** is a momentary wrong output (glitch) caused by unequal gate delays, though the steady-state function is right.
 

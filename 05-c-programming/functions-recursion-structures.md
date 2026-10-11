@@ -2,11 +2,13 @@
 
 > **Paper:** CS · **Priority:** P0 · **Plan topics:** Functions; Recursion in C; Structures; Memory and pointer reasoning
 > **Prerequisites:** [Pointers, arrays, strings](pointers-arrays-strings.md) · **Leads to:** [Linked lists](../07-data-structures/linked-lists.md), [Asymptotic analysis](../08-algorithms/asymptotic-analysis.md)
+> **PYQ weightage:** High · 20 Qs since 2015 (4 since 2021) · DA: 0 · Trend: falling · Most asked: Recursion tracing (with static variables and nested calls), parameter passing modes, structure alignment & padding
 
 Assumptions: 64-bit model (`int` 4, `short` 2, `long`/`double`/pointer 8), each scalar aligned to its own size.
 
 ## Quick glance
 
+- **Exam focus:** Tracing recursive functions (especially with `static` variables and nested calls), parameter passing modes (value vs reference vs name), and struct alignment/padding calculations; tested heavily as NAT and MCQ.
 - **C passes everything by value** (copies). To change a caller's variable, pass its address (`&x`) and use `*p`.
 - A function call creates an **activation record** (frame) on the stack holding parameters, return address, locals. Frames die on return.
 - **Parameter-passing modes:** value, reference, value-result (copy-in/copy-out), name (textual substitution, re-evaluated at each use). The same program gives different answers; the traced example below separates all four.
@@ -18,7 +20,7 @@ Assumptions: 64-bit model (`int` 4, `short` 2, `long`/`double`/pointer 8), each 
 - `p->x` ≡ `(*p).x`. Self-referential struct holds a **pointer** to its own type, never the type itself.
 - `malloc(n)` uninitialised; `calloc(k, s)` zeroed; `realloc` may move the block; every `malloc` needs one `free`.
 
-## 1. Functions and call by value
+## 1. Functions and call by value [PYQ: Medium]
 
 A function has a return type, name, parameters and body. A **prototype** declares it before use. Each call copies the argument values into the parameter variables.
 
@@ -53,7 +55,7 @@ main() calls f(3), which calls f(2):
 ```
 Frames are pushed on call and popped on return, so the **most recent call finishes first** (LIFO). Local variables of one call do not interfere with those of another call of the same function. Frame layout, access links and displays: [Runtime environments](../12-compiler-design/runtime-environments.md).
 
-## 2. Parameter-passing modes
+## 2. Parameter-passing modes [PYQ: Medium]
 
 | Mode | What the callee gets | Writes visible to caller? | When the actual argument's address/value is computed |
 |---|---|---|---|
@@ -88,7 +90,7 @@ call P(A[i])        // i = 1 at the call, so the actual is A[1] = 20
 - **Reference:** `x` = &i, `y` = &A[1]. `t` = 1; `i` = A[1] = 2; `A[1]` = 1. Result **i = 2, A = {5, 1, 7}** (a proper swap).
 - **Name:** `t = i` → 1. `x = y` is `i = A[i]` → `i = A[1]` = 2. `y = t` is `A[i] = t` with the **new** `i` = 2 → `A[2] = 1`. Result **i = 2, A = {5, 2, 1}** (wrong element changed). Name passing re-evaluates `A[i]` after `i` changed.
 
-## 3. Recursion
+## 3. Recursion [PYQ: High]
 
 A recursive function calls itself on a smaller input until a **base case** returns directly. Each call has its own frame, so depth `d` costs `O(d)` stack space. Missing base case → stack overflow.
 
@@ -164,7 +166,7 @@ int gcd(int a, int b) { return b == 0 ? a : gcd(b, a % b); }   // gcd(48,18): (1
 | fib | T(n) = T(n−1) + T(n−2) + 1 | Θ(φ^n) | O(n) |
 | two calls on n/2 plus O(n) (merge sort) | T(n) = 2T(n/2) + n | O(n log n) | O(log n) frames (+ buffers) |
 
-## 4. Structures and unions
+## 4. Structures and unions [PYQ: Medium]
 
 A **structure** groups members of different types; members have distinct addresses laid out in declaration order.
 
@@ -223,7 +225,7 @@ printf("%c", u.c[0]);    // little-endian: lowest byte 0x44 first → 'D'
 
 Also: `enum {A, B = 5, C}` gives A = 0, B = 5, C = 6 (next integer after the previous constant). Bit-fields (`int f : 3;`) pack members into bits; layout is implementation-dependent, so GATE rarely relies on it.
 
-## 5. Dynamic memory
+## 5. Dynamic memory [PYQ: Low]
 
 Stack variables have automatic lifetime. For sizes unknown at compile time or data that must outlive a call, request **heap** memory (`<stdlib.h>`):
 

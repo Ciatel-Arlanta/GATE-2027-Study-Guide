@@ -2,9 +2,11 @@
 
 > **Paper:** CS · **Priority:** P0 · **Plan topics:** Data-link layer; Error detection; Medium Access Control; Ethernet
 > **Prerequisites:** [Layering, switching and performance](layering-switching-performance.md) · **Leads to:** [Routing](routing.md), [Transport layer and TCP](transport-layer-tcp.md)
+> **PYQ weightage:** High · 23 Qs since 2015 (9 since 2021) · DA: 0 · Trend: falling · Most asked: Sliding Window (GBN/SR efficiency & sequence bits), CSMA/CD (min frame length & backoff), CRC polynomial division
 
 ## Quick glance
 
+- **Exam focus:** GATE frequently tests numerical problems on sliding window protocols (maximum window size, minimum sequence-number bits for GBN and SR, link efficiency) and CSMA/CD minimum frame size ($L_{min} = 2T_p \times R$) and exponential backoff, primarily as NAT questions.
 - The link layer moves **frames** between **adjacent** nodes: framing, error detection, flow control (sliding window), and medium access for shared links.
 - **Parity** detects odd numbers of bit errors; **2D parity** corrects 1 bit; **Internet checksum** = one's-complement sum of 16-bit words, complemented; **CRC** = remainder of polynomial division mod 2 by generator $G(x)$ of degree $r$, appended as $r$ bits.
 - **Hamming distance $d$**: detect $d-1$ errors, correct $\lfloor (d-1)/2 \rfloor$. Hamming code: $2^r \ge m + r + 1$, check bits at power-of-2 positions.
@@ -17,7 +19,7 @@
 
 ---
 
-## 1. Services of the data link layer and framing
+## 1. Services of the data link layer and framing [PYQ: Low]
 
 **Intuition.** The physical layer delivers a stream of bits with no boundaries. The link layer carves it into **frames**, adds addresses and error-check bits, and decides who may speak on a shared wire.
 
@@ -38,7 +40,7 @@ Output: `0 11111 0 0 11111 0 1` $=$ `011111001111101` (15 bits: 2 stuffed bits).
 
 ---
 
-## 2. Error detection and correction
+## 2. Error detection and correction [PYQ: Medium]
 
 Errors flip bits. We add **redundant bits**; the more redundancy, the more error patterns are caught.
 
@@ -153,7 +155,7 @@ Codeword (positions 1 to 7): `0110011`. Suppose position 5 flips: `0110111`. Rec
 
 ---
 
-## 3. Flow control and reliable transmission (sliding window)
+## 3. Flow control and reliable transmission (sliding window) [PYQ: High]
 
 **Intuition.** The sender must not outrun the receiver, and over a lossy link it must retransmit. Think of a pipe of length $T_p$: stop-and-wait puts one frame in the pipe at a time; sliding window keeps several frames in flight.
 
@@ -231,7 +233,7 @@ In full-duplex communication, instead of sending a separate ACK frame, the recei
 
 ---
 
-## 4. Medium access control (MAC)
+## 4. Medium access control (MAC) [PYQ: High]
 
 On a **shared channel** (broadcast link) the **MAC sublayer** decides who transmits when; two simultaneous transmissions collide. Three families:
 
@@ -304,7 +306,7 @@ Wi-Fi cannot detect collisions while sending (own signal dominates, hidden termi
 
 ---
 
-## 5. Ethernet (IEEE 802.3)
+## 5. Ethernet (IEEE 802.3) [PYQ: Medium]
 
 ### 5.1 Frame format
 

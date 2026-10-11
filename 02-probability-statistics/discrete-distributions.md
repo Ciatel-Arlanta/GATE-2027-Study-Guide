@@ -2,8 +2,12 @@
 
 > **Paper:** CS+DA · **Priority:** P0 · **Plan topics:** Bernoulli distribution; Binomial distribution; Uniform distribution (discrete); Poisson distribution (plus geometric, negative binomial, hypergeometric as needed extras)
 > **Prerequisites:** [Random variables and moments](random-variables-and-moments.md) · **Leads to:** [Continuous distributions](continuous-distributions.md) · [Statistical inference](statistical-inference.md)
+> **PYQ weightage:** Low · 5 Qs since 2015 (3 since 2021) · DA: 3 · Trend: rising · Most asked: Poisson distribution, Bernoulli distribution, Binomial distribution, Geometric distribution
 
 ## Quick glance
+
+- **Exam focus:** Poisson distribution (mean = variance = $\lambda$, additive rates, binomial approximation), Binomial parameters ($np, npq$), and Geometric distribution memorylessness; tested as 1-mark or 2-mark MCQ/NAT in CS and DA.
+- Key properties at a glance:
 
 | Distribution | PMF | Mean | Variance |
 |---|---|---|---|
@@ -18,14 +22,14 @@
 - Poisson mean = variance; sum of independent Poissons is Poisson with summed rates.
 - **#1 trap:** geometric has two conventions (trials vs failures). GATE usually uses "number of trials until first success", mean $1/p$.
 
-## 1. Bernoulli distribution
+## 1. Bernoulli distribution [PYQ: Medium]
 
 One trial, success with probability $p$ ($q=1-p$). $X=1$ on success, $0$ otherwise.
 
 - $E[X]=p$; $E[X^2]=p$, so $\mathrm{Var}=p-p^2=pq$. Maximum variance $\frac14$ at $p=\frac12$.
 - An **indicator variable** $I_A$ of an event $A$ is Bernoulli$(P(A))$.
 
-## 2. Binomial distribution
+## 2. Binomial distribution [PYQ: Low]
 
 **Setting.** $n$ independent Bernoulli$(p)$ trials; $X$ = number of successes. Write $X=\sum_{i=1}^nI_i$.
 
@@ -53,7 +57,7 @@ $$P(X=k)=\binom nkp^kq^{n-k},\ k=0..n$$
 
 **Hypergeometric (sampling without replacement).** $N$ items, $K$ successes, draw $n$ without replacement; $P(X=k)=\dfrac{\binom Kk\binom{N-K}{n-k}}{\binom Nn}$, $E[X]=n\frac KN$, $\mathrm{Var}=n\frac KN\left(1-\frac KN\right)\frac{N-n}{N-1}$. Example: 5 cards, exactly 2 hearts: $\frac{\binom{13}2\binom{39}3}{\binom{52}5}=\frac{78\times9139}{2598960}=0.2743$. When $N\gg n$ it is close to $\mathrm{Bin}(n,K/N)$.
 
-## 3. Discrete uniform distribution
+## 3. Discrete uniform distribution [PYQ: Low]
 
 $X$ equally likely on $\{a,a+1,\dots,b\}$, $m=b-a+1$ values: $P(X=k)=1/m$.
 
@@ -62,7 +66,7 @@ $X$ equally likely on $\{a,a+1,\dots,b\}$, $m=b-a+1$ values: $P(X=k)=1/m$.
 
 **Worked example 6 — fair die.** $m=6$: mean $3.5$, variance $\frac{35}{12}=2.917$. For $\{10,\dots,20\}$: $m=11$, mean $15$, variance $\frac{120}{12}=10$.
 
-## 4. Geometric distribution
+## 4. Geometric distribution [PYQ: Low]
 
 **Setting.** Independent Bernoulli$(p)$ trials; $X$ = **trial number of the first success**, $k=1,2,\dots$
 
@@ -78,7 +82,7 @@ $$P(X=k)=q^{k-1}p,\quad P(X>k)=q^k,\quad E[X]=\frac1p,\quad \mathrm{Var}X=\frac 
 
 **Negative binomial.** Trials until the $r$-th success: $P(X=k)=\binom{k-1}{r-1}p^rq^{k-r}$, $k\ge r$; mean $r/p$, variance $rq/p^2$ (sum of $r$ independent geometrics). Example: fair coin, 3rd head on toss 5: $\binom42\frac1{32}=\frac6{32}=0.1875$; expected tosses $=3/0.5=6$.
 
-## 5. Poisson distribution
+## 5. Poisson distribution [PYQ: Medium]
 
 **Setting.** Counts of events occurring independently at a constant average rate $\lambda$ per interval (calls per minute, typos per page, packets per second, defects per metre).
 
@@ -112,7 +116,7 @@ Use it when $n$ is large ($\ge50$) and $p$ small ($\le0.1$).
 
 **Poisson process.** Events at rate $\lambda$ with independent, stationary increments: count in $[0,t]$ is $\mathrm{Pois}(\lambda t)$ and **inter-arrival times are $\mathrm{Exp}(\lambda)$** — see [Continuous distributions](continuous-distributions.md). Thinning: if each event is kept independently with prob $r$, the kept events form a Poisson process of rate $r\lambda$.
 
-## 6. Choosing a distribution
+## 6. Choosing a distribution [PYQ: Low]
 
 ```mermaid
 flowchart TD
@@ -188,7 +192,7 @@ flowchart TD
 
 </details>
 
-**Q2 (MCQ).** A Binomial random variable has mean 6 and variance 4. Then $n$ is
+**Q2 (MCQ).** A Binomial random variable has mean 6 and variance 4. Then $n$ is  
 (A) 12 (B) 18 (C) 20 (D) 36
 
 <details><summary>Answer</summary>
@@ -216,10 +220,10 @@ flowchart TD
 
 </details>
 
-**Q5 (MSQ).** Which are correct?
-(A) Poisson distribution has equal mean and variance.
-(B) The sum of two independent Poisson variables is Poisson.
-(C) Geometric distribution is memoryless.
+**Q5 (MSQ).** Which are correct?  
+(A) Poisson distribution has equal mean and variance.  
+(B) The sum of two independent Poisson variables is Poisson.  
+(C) Geometric distribution is memoryless.  
 (D) $\mathrm{Bin}(5,0.5)+\mathrm{Bin}(5,0.2)\sim\mathrm{Bin}(10,\cdot)$.
 
 <details><summary>Answer</summary>

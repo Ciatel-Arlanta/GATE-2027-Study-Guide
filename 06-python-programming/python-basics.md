@@ -2,9 +2,11 @@
 
 > **Paper:** DA · **Priority:** P0 · **Plan topics:** Python syntax; Variables and expressions; Functions; Iteration and loops
 > **Prerequisites:** [C basics and expressions](../05-c-programming/c-basics-and-expressions.md) (helpful for contrast) · **Leads to:** [Python collections](python-collections.md) · [OOP, recursion, tracing](python-oop-recursion-tracing.md)
+> **PYQ weightage:** Low · 3 Qs since 2015 (3 since 2021) · DA: 3 · Trend: steady · Note: Python is tested only in the DA paper (introduced 2024); few historical PYQs exist, but Python carries ~5–8 marks in GATE DA · Most asked: Function tracing, loops and conditions, division/remainder semantics
 
 ## Quick glance
 
+- **Exam focus:** Tracing Python functions, integer division (`//`) and modulo (`%`) with negative operands, chained comparisons, and mutable default arguments; primarily tested as NAT and MCQ in GATE DA.
 - Python is **dynamically typed**: a variable is a *name* bound to an object; the type lives on the object, not the name. `x = 5; x = "a"` is legal.
 - **Indentation is syntax.** A block is the set of lines indented equally after a colon. No braces, no semicolons needed.
 - `/` is always **true division** (returns float). `//` is **floor** division (rounds toward $-\infty$). `%` has the **sign of the divisor**. Identity: `a == (a // b) * b + a % b`.
@@ -15,7 +17,7 @@
 - Scope is **LEGB** (Local, Enclosing, Global, Built-in). Assigning to a name anywhere in a function makes it local for the *whole* function.
 - **#1 trap:** a mutable default argument (`def f(x, L=[])`) is created once, at definition time, and shared across calls.
 
-## 1. Syntax, names and objects
+## 1. Syntax, names and objects [PYQ: Low]
 
 **Intuition.** In C a variable is a labelled box holding a value. In Python a variable is a *sticky label* attached to an object. Assignment never copies the object; it just attaches another label.
 
@@ -60,7 +62,7 @@ print(z is x)             # True
 
 Small ints (-5..256) and some short strings are cached by CPython, so `a = 256; b = 256; a is b` is `True` but this is an implementation detail. **GATE questions only use `is` for lists/objects or `is None`; never rely on integer or string identity.**
 
-## 2. Arithmetic and the division family
+## 2. Arithmetic and the division family [PYQ: Low]
 
 **Intuition.** Floor division rounds *down* (toward $-\infty$), not toward zero as C does. `%` is defined so that the identity $a = (a // b)\cdot b + (a \% b)$ always holds, which forces the remainder to take the **sign of the divisor**.
 
@@ -181,7 +183,7 @@ Strings are **immutable** sequences; every method returns a *new* string.
 
 `"3" + 4` raises `TypeError`; Python does **no** implicit str/int conversion.
 
-## 3. Iteration and loops
+## 3. Iteration and loops [PYQ: Low]
 
 ### 3.1 `for` and `range`
 
@@ -250,7 +252,7 @@ Output: `4` only. With `for k in range(3): pass` followed by `else: print("for-e
 | `sum`, `min`, `max`, `any`, `all` | `any([])`, `all([])` | `False`, `True` |
 | `sorted(it, key=, reverse=)` | `sorted([3,-5,1], key=abs)` | `[1, 3, -5]` |
 
-## 4. Functions
+## 4. Functions [PYQ: Low]
 
 **Intuition.** A function is an object created by `def` at the moment `def` executes. Calling it creates a fresh local namespace. A function without `return` (or with bare `return`) returns `None`.
 
@@ -340,7 +342,7 @@ print(max("apple", "fig", key=len))              # apple
 
 `map` and `filter` return lazy iterators; wrap in `list(...)`. They can be consumed **only once**.
 
-## 5. Scope: LEGB, `global`, `nonlocal`
+## 5. Scope: LEGB, `global`, `nonlocal` [PYQ: Low]
 
 **Rule.** When a name is *read*, Python looks in **L**ocal, then **E**nclosing functions, then **G**lobal (module), then **B**uilt-in. When a name is *assigned* anywhere in a function body, it is local **throughout that function** (decided at compile time) unless declared `global` or `nonlocal`.
 

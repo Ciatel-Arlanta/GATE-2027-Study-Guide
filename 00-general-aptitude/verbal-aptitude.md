@@ -2,19 +2,21 @@
 
 > **Paper:** CS+DA · **Priority:** P1 · **Plan topics:** *(not in the Master Study Plan; added)* Basic English grammar; vocabulary, idioms and phrases in context; reading comprehension; narrative sequencing
 > **Prerequisites:** none · **Leads to:** [Quantitative aptitude](quantitative-aptitude.md) · [Analytical aptitude](analytical-aptitude.md)
+> **PYQ weightage:** High · 70 Qs since 2015 (28 since 2021) · DA: 6 · Trend: falling · Most asked: Most Appropriate Word, Verbal Reasoning, Word Pairs, Passage Reading
 
 ## Quick glance
 
-- GATE verbal items (about 2 to 3 marks per paper, usually 1 to 2 one-mark and 1 two-mark question) are of five types: **fill in the blank**, **sentence correction / error spotting**, **vocabulary (synonym, antonym, idiom, odd-one-out)**, **sentence sequencing (jumbled paragraph)** and a short **reading comprehension**.
+- **Exam focus:** Vocabulary in context (most appropriate word, word pairs/analogies), verbal reasoning (statement and logical inference), grammar (subject-verb agreement, tenses, prepositions), and reading comprehension; typically 2–3 questions per paper as 1-mark and 2-mark MCQs (and occasional MSQ).
+- GATE verbal items (about 2 to 3 marks per paper, usually 1 to 2 one-mark and 1 two-mark question) are of five types: **fill in the blank**, **sentence correction / error spotting**, **vocabulary (synonym, antonym, idiom, odd-one-out, analogy)**, **sentence sequencing (jumbled paragraph)** and a short **reading comprehension / verbal reasoning deduction**.
 - **Subject-verb agreement:** the verb agrees with the *head noun*, not the nearest noun. "The list of items **is** long." "Neither of the boys **has** come." "Each / every / either / neither + singular verb."
 - **Tense cues:** *since / for* + present perfect; *yesterday / ago / last* + simple past; *by the time* + past perfect for the earlier action; no future tense after *if / when / as soon as*.
 - **Articles:** *a* before a consonant **sound**, *an* before a vowel **sound** ("an hour", "a university"); *the* for a specific or unique noun; no article before general plurals, abstract nouns and most proper nouns.
 - **Prepositions** are collocations: *different from*, *prefer X to Y*, *capable of*, *interested in*, *depend on*, *comprise* (no "of"), *discuss* (no "about").
 - **Sequencing:** find the **opening sentence** (introduces the topic, no pronoun pointing back), then chain by **pronoun reference, connectors and logical order**; the conclusion usually has *thus / therefore / hence*.
-- **Reading comprehension:** answer only from the passage; eliminate options that are *too extreme* (always, never, only, all) or *outside scope*.
+- **Reading comprehension & verbal reasoning:** answer only from the passage or stated premises; eliminate options that are *too extreme* (always, never, only, all), *outside scope*, or commit the *fallacy of the inverse/converse*.
 - **#1 trap:** picking the option that sounds natural but changes the meaning or breaks agreement. Check the *rule* before the *feel*.
 
-## 1. Grammar: what GATE actually tests
+## 1. Grammar: what GATE actually tests [PYQ: High]
 
 ### 1.1 Subject-verb agreement
 
@@ -31,7 +33,7 @@
 | "A number of" vs "The number of" | plural vs singular | *A number of seats **are** vacant. The number of seats **is** small.* |
 | relative pronoun *who / which / that* | agrees with its antecedent | *He is one of those who **work** hard.* |
 
-**Worked example 1.** *"The results of the survey, which was conducted last year, ______ surprising."* Head noun: *results* (plural); the clause "which was conducted" modifies *survey*. Answer: **are**.
+**Worked example 1.** *\"The results of the survey, which was conducted last year, ______ surprising.\"* Head noun: *results* (plural); the clause \"which was conducted\" modifies *survey*. Answer: **are**.
 
 ### 1.2 Tenses
 
@@ -52,7 +54,7 @@ Rules that GATE exploits:
 - **Reported speech back-shifts tense:** *He said that he **was** tired.*
 - **Conditionals:** real: *if + present, will + V1*; unreal present: *if + past, would + V1* (*If I **were** you, I **would** go*); unreal past: *if + past perfect, would have + V3*.
 
-**Worked example 2.** *"Hardly had he entered the room ______ the lights went out."* Pattern *hardly / scarcely had ... **when / before***; *no sooner had ... **than***. Answer: **when** (or *before*). Note the inversion after *hardly*.
+**Worked example 2.** *\"Hardly had he entered the room ______ the lights went out.\"* Pattern *hardly / scarcely had ... **when / before***; *no sooner had ... **than***. Answer: **when** (or *before*). Note the inversion after *hardly*.
 
 ### 1.3 Articles and determiners
 
@@ -64,7 +66,7 @@ Rules that GATE exploits:
 
 ### 1.4 Adjectives, adverbs, comparison
 
-- Adjectives modify nouns, adverbs modify verbs/adjectives/adverbs: *She sings **beautifully**.* (not "beautiful"). *He looks **happy*** (linking verbs *look, seem, feel, become* take adjectives).
+- Adjectives modify nouns, adverbs modify verbs/adjectives/adverbs: *She sings **beautifully**.* (not \"beautiful\"). *He looks **happy*** (linking verbs *look, seem, feel, become* take adjectives).
 - Comparatives of two: *taller than*; superlatives of three or more: *the tallest*. **Double comparatives are wrong:** *more better, most unkindest*.
 - Latin comparatives take **to**, not *than*: *superior to, inferior to, senior to, junior to, prefer to*.
 - Order of adjectives: opinion, size, age, shape, colour, origin, material: *a lovely small old round red Chinese silk scarf*.
@@ -109,18 +111,18 @@ Rules that GATE exploits:
 | redundancy | *return back, repeat again, reverse back* | return, repeat, reverse |
 | double negative | *I don't know nothing* | I don't know anything |
 | dangling modifier | *Walking down the road, the trees looked lovely.* | *Walking down the road, **I saw** lovely trees.* |
-| misplaced "only" | *He only has two pens* | ambiguous; *He has only two pens* |
+| misplaced \"only\" | *He only has two pens* | ambiguous; *He has only two pens* |
 | uncountable plural | *furnitures, informations, advices, equipments* | furniture, information, advice, equipment (uncountable) |
 | *less/fewer* | *less people* | fewer people |
 | *neither ... or* | | neither ... **nor** |
 
-**Worked example 3 (error spotting).** *"One of the best player (a) / in the team (b) / has been selected (c) / for the national side (d)."* "One of the" requires a plural noun: *best **players***. Error in **(a)**.
+**Worked example 3 (error spotting).** *\"One of the best player (a) / in the team (b) / has been selected (c) / for the national side (d).\"* \"One of the\" requires a plural noun: *best **players***. Error in **(a)**.
 
 **Worked example 4 (sentence correction).** Options: (A) *The reason is because he was late.* (B) *The reason is that he was late.* Prefer **(B)**; *reason is because* is redundant.
 
-## 2. Vocabulary in context
+## 2. Vocabulary in context [PYQ: High]
 
-GATE asks one word, one idiom or one odd-one-out. **Use the surrounding sentence to decide the meaning; do not rely on the word alone.**
+GATE asks one word, one idiom, one odd-one-out, or word-pair analogies. **Use the surrounding sentence to decide the meaning; do not rely on the word alone.**
 
 ### 2.1 Fill in the blanks (word in context)
 
@@ -130,9 +132,9 @@ GATE asks one word, one idiom or one odd-one-out. **Use the surrounding sentence
 2. Look for **signal words**: *although, but, despite, however* signal contrast (the blank has the **opposite** tone of the other clause); *and, moreover, therefore* signal agreement.
 3. Eliminate by grammar (part of speech), then by meaning, then by collocation.
 
-**Worked example 5.** *"Despite the manager's ______ words, the team remained sceptical about the plan."* *Despite* signals contrast: the team is sceptical, so the words must have been **reassuring / encouraging**, not discouraging.
+**Worked example 5.** *\"Despite the manager's ______ words, the team remained sceptical about the plan.\"* *Despite* signals contrast: the team is sceptical, so the words must have been **reassuring / encouraging**, not discouraging.
 
-**Worked example 6.** *"The author's prose is so ______ that readers often need to reread a sentence three times."* Cause-result: hard to follow, so **convoluted / abstruse / opaque**, not *lucid*.
+**Worked example 6.** *\"The author's prose is so ______ that readers often need to reread a sentence three times.\"* Cause-result: hard to follow, so **convoluted / abstruse / opaque**, not *lucid*.
 
 ### 2.2 Frequently tested words (with opposites)
 
@@ -190,7 +192,7 @@ GATE asks one word, one idiom or one odd-one-out. **Use the surrounding sentence
 | a storm in a teacup | a big fuss about something small |
 | the ball is in your court | it is your turn to act |
 
-### 2.4 Odd-one-out and analogy-style vocabulary
+### 2.4 Odd-one-out vocabulary
 
 Odd-one-out: find the **category** shared by three and the one that breaks it (part of speech, domain, degree).
 
@@ -198,7 +200,37 @@ Odd-one-out: find the **category** shared by three and the one that breaks it (p
 
 **Worked example 8.** *Odd one: (A) joyful (B) elated (C) gloomy (D) ecstatic.* Three are positive. Odd: **(C) gloomy**.
 
-### 2.5 Word-formation and commonly confused pairs
+### 2.5 Word pairs and analogies
+
+**Intuition.** Word pair questions ask you to identify the relationship between a given pair of words and find an identical relationship in the options ($A : B :: C : D$), or to find the mismatched pair among four combinations.
+
+**Core relationship patterns in GATE:**
+
+| Relationship | Concept | Example |
+| --- | --- | --- |
+| Specialist : Subject | Professional to the domain/patient they treat | *Pediatrician : Children* :: *Gynaecologist : Females* |
+| Professional : Tool | Worker to the primary instrument used | *Carpenter : Saw* :: *Surgeon : Scalpel* |
+| Degree of intensity | Mild form to extreme form of an action/state | *Trickle : Deluge* :: *Whisper : Shout* |
+| Synonyms | Words with the same or near-identical meaning | *Acquiescence : Submission* :: *Profligate : Extravagant* |
+| Antonyms | Words with diametrically opposed meanings | *Candid : Evasive* :: *Benevolent : Malevolent* |
+| Part : Whole | Component to the overarching entity | *Piston : Engine* :: *Spoke : Wheel* |
+| Cause : Effect | Triggering condition to outcome | *Pathogen : Disease* :: *Spark : Explosion* |
+
+**Worked example 9 (analogy pair).** *Select the pair that best expresses a relationship similar to:* **Children : Pediatrician**  
+(A) Adult : Orthopaedist  
+(B) Females : Gynaecologist  
+(C) Kidney : Nephrologist  
+(D) Skin : Dermatologist  
+*Solution:* A pediatrician is a doctor specializing in the medical care of a specific demographic category of human patients (*children*). A gynaecologist specializes in the medical care of *females*. In (C) and (D), kidneys and skin are organs/tissues, not classes of individuals; an orthopaedist treats musculoskeletal disorders, not adults exclusively. **Answer: (B)**.
+
+**Worked example 10 (incorrect combination pair).** *Which of the following combinations is incorrect?*  
+(A) Acquiescence : Submission  
+(B) Wheedle : Roundabout  
+(C) Flippancy : Lightness  
+(D) Profligate : Extravagant  
+*Solution:* In (A), *acquiescence* means passive compliance or submission (synonyms). In (C), *flippancy* is superficial or disrespectful lightness (synonyms). In (D), *profligate* means recklessly extravagant (synonyms). But in (B), *wheedle* means to coax or persuade using flattery, while *roundabout* means circuitous or indirect; they are not synonyms. **Answer: (B)**.
+
+### 2.6 Word-formation and commonly confused pairs
 
 | Pair | Difference |
 | --- | --- |
@@ -215,7 +247,7 @@ Odd-one-out: find the **category** shared by three and the one that breaks it (p
 | continual / continuous | repeated with breaks / without a break |
 | economic / economical | of economy / thrifty |
 
-## 3. Reading comprehension
+## 3. Reading comprehension [PYQ: Medium]
 
 **Format.** A passage of 150 to 300 words and 1 to 3 questions (a two-mark question is typically *inference* or *main idea*).
 
@@ -229,12 +261,12 @@ Odd-one-out: find the **category** shared by three and the one that breaks it (p
 
 | Type | Typical stem | How to answer |
 | --- | --- | --- |
-| main idea | "The passage is primarily about..." | the option covering the *whole* passage, not a detail |
-| inference | "It can be inferred that..." | one logical step beyond the text; **not** an outside fact |
-| detail | "According to the passage..." | match wording of one sentence |
-| vocabulary | "The word X most nearly means" | substitute each option into the sentence |
-| tone | "The author's attitude is..." | look at adjectives and verbs: critical, neutral, optimistic |
-| title | "Best title" | specific enough but not narrower than the passage |
+| main idea | \"The passage is primarily about...\" | the option covering the *whole* passage, not a detail |
+| inference | \"It can be inferred that...\" | one logical step beyond the text; **not** an outside fact |
+| detail | \"According to the passage...\" | match wording of one sentence |
+| vocabulary | \"The word X most nearly means\" | substitute each option into the sentence |
+| tone | \"The author's attitude is...\" | look at adjectives and verbs: critical, neutral, optimistic |
+| title | \"Best title\" | specific enough but not narrower than the passage |
 
 **Elimination rules.** Reject options that are:
 
@@ -243,24 +275,66 @@ Odd-one-out: find the **category** shared by three and the one that breaks it (p
 - **reversed** (opposite of the author's claim);
 - **half right** (starts correct, ends with an unsupported claim).
 
-**Worked example 9 (mini passage).** *"Open-source software is often described as free, but the word hides a cost: someone must maintain it. Volunteers do much of this work, and when they leave, projects can decay quickly. Thus the sustainability of widely used tools depends less on code quality than on the people who look after it."* 
+**Worked example 11 (mini passage).** *\"Open-source software is often described as free, but the word hides a cost: someone must maintain it. Volunteers do much of this work, and when they leave, projects can decay quickly. Thus the sustainability of widely used tools depends less on code quality than on the people who look after it.\"* 
 
 Question: *The author's main point is that...* (A) open-source software is poor in quality (B) the long-term survival of open-source tools depends on their maintainers (C) volunteers should be paid (D) free software is always costly.
 
 - (A) never claimed. (C) a recommendation not made. (D) *always* is too strong. **(B)** is stated in the last sentence. **Answer: (B).**
 
-## 4. Narrative sequencing (jumbled sentences)
+## 4. Verbal reasoning (statement and logical inference) [PYQ: High]
+
+**Intuition.** GATE verbal reasoning questions present a compact 1–2 sentence premise and ask which statement is *logically valid* or *can be inferred*. The goal is rigorous deductive inference strictly bounded by the premises: treat the text as an axiomatic system where outside common knowledge cannot rescue an invalid step.
+
+**Rules and deductive checks:**
+
+1. **Strict textual entailment:** A conclusion is valid if and only if it is impossible for the premise to be true while the conclusion is false. If a claim merely \"makes sense in real life\" but is not forced by the text, eliminate it.
+2. **Beware of conditional fallacies:**
+   - If the statement asserts: *\"Alexander turned his attention towards India, since he had conquered Persia\"*, it asserts two facts: he conquered Persia, and he turned attention to India.
+   - It does **not** assert the counterfactual conditional: *\"Had he not conquered Persia, he would not have turned attention to India\"* (denying the antecedent fallacy).
+   - It does not justify *\"Persia was the only prerequisite for marching to India\"* (affirming the consequent / necessity vs sufficiency).
+3. **Quantifier precision:** Pay strict attention to boundaries:
+   - *\"At least seventeen languages\"* $\implies \ge 17$, which contradicts *\"exactly 17\"*.
+   - *\"Some\"* does not imply *\"all\"*; *\"often\"* does not imply *\"always\"*.
+4. **Rhetorical force vs absolute claims:** Statements like *\"If this is not an indication of diversity, nothing else is\"* use rhetorical emphasis to assert that the phenomenon is *strong, compelling evidence of diversity*. It does not mean no other diversity indicators exist in the country.
+
+**Worked example 12 (modeled on GATE PYQ).**  
+*Premise:* \"Indian currency notes show the denomination indicated in at least seventeen languages. If this is not an indication of the nation's diversity, nothing else is.\"  
+*Which of the following can be logically inferred from the above sentences?*  
+(A) India is a country of exactly seventeen languages.  
+(B) Linguistic pluralism is the only indicator of a nation's diversity.  
+(C) Indian currency notes have sufficient space for all Indian languages.  
+(D) Linguistic pluralism is strong evidence of India's diversity.  
+
+*Solution:*
+- (A) contradicts \"at least seventeen\" ($\ge 17$).
+- (B) incorrectly takes the rhetorical conditional literally to mean no other indicators exist.
+- (C) introduces an unsupported spatial claim about currency note layout.
+- (D) directly reflects the author's logical assertion: printing 17+ languages is compelling proof (strong evidence) of diversity. **Answer: (D).**
+
+**Worked example 13 (cause-and-effect inference).**  
+*Premise:* \"Alexander turned his attention towards India, since he had conquered Persia.\"  
+*Which one of the statements below is logically valid and can be inferred from the above sentence?*  
+(A) Alexander would not have turned his attention towards India had he not conquered Persia.  
+(B) Alexander was not ready to rest on his laurels, and wanted to march to India.  
+(C) Alexander's conquest of Persia preceded his attention turning towards India.  
+(D) Alexander conquered India after Persia.  
+
+*Solution:*
+- \"Since\" establishes that Persia was conquered before attention turned to India; chronological precedence is factual.
+- (A) claims an unstated necessity (inverse fallacy). (B) assumes psychological motivation (\"rest on laurels\") not in the text. (D) assumes he conquered India, whereas the text only says he turned his *attention* towards India. **Answer: (C)**.
+
+## 5. Narrative sequencing (jumbled sentences) [PYQ: Medium]
 
 **Task.** Four to five sentences (labelled P, Q, R, S...) are shuffled; choose the correct order.
 
 **Algorithm.**
 
-1. **Find the opener.** It introduces the topic in general terms and does not start with a pronoun (*he, this, they*), a connector (*however, thus*) or a reference such as "such" or "these".
+1. **Find the opener.** It introduces the topic in general terms and does not start with a pronoun (*he, this, they*), a connector (*however, thus*) or a reference such as \"such\" or \"these\".
 2. **Find mandatory pairs.** A pronoun must follow the noun it refers to; *however / but* follows a statement it contradicts; *for example* follows the claim it illustrates; *thus / therefore* closes.
 3. **Chain the rest** by logical flow: general to specific, cause to effect, problem to solution, chronological order.
 4. **Check against options.** Often fixing just the first and last sentence eliminates three of four options.
 
-**Worked example 10.** Arrange:
+**Worked example 14.** Arrange:
 
 - P: *This is why many cities now run on-demand shuttles.*
 - Q: *Fixed bus routes are inefficient when passenger demand is low.*
@@ -269,7 +343,7 @@ Question: *The author's main point is that...* (A) open-source software is poor 
 
 Opener: **S** (general statement). Then **Q** (problem), **R** (explains the problem), **P** (*This is why* refers to the whole problem; conclusion). Order: **S Q R P**.
 
-**Worked example 11 (pronoun chain).**
+**Worked example 15 (pronoun chain).**
 
 - 1: *Marie Curie won two Nobel Prizes.*
 - 2: *Her first, in physics, was shared with her husband.*
@@ -292,18 +366,22 @@ Opener: **S** (general statement). Then **Q** (problem), **R** (explains the pro
 | Fewer/less | fewer = countable, less = uncountable | determiners |
 | Uncountable | furniture, information, advice, equipment, luggage, news | plural traps |
 | Parallelism | all items in a list in the same form | sentence correction |
+| Analogy pair | match precise relationship (specialist-patient, tool, degree) | word pairs |
+| Verbal reasoning deduction | strict entailment from premises; no outside assumptions | statement & inference |
 | Sequencing | opener, pronoun chain, connector, conclusion | jumbled sentences |
 
 ## GATE traps
 
 - **Nearest-noun agreement.** *The cost of these books **is** high* (head noun cost). The noun right before the verb is often a distractor.
-- **"One of the" + plural noun, but singular verb:** *One of my friends **is** a doctor.*
-- **"Neither/either of" + singular verb** in formal usage; **"neither ... nor"** uses the nearer noun.
+- **\"One of the\" + plural noun, but singular verb:** *One of my friends **is** a doctor.*
+- **\"Neither/either of\" + singular verb** in formal usage; **\"neither ... nor\"** uses the nearer noun.
 - **Present perfect with a past time word** (*yesterday, in 2010, ago*) is always wrong.
-- **"Although ... but"**, **"despite of"**, **"return back"**, **"discuss about"**, **"prefer than"** are all errors.
-- **"Information", "advice", "furniture", "equipment"** are never plural.
+- **\"Although ... but\"**, **\"despite of\"**, **\"return back\"**, **\"discuss about\"**, **\"prefer than\"** are all errors.
+- **\"Information\", \"advice\", \"furniture\", \"equipment\"** are never plural.
 - **Contrast signal reverses the blank:** after *despite / although / but* the missing word has the opposite tone of the other part.
 - **RC inference** is not outside knowledge; **extreme words** make options false.
+- **Verbal reasoning: inverse fallacy:** *A, since B* does not mean *not B implies not A*. Do not infer counterfactual conditions.
+- **Analogy order and category:** *A : B :: C : D* requires identical order and matching grammatical/demographic categories.
 - **Jumbled sentences:** a sentence that begins with a pronoun, *this*, *however* or *thus* cannot be first.
 - **Idioms are never literal.** Do not choose the literal meaning of *spill the beans*.
 - **Do not change the meaning** to fix grammar: if two options are both grammatical, the one that preserves the original meaning wins.
@@ -314,12 +392,12 @@ Opener: **S** (general statement). Then **Q** (problem), **R** (explains the pro
 - [Quantitative aptitude](quantitative-aptitude.md) — data-interpretation questions are really reading comprehension on a table or chart; read the labels and units first.
 - [Spatial aptitude](spatial-aptitude.md) — the same elimination discipline (check one feature at a time) works on figure questions.
 - [EXAM-STRATEGY](../EXAM-STRATEGY.md) — GA is the fastest 15 marks: 10 questions, few minutes each; do it first or last depending on your strategy.
-- [Propositional logic](../01-discrete-mathematics/propositional-logic.md) — "unless", "if", "only if" in grammar match the logical connectives; *unless P, Q* = *if not P then Q*.
+- [Propositional logic](../01-discrete-mathematics/propositional-logic.md) — \"unless\", \"if\", \"only if\" in grammar match the logical connectives; *unless P, Q* $\equiv$ *if not P then Q*.
 - [Compiler design: lexical analysis](../12-compiler-design/lexical-analysis.md) — parsing a sentence into parts of speech is the natural-language analogue of tokenising and parsing.
 
 ## Practice
 
-**Q1 (MCQ).** Choose the correct sentence.
+**Q1 (MCQ).** Choose the correct sentence.  
 (A) *Each of the players have received a medal.* (B) *Each of the players has received a medal.* (C) *Each of the player has received a medal.* (D) *Each of the players have received medals.*
 
 <details><summary>Answer</summary>
@@ -329,7 +407,7 @@ Opener: **S** (general statement). Then **Q** (problem), **R** (explains the pro
 
 </details>
 
-**Q2 (MCQ).** Fill in the blank: *"Neither the captain nor the other players ______ aware of the change."*
+**Q2 (MCQ).** Fill in the blank: *\"Neither the captain nor the other players ______ aware of the change.\"*  
 (A) was (B) were (C) is (D) has been
 
 <details><summary>Answer</summary>
@@ -339,7 +417,7 @@ Opener: **S** (general statement). Then **Q** (problem), **R** (explains the pro
 
 </details>
 
-**Q3 (MCQ).** Choose the word closest in meaning to **ephemeral**.
+**Q3 (MCQ).** Choose the word closest in meaning to **ephemeral**.  
 (A) lasting (B) fleeting (C) fragile (D) trivial
 
 <details><summary>Answer</summary>
@@ -349,7 +427,7 @@ Opener: **S** (general statement). Then **Q** (problem), **R** (explains the pro
 
 </details>
 
-**Q4 (MCQ).** *"Although the proposal was criticised, ______."* Choose the best completion.
+**Q4 (MCQ).** *\"Although the proposal was criticised, ______.\"* Choose the best completion.  
 (A) but it was accepted (B) it was accepted (C) so it was accepted (D) however it was accepted
 
 <details><summary>Answer</summary>
@@ -359,11 +437,11 @@ Opener: **S** (general statement). Then **Q** (problem), **R** (explains the pro
 
 </details>
 
-**Q5 (MCQ).** Choose the correct order of the sentences.
-P: *As a result, the river dried up in many places.*
-Q: *A decade of low rainfall reduced the water inflow.*
-R: *The valley's farmers depended on this river.*
-S: *The region has a large river.*
+**Q5 (MCQ).** Choose the correct order of the sentences.  
+P: *As a result, the river dried up in many places.*  
+Q: *A decade of low rainfall reduced the water inflow.*  
+R: *The valley's farmers depended on this river.*  
+S: *The region has a large river.*  
 
 (A) SQPR (B) SRQP (C) QSRP (D) RSQP
 
@@ -374,7 +452,7 @@ S: *The region has a large river.*
 
 </details>
 
-**Q6 (MSQ).** Which of the following sentences are grammatically correct?
+**Q6 (MSQ).** Which of the following sentences are grammatically correct?  
 (A) *The news are shocking.* (B) *He has been working here since 2019.* (C) *She prefers tea than coffee.* (D) *Scarcely had he left when the phone rang.*
 
 <details><summary>Answer</summary>
@@ -384,7 +462,7 @@ S: *The region has a large river.*
 
 </details>
 
-**Q7 (MCQ, RC).** *"Critics claim that the new highway will reduce travel time. However, studies of similar projects show that faster roads attract more drivers, and congestion soon returns to earlier levels."* Which statement is best supported?
+**Q7 (MCQ, RC).** *\"Critics claim that the new highway will reduce travel time. However, studies of similar projects show that faster roads attract more drivers, and congestion soon returns to earlier levels.\"* Which statement is best supported?  
 (A) Highways never reduce travel time. (B) Travel-time savings from new highways may be temporary. (C) Congestion can only be solved by public transport. (D) The studies were conducted on the present highway.
 
 <details><summary>Answer</summary>
@@ -394,12 +472,27 @@ S: *The region has a large river.*
 
 </details>
 
-**Q8 (MCQ).** Identify the part with the error: *"The number of (a) / students who have applied (b) / for scholarships are (c) / increasing every year (d)."*
+**Q8 (MCQ).** Identify the part with the error: *\"The number of (a) / students who have applied (b) / for scholarships are (c) / increasing every year (d).\"*  
 (A) a (B) b (C) c (D) d
 
 <details><summary>Answer</summary>
 
 **Answer:** (C)  
 **Solution:** *The number of* takes a singular verb: *The number of students ... **is** increasing.* (Contrast with *A number of students are...*). The error is in (c): *are* should be *is*.
+
+</details>
+
+**Q9 (MCQ, Verbal Reasoning).** Read the statements:  
+*\"Every employee who completed the security training received a certificate. Ramesh did not receive a certificate.\"*  
+Which one of the following is a logically valid conclusion?  
+(A) Ramesh did not complete the security training.  
+(B) Ramesh is not an employee.  
+(C) If Ramesh completes the training, he will receive two certificates.  
+(D) Only employees who failed the exam were denied certificates.
+
+<details><summary>Answer</summary>
+
+**Answer:** (A)  
+**Solution:** Let $E(x)$ = $x$ is an employee, $T(x)$ = $x$ completed training, $C(x)$ = $x$ received certificate. Premise: $\forall x\, ((E(x) \land T(x)) \to C(x))$. For Ramesh ($r$): if $E(r)$ is assumed, then $\lnot C(r) \implies \lnot(E(r) \land T(r)) \equiv \lnot E(r) \lor \lnot T(r)$. Under the standard reading where Ramesh is an employee evaluated for certification, modus tollens forces $\lnot T(r)$ (he did not complete the training). Option (A) is the direct contrapositive deduction. (C) and (D) invent conditions outside the premises.
 
 </details>

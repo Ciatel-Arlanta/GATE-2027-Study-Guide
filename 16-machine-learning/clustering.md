@@ -2,9 +2,11 @@
 
 > **Paper:** DA · **Priority:** P0 · **Plan topics:** Clustering; k-means; k-medoids; Hierarchical clustering: top-down; Hierarchical clustering: bottom-up; Single-linkage clustering; Multiple-linkage clustering
 > **Prerequisites:** [ML foundations](ml-foundations.md) · [Minimum spanning trees](../08-algorithms/minimum-spanning-trees.md) · **Leads to:** [Dimensionality reduction and PCA](dimensionality-reduction-pca.md)
+> **PYQ weightage:** Medium · 3 Qs (DA 2024–2026 only) · Trend: steady · Most asked: k-means clustering iterations, Hierarchical clustering (single/complete linkage), Dissimilarity metrics
 
 ## Quick glance
 
+- **Exam focus:** GATE DA tests k-means cluster assignment and centroid update traces, hierarchical agglomerative clustering distance matrices (single vs complete linkage dendrograms), and formal definitions of dissimilarity metrics, as NATs and MCQs.
 - **Clustering** = unsupervised grouping of unlabelled points so that points in a cluster are similar and clusters differ.
 - **k-means** (Lloyd): repeat (1) assign each point to the nearest centroid, (2) set each centroid to the mean of its points, until assignments stop changing. Minimises $\sum_k\sum_{x\in C_k}\|x-\mu_k\|^2$ (within-cluster SSE). Each step never increases SSE, so it converges, but only to a **local** optimum that depends on the initialisation. Cost per iteration $O(nkd)$.
 - **k-medoids (PAM)**: like k-means but each centre is an actual **data point** (the medoid); works with any dissimilarity and is more robust to outliers; costlier ($O(k(n-k)^2)$ per iteration).
@@ -13,7 +15,7 @@
 - Agglomerative is $O(n^3)$ naively ($O(n^2\log n)$ with a heap), memory $O(n^2)$ for the distance matrix.
 - #1 trap: "multiple linkage" in the syllabus means **the different linkage criteria** (complete, average, ...), not a separate algorithm.
 
-## 1. What clustering is
+## 1. What clustering is [PYQ: Low]
 
 No labels, no "right answer": we only have a notion of similarity (distance). The number of clusters $k$ is usually a choice. Uses: customer segmentation, image compression (colour quantisation), initial exploration, pre-processing.
 
@@ -22,7 +24,7 @@ No labels, no "right answer": we only have a notion of similarity (distance). Th
 | Partitional (k-means, k-medoids) | optimise an objective over a flat partition | yes | roughly spherical, similar size |
 | Hierarchical | build a tree of nested clusters | no (cut the tree) | depends on linkage |
 
-## 2. k-means
+## 2. k-means [PYQ: Medium]
 
 **Intuition.** Place $k$ flags; every point joins the nearest flag; move each flag to the centre of its crowd; repeat until nobody switches.
 
@@ -59,7 +61,7 @@ A different start (A and B as centroids) goes $\{A,C\},\{B,D,E,F\}\to\{A,B,C\},\
 - Cost $O(nkd)$ per iteration; $k=1$ gives centroid = global mean.
 - Every cluster boundary is a straight line/hyperplane (Voronoi cells).
 
-## 3. k-medoids (PAM)
+## 3. k-medoids (PAM) [PYQ: Low]
 
 **Intuition.** Same as k-means, but each cluster is represented by its most central **actual data point**, the **medoid**, which minimises the sum of dissimilarities to the other members. Only pairwise dissimilarities are needed (any distance, even non-Euclidean, categorical data).
 
@@ -83,7 +85,7 @@ A different start (A and B as centroids) goes $\{A,C\},\{B,D,E,F\}\to\{A,B,C\},\
 | Outliers | sensitive | more robust |
 | Cost / iteration | $O(nkd)$ | $O(k(n-k)^2)$ |
 
-## 4. Hierarchical clustering
+## 4. Hierarchical clustering [PYQ: Medium]
 
 ### 4.1 Bottom-up (agglomerative) and top-down (divisive)
 
@@ -105,7 +107,7 @@ The Plan's *single-linkage* and *multiple-linkage* topics together mean: **the w
 | --- | --- | --- |
 | **Single** | $\min_{a\in A,b\in B}d(a,b)$ | chaining: clusters stretch into long chains; can handle non-spherical shapes; sensitive to noise bridges |
 | **Complete** | $\max_{a,b}d(a,b)$ | compact, similar-diameter clusters; sensitive to outliers |
-| **Average** (UPGMA) | $\frac1{|A||B|}\sum_{a,b}d(a,b)$ | compromise |
+| **Average** (UPGMA) | $\frac1{\vert A\vert \vert B\vert }\sum_{a,b}d(a,b)$ | compromise |
 | Centroid | $d(\mu_A,\mu_B)$ | can produce inversions (merge heights not monotone) |
 | Ward | merge with the smallest increase in total within-cluster SSE | compact, k-means-like |
 

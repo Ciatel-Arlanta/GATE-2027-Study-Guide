@@ -2,11 +2,13 @@
 
 > **Paper:** CS · **Priority:** P0 · **Plan topics:** Pointers; Arrays in C; Memory and pointer reasoning (strings are covered here too)
 > **Prerequisites:** [C basics and expressions](c-basics-and-expressions.md) · **Leads to:** [Functions, recursion, structures](functions-recursion-structures.md), [Linked lists](../07-data-structures/linked-lists.md)
+> **PYQ weightage:** High · 20 Qs since 2015 (12 since 2021) · DA: 0 · Trend: rising · Most asked: Pointer arithmetic, array-pointer decay & indexing, 2D array row-major addressing, string pointers
 
 Assumptions: 64-bit model (`int` = 4, `char` = 1, `double` = 8, pointer = 8 bytes), little-endian. Sample addresses (1000, 2000, ...) are illustrative.
 
 ## Quick glance
 
+- **Exam focus:** Pointer arithmetic, 1D/2D array address calculations (`m[i][j]` vs `*(*(m+i)+j)`), `*p++` vs `(*p)++` dereferencing, and string pointer manipulations; tested primarily through NAT (tracing program output) and MCQ.
 - A **pointer** stores an address. `&x` = address of x; `*p` = the object p points to. `sizeof(pointer)` is 8 whatever it points to.
 - **Pointer arithmetic is scaled:** `p + k` moves `k * sizeof(*p)` bytes. `p - q` (same array) = number of **elements** between them.
 - **`a[i] == *(a+i) == *(i+a) == i[a]`.** An array name in an expression decays to `&a[0]`, except under `sizeof`, `&`, and as a string-literal initialiser.
@@ -18,7 +20,7 @@ Assumptions: 64-bit model (`int` = 4, `char` = 1, `double` = 8, pointer = 8 byte
 - `*p++` = `*(p++)`; `(*p)++` increments the pointee; `++*p` increments the pointee and yields the new value.
 - Returning the address of a local variable = dangling pointer (UB).
 
-## 1. Memory model
+## 1. Memory model [PYQ: Low]
 
 Memory is a long row of numbered bytes. A variable is a name for a few consecutive bytes; its address is the number of its first byte. A process sees:
 
@@ -41,7 +43,7 @@ high addresses
 low addresses
 ```
 
-## 2. Pointer basics
+## 2. Pointer basics [PYQ: Medium]
 
 ```c
 int x = 10;
@@ -70,7 +72,7 @@ int **pp = &p;    // pointer to pointer
 | `int **pp` | pointer to pointer to int |
 | `int (*a[4])(int)` | array of 4 function pointers |
 
-## 3. Pointer arithmetic
+## 3. Pointer arithmetic [PYQ: High]
 
 If `p` has type `T*`, then `p + k` is `p + k*sizeof(T)` in bytes.
 
@@ -107,7 +109,7 @@ Postfix `++`/`--` and unary `*` are different levels: postfix is higher, so `*p+
 
 Output: **10 30 30 32 32 20**.
 
-## 4. Arrays
+## 4. Arrays [PYQ: High]
 
 An array is a block of `n` consecutive elements of the same type. `int a[5]` occupies 20 bytes; `a[i]` is the element at address `a + i*4`.
 
@@ -184,7 +186,7 @@ printf("%d %d\n", **pp, (int)(pp - p));
 - `++*pp`: increments `p[2]` from `a+2` to `a+3`. Now `**pp` = `a[3]` = 40, `pp - p` = 2.
 - Output: `1 1 20`, then `30 40 2`.
 
-## 5. Strings
+## 5. Strings [PYQ: Medium]
 
 A C string is a `char` array ending with the null character `'\0'` (value 0). Functions find the end by looking for it.
 
@@ -223,7 +225,7 @@ Trace `cpy(d, "ab")`: iteration 1 copies 'a' (nonzero → continue); iteration 2
 
 **In-place reverse** (two indices): `for (i=0, j=len-1; i<j; i++, j--) { t=s[i]; s[i]=s[j]; s[j]=t; }`; "GATE" → "ETAG".
 
-## 6. `const`, `void*`, function pointers
+## 6. `const`, `void*`, function pointers [PYQ: Low]
 
 **`const` with pointers** — read the declaration right to left:
 
@@ -244,7 +246,7 @@ printf("%d %d", op[0](9, 4), (*op[1])(9, 4));   // 13 5
 ```
 Used for callbacks such as the comparator of `qsort`.
 
-## 7. Pointer bugs
+## 7. Pointer bugs [PYQ: Low]
 
 | Bug | Example | Result |
 |---|---|---|
@@ -390,6 +392,6 @@ printf("%zu %zu %s", sizeof(s), strlen(s), s + 6);
 <details><summary>Answer</summary>
 
 **Answer:** (A)  
-**Solution:** `sizeof(s)` = 11 characters + `' '` = 12. The loop writes `' '` over the space at index 5, then `p++` moves to index 6, so the walk continues to the real end. `strlen(s)` stops at the new terminator: 5. `s + 6` points to "world". Output `12 5 world`.
+**Solution:** `sizeof(s)` = 11 characters + `'\0'` = 12. The loop writes `'\0'` over the space at index 5, then `p++` moves to index 6, so the walk continues to the real end. `strlen(s)` stops at the new terminator: 5. `s + 6` points to "world". Output `12 5 world`.
 
 </details>

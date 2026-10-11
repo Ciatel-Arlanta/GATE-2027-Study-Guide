@@ -74,4 +74,4 @@ Both papers share Probability, Linear Algebra, Calculus, Data Structures, Algori
 2. **Cycle 2 (consolidation):** CHECKPOINT per section; re-read only chapters you scored poorly on; full-subject PYQs by year.
 3. **Cycle 3 (speed):** CHEATSHEETs + GATE traps lists + full-length mocks under time. See [EXAM-STRATEGY.md](EXAM-STRATEGY.md).
 
-[Connections](CONNECTIONS.md) · [Coverage](COVERAGE.md) · [Progress](PROGRESS.md) · [Cheat sheets](CHEATSHEETS.md)
+[Connections](CONNECTIONS.md) · [Coverage](COVERAGE.md) · [Progress](PROGRESS.md) · [Cheat sheets](CHEATSHEETS.md) · [Weightage](WEIGHTAGE.md)

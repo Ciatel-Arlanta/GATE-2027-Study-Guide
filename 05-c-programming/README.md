@@ -3,6 +3,8 @@
 > **Paper:** CS (the DA paper tests Python instead: see [Python programming](../06-python-programming/README.md)) · **Priority:** P0
 > **Prerequisites:** [Number representation](../09-digital-logic/number-representation-and-arithmetic.md) (two's complement) · **Leads to:** [Data structures](../07-data-structures/README.md), [Algorithms](../08-algorithms/README.md), [Compiler design: runtime environments](../12-compiler-design/runtime-environments.md)
 
+**PYQ weightage:** ~2.5 Qs per CSE paper (2021–26), trend falling; DA: 0 Qs in 2024–26.
+
 ## Weightage
 
 C and Data Structures ("Programming and Data Structures") together carry about **8-12 marks** in the CS paper every year. Typical split: 2-4 marks of pure C tracing (output of a program, pointer arithmetic, recursion, static variables), 2-3 marks of data-structure code (linked list, tree, stack), the rest data-structure theory. C tracing questions are among the most reliably scoring marks: no formula to forget, only discipline.
@@ -21,11 +23,17 @@ Whenever a trace feels ambiguous, draw memory boxes and the call stack on paper.
 
 ## Reading order
 
-| # | Chapter | Priority | Plan topics covered |
-|---|---|---|---|
-| 1 | [C basics and expressions](c-basics-and-expressions.md) | P0 | C syntax and semantics; Tracing C programs and expressions |
-| 2 | [Pointers, arrays, strings](pointers-arrays-strings.md) | P0 | Pointers; Arrays in C; Memory and pointer reasoning |
-| 3 | [Functions, recursion, structures](functions-recursion-structures.md) | P0 | Functions; Recursion in C; Structures; Memory and pointer reasoning |
+| # | Chapter | Priority | Plan topics covered | PYQ weightage |
+|---|---|---|---|---|
+| 1 | [C basics and expressions](c-basics-and-expressions.md) | P0 | C syntax and semantics; Tracing C programs and expressions | High · 22 |
+| 2 | [Pointers, arrays, strings](pointers-arrays-strings.md) | P0 | Pointers; Arrays in C; Memory and pointer reasoning | High · 20 |
+| 3 | [Functions, recursion, structures](functions-recursion-structures.md) | P0 | Functions; Recursion in C; Structures; Memory and pointer reasoning | High · 20 |
+
+## Study priority
+
+- [C basics and expressions](c-basics-and-expressions.md) (High · 22) — master loop and control-flow tracing, operators and precedence, and signed/unsigned conversions first; read it before the other two chapters.
+- [Pointers, arrays, strings](pointers-arrays-strings.md) (High · 20) — master pointer arithmetic, array–pointer decay and indexing, and 2D row-major addressing.
+- [Functions, recursion, structures](functions-recursion-structures.md) (High · 20) — master recursion tracing with static variables and nested calls, parameter-passing modes, and structure alignment and padding.
 
 Revision aids: [CHEATSHEET](CHEATSHEET.md) · [CHECKPOINT](CHECKPOINT.md)
 

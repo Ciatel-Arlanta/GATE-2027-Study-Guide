@@ -2,8 +2,10 @@
 
 > **Paper:** CS+DA · **Priority:** P0 · **Plan topics:** Eigenvalues and eigenvectors
 > **Prerequisites:** [Matrices and determinants](matrices-and-determinants.md) · [Vector spaces](vector-spaces.md) · **Leads to:** [Orthogonality, projections, SVD](orthogonality-projections-svd.md) · [PCA](../16-machine-learning/dimensionality-reduction-pca.md)
+> **PYQ weightage:** High · 30 Qs since 2015 (12 since 2021) · DA: 5 · Trend: falling · Most asked: Eigen Value, Multiplicity, Diagonalisability
 
 ## Quick glance
+- **Exam focus:** Computing eigenvalues and eigenvectors via trace (sum λ_i = tr(A)) and determinant (prod λ_i = det(A)) shortcuts, powers and polynomials of A, algebraic vs geometric multiplicity (diagonalisability: GM = AM), and Cayley–Hamilton theorem (p(A) = 0). By far the single highest-yield Linear Algebra topic in GATE (constant NAT and MSQ questions).
 - **Ax = λx, x ≠ 0.** λ is an eigenvalue, x an eigenvector. Eigenvalues are roots of the **characteristic polynomial** det(A - λI) = 0.
 - **Sum of eigenvalues = trace(A); product = det(A).** For 2 × 2: λ² - (trace) λ + det = 0.
 - Eigenvalues of A^k: λ^k; of A^-1: 1/λ; of A + cI: λ + c; of p(A): p(λ); of A^T: same as A. **Triangular/diagonal matrix: eigenvalues are the diagonal entries.**
@@ -14,7 +16,7 @@
 - Rank-1 matrix u v^T: eigenvalues u^T v (once) and 0 (n - 1 times).
 - **#1 trap:** eigenvalue 0 does not make the eigen-decomposition fail; but a repeated eigenvalue may make the matrix non-diagonalisable (check GM).
 
-## 1. The idea
+## 1. The idea [PYQ: High]
 
 **Intuition.** A matrix usually rotates and stretches vectors. An eigenvector is a direction that is **only stretched** (or flipped) by the map: A sends x to λx on the same line. Finding such directions turns a complicated map into independent scalings along those directions.
 
@@ -42,7 +44,7 @@
 
 Shortcut: this A = J + I where J is the all-ones matrix. J has eigenvalues 3, 0, 0, so A has 4, 1, 1.
 
-## 2. Properties
+## 2. Properties [PYQ: High]
 
 | Fact | Statement |
 |---|---|
@@ -70,7 +72,7 @@ Shortcut: this A = J + I where J is the all-ones matrix. J has eigenvalues 3, 0,
 
 **Eigenvalues from given ones.** If A (3 × 3) has eigenvalues 1, 2, 3 then: det(A²+I) = (1 + 1)(4 + 1)(9 + 1) = 100; tr(A^-1) = 1 + 1/2 + 1/3 = 11/6; det(A) = 6; the eigenvalues of A² - 3A + 2I are λ² - 3λ + 2 = 0, 0, 2.
 
-## 3. Multiplicity and diagonalisability
+## 3. Multiplicity and diagonalisability [PYQ: Medium]
 
 - **AM(λ)** = multiplicity of λ in the characteristic polynomial.
 - **GM(λ)** = dim E_λ = n - rank(A - λI).
@@ -87,7 +89,7 @@ Shortcut: this A = J + I where J is the all-ones matrix. J has eigenvalues 3, 0,
 
 Uses: closed forms for recurrences (Fibonacci via [[1,1],[1,0]]), Markov chain steady states, differential equations x' = Ax.
 
-## 4. Cayley–Hamilton theorem
+## 4. Cayley–Hamilton theorem [PYQ: Medium]
 
 **Statement.** If p(λ) = det(λI - A) then **p(A) = 0**.
 
@@ -101,7 +103,7 @@ Uses: closed forms for recurrences (Fibonacci via [[1,1],[1,0]]), Markov chain s
 
 **Worked example 7 — expression.** For A = [[1,2],[3,2]], A² = 3A + 4I, so A² - 3A + I = 4I + I = 5I. Every eigenvalue of this matrix is 5 (matches λ² - 3λ + 1 at λ = 4 and -1: both 5).
 
-## 5. Symmetric matrices: the spectral theorem
+## 5. Symmetric matrices: the spectral theorem [PYQ: Medium]
 
 For real **symmetric** A:
 - all eigenvalues are real;
@@ -116,7 +118,7 @@ For real **symmetric** A:
 
 **Definiteness link.** Symmetric A is positive definite iff all eigenvalues > 0 (see [quadratic forms](matrices-and-determinants.md)). **Rayleigh quotient:** λ_min ≤ x^T A x / x^T x ≤ λ_max.
 
-## 6. Complex eigenvalues and other cases
+## 6. Complex eigenvalues and other cases [PYQ: Low]
 
 - A rotation by θ, [[cos θ, -sin θ],[sin θ, cos θ]], has eigenvalues e^(±iθ). For θ = 90°, [[0,-1],[1,0]]: λ² + 1 = 0 so λ = ±i. A real matrix of odd order always has at least one real eigenvalue.
 - A 2 × 2 real matrix has complex eigenvalues iff (trace)² < 4 det.
@@ -172,8 +174,8 @@ For real **symmetric** A:
 
 <details><summary>Answer</summary>
 
-**Answer:** 19  
-**Solution:** det = 12 - 2 = 10, trace = 7. Sum = 7, product = 10, so 10 + 7 = 17. Recheck: eigenvalues are roots of λ² - 7λ + 10, i.e. 2 and 5; 2·5 + 2 + 5 = **17**. (The answer is 17.)
+**Answer:** 17  
+**Solution:** det = 12 - 2 = 10, trace = 7. Eigenvalues are roots of λ² - 7λ + 10 = 0, giving λ1 = 2, λ2 = 5. Therefore λ1 λ2 + λ1 + λ2 = 10 + 7 = **17**.
 
 </details>
 
@@ -181,8 +183,8 @@ For real **symmetric** A:
 
 <details><summary>Answer</summary>
 
-**Answer:** (B)  
-**Solution:** Eigenvalues of A² + A are λ² + λ: 2, 6, 12. Product = 144... recompute: 1 + 1 = 2; 4 + 2 = 6; 9 + 3 = 12; 2 · 6 · 12 = 144. So the answer is **(C) 144**.
+**Answer:** (C)  
+**Solution:** Eigenvalues of A² + A are λ² + λ. For λ = 1, 2, 3: 1² + 1 = 2; 2² + 2 = 6; 3² + 3 = 12. Determinant is the product of eigenvalues: 2 · 6 · 12 = **144**, matching (C).
 
 </details>
 

@@ -2,9 +2,11 @@
 
 > **Paper:** CS · **Priority:** P0 · **Plan topics:** Turing machines; Undecidability
 > **Prerequisites:** [Context-free languages and PDA](context-free-languages-and-pda.md) · [Pumping lemma](pumping-lemma.md) · [Sets, relations, functions](../01-discrete-mathematics/sets-relations-functions.md) · **Leads to:** [Asymptotic analysis](../08-algorithms/asymptotic-analysis.md)
+> **PYQ weightage:** High · 17 Qs since 2015 (6 since 2021) · DA: 0 · Trend: falling · Most asked: Decidability, Recursive and Recursively Enumerable Languages, Reduction, Turing Machine
 
 ## Quick glance
 
+- **Exam focus:** Decidability and semi-decidability (halting problem, Rice's theorem, emptiness/universality across the Chomsky hierarchy, REC/RE closure); tested mostly via MCQ and MSQ.
 - **Turing machine (TM):** finite control + an infinite tape + a read/write head that moves left or right. It is the formal model of an algorithm (Church–Turing thesis). A TM can **accept, reject, or loop forever**.
 - **Recursive (REC / decidable):** some TM halts on every input and accepts exactly L. **Recursively enumerable (RE / semi-decidable):** some TM accepts exactly L (it may loop on non-members).
 - Hierarchy: **Regular ⊊ DCFL ⊊ CFL ⊊ CSL ⊊ REC ⊊ RE ⊊ all languages**. Automata: DFA/NFA, DPDA, NPDA, LBA, TM. Grammars (Chomsky types 3, 2, 1, 0).
@@ -15,7 +17,7 @@
 - Undecidable for CFGs: equivalence, universality (L = Σ*), ambiguity, disjointness (via PCP). Decidable: membership, emptiness, finiteness.
 - #1 trap: confusing "decidable" with "RE" and applying Rice's theorem to properties of the *machine* (number of states, steps taken) rather than of its *language*.
 
-## 1. The Turing machine model
+## 1. The Turing machine model [PYQ: Low]
 
 **Intuition.** A person with a pencil, an eraser and an endless strip of paper who may only look at one cell at a time and follows a fixed finite rulebook. Unlike a PDA, the tape can be read and rewritten anywhere (not just the top of a stack), which is exactly what lets it copy and compare many things.
 
@@ -79,7 +81,7 @@ Rejections: aabbc: after round 2 the tape is X X Y Y Z _ ; q2 skips Z, reaches t
 
 **Universal TM and encoding.** Every TM M is encoded as a finite string ⟨M⟩ over {0,1}. A universal TM U on input ⟨M, w⟩ simulates M on w; thus A_TM = {⟨M, w⟩ : M accepts w} is **RE**. The set of all TMs is countable, but the set of all languages is uncountable, so most languages are not RE.
 
-## 2. The Chomsky hierarchy
+## 2. The Chomsky hierarchy [PYQ: Medium]
 
 | Type | Grammar rule form | Machine | Class | Example |
 | --- | --- | --- | --- | --- |
@@ -119,7 +121,7 @@ Rejections: aabbc: after round 2 the tape is X X Y Y Z _ ; q2 skips Z, reaches t
 
 D = decidable, U = undecidable. For CSL, membership is decidable (the LBA has finitely many configurations). **Memorise the CFL row: membership, emptiness, finiteness decidable; equivalence, universality, ambiguity, disjointness undecidable.**
 
-## 3. The halting problem and diagonalisation
+## 3. The halting problem and diagonalisation [PYQ: Medium]
 
 **Intuition.** If a program existed that could decide whether any program halts, we could use it on a program that does the opposite of its own prediction, producing a contradiction. This is Cantor's diagonal argument for programs.
 
@@ -140,7 +142,7 @@ D = decidable, U = undecidable. For CSL, membership is decidable (the LBA has fi
 
 Why L(M) ≠ ∅ is RE: dovetail M on all inputs in parallel; if some input is ever accepted, accept. It is not decidable because deciding it would decide A_TM (reduction below).
 
-## 4. Reductions
+## 4. Reductions [PYQ: Low]
 
 **Mapping reduction.** A ≤_m B if a computable function f satisfies: w ∈ A ⇔ f(w) ∈ B.
 
@@ -162,7 +164,7 @@ Reduce A_TM to the complement of E_TM. Given ⟨M, w⟩, build M' that ignores i
 - **Program-level:** does a program halt on all inputs; do two programs compute the same function; is a given line of code dead (reachability); does the program output a given string. All undecidable (Rice-like).
 - **Decidable by contrast:** halting for DFAs/PDAs/LBAs; emptiness and equivalence of DFAs; word problem for CSL grammars; Presburger arithmetic; tiling a finite region.
 
-## 5. Rice's theorem
+## 5. Rice's theorem [PYQ: Medium]
 
 **Statement.** Let P be a property of Turing-recognisable languages (a set of RE languages) that is **non-trivial**: some TM's language has P and some TM's language does not. Then {⟨M⟩ : L(M) has P} is undecidable.
 
@@ -187,7 +189,7 @@ Reduce A_TM to the complement of E_TM. Given ⟨M, w⟩, build M' that ignores i
 
 The distinction between the last few rows: Rice's theorem is about *semantic* properties of the accepted language. A syntactic property (number of states, number of transitions) is decidable by inspecting the finite description; a bounded-step behaviour is decidable by simulation; **unbounded-step behaviour** (halting, reaching a state) is usually undecidable but needs its own reduction, not Rice.
 
-## 6. Classifying languages: a decision procedure
+## 6. Classifying languages: a decision procedure [PYQ: High]
 
 For "which of these languages is regular / CFL / REC / RE / not RE" questions:
 

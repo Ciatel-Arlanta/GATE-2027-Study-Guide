@@ -2,19 +2,21 @@
 
 > **Paper:** CS+DA · **Priority:** P0 · **Plan topics:** Random variables; Discrete random variables and PMFs; Continuous random variables and PDFs; Cumulative distribution function; Mean, median and mode; Standard deviation; Covariance; Correlation; Conditional expectation; Conditional variance; Conditional PDF
 > **Prerequisites:** [Probability basics](probability-basics.md) · [Integration](../04-calculus-optimization/integration.md) · **Leads to:** [Discrete distributions](discrete-distributions.md) · [Continuous distributions](continuous-distributions.md)
+> **PYQ weightage:** High · 28 Qs since 2015 (24 since 2021) · DA: 14 · Trend: rising · Most asked: Expectation & indicator variables, Random variables & PDF/CDF, Statistics (mean, median, mode), Covariance & correlation
 
 ## Quick glance
 
+- **Exam focus:** Linearity of expectation (indicator variables for hashing/permutations/bins), PDF normalization and CDF integration, covariance/correlation, and sample vs population variance; high weightage in CS and massive in DA (MCQ/NAT/MSQ).
 - A **random variable (RV)** $X$ is a function from outcomes to numbers. **Discrete:** countable values, described by a PMF $p(x)=P(X=x)$. **Continuous:** described by a PDF $f(x)\ge0$ with $\int f=1$; $P(X=x)=0$ for every single $x$.
 - **CDF** $F(x)=P(X\le x)$: non-decreasing, right-continuous, $F(-\infty)=0$, $F(\infty)=1$; for continuous $X$, $f=F'$ and $P(a<X\le b)=F(b)-F(a)$.
 - **Mean** $E[X]=\sum xp(x)=\int xf(x)dx$; **LOTUS** $E[g(X)]=\sum g(x)p(x)$. **Linearity always holds:** $E[X+Y]=E[X]+E[Y]$, independent or not.
 - **Variance** $\mathrm{Var}(X)=E[X^2]-(E[X])^2$; $\mathrm{Var}(aX+b)=a^2\mathrm{Var}(X)$; $\mathrm{Var}(X+Y)=\mathrm{Var}X+\mathrm{Var}Y+2\mathrm{Cov}(X,Y)$.
-- **Cov** $=E[XY]-E[X]E[Y]$; **correlation** $\rho=\mathrm{Cov}/(\sigma_X\sigma_Y)\in[-1,1]$. Independent $\Rightarrow$ Cov $=0$, **not conversely**.
+- **Cov** $=E[XY]-E[X]E[Y]$; **correlation** $\rho=\mathrm{Cov}/(\\sigma_X\sigma_Y)\in[-1,1]$. Independent $\Rightarrow$ Cov $=0$, **not conversely**.
 - **Indicator trick:** write a count as a sum of 0/1 variables; $E[\text{count}]=\sum P(\text{event}_i)$ — no independence needed.
 - **Total expectation:** $E[Y]=E[E[Y\mid X]]$. **Total variance:** $\mathrm{Var}(Y)=E[\mathrm{Var}(Y\mid X)]+\mathrm{Var}(E[Y\mid X])$.
 - **#1 trap:** $E[XY]=E[X]E[Y]$ and $\mathrm{Var}(X+Y)=\mathrm{Var}X+\mathrm{Var}Y$ need independence (or zero covariance); linearity of $E$ does not.
 
-## 1. Random variables, PMF and CDF
+## 1. Random variables, PMF and CDF [PYQ: High]
 
 **Intuition.** An experiment's outcome is often not a number ("HHT"); a random variable attaches a number (number of heads). Formally $X:S\to\mathbb R$.
 
@@ -43,7 +45,7 @@ Mode $=7$; $F(7)=21/36\ge\frac12$ and $F(6)=15/36<\frac12$, so the median is $7$
 
 A discrete CDF is a **staircase**; a continuous CDF is a continuous curve; a mixed RV has both.
 
-## 2. Continuous RVs and PDFs
+## 2. Continuous RVs and PDFs [PYQ: Medium]
 
 A continuous RV has a **probability density function** $f$ with $f(x)\ge0$, $\int_{-\infty}^{\infty}f=1$ and $P(a\le X\le b)=\int_a^bf(x)\,dx$.
 
@@ -63,7 +65,7 @@ A continuous RV has a **probability density function** $f$ with $f(x)\ge0$, $\in
 - Mean $=\int_0^12x^2dx=\tfrac23$; $E[X^2]=\int_0^12x^3dx=\tfrac12$; $\mathrm{Var}=\tfrac12-\tfrac49=\tfrac1{18}$.
 - Order: mean $0.667<$ median $0.707<$ mode $1$ — the typical ordering for a left-skewed density.
 
-## 3. Mean, median, mode and standard deviation
+## 3. Mean, median, mode and standard deviation [PYQ: High]
 
 | Measure | Definition | Notes |
 |---|---|---|
@@ -97,7 +99,7 @@ A continuous RV has a **probability density function** $f$ with $f(x)\ge0$, $\in
 | $E[aX+bY]=aE[X]+bE[Y]$ | **always** |
 | $E[XY]=E[X]E[Y]$ | independent (sufficient, not necessary) |
 
-## 4. Linearity of expectation and indicator variables
+## 4. Linearity of expectation and indicator variables [PYQ: High]
 
 **Idea.** To count something, write the count as $N=\sum_iI_i$ where $I_i=1$ if the $i$-th event occurs, else $0$. Then $E[I_i]=P(\text{event}_i)$ and $E[N]=\sum_iP(\text{event}_i)$ — **valid even when the events are dependent.**
 
@@ -111,7 +113,7 @@ A continuous RV has a **probability density function** $f$ with $f(x)\ge0$, $\in
 
 Other uses: expected number of inversions in a random permutation $=\binom n2/2$; expected comparisons in randomised quicksort ([Searching and sorting](../08-algorithms/searching-and-sorting.md)) is computed with indicators $X_{ij}$ = "$i$ and $j$ compared", $P=\frac2{j-i+1}$.
 
-## 5. Joint, marginal and conditional distributions (discrete)
+## 5. Joint, marginal and conditional distributions (discrete) [PYQ: Medium]
 
 For two RVs the **joint PMF** is $p(x,y)=P(X=x,Y=y)$, summing to 1. **Marginals:** $p_X(x)=\sum_yp(x,y)$, $p_Y(y)=\sum_xp(x,y)$. **Conditional:** $p(y\mid x)=p(x,y)/p_X(x)$. **Independent** iff $p(x,y)=p_X(x)p_Y(y)$ for *all* $(x,y)$.
 
@@ -132,7 +134,7 @@ For two RVs the **joint PMF** is $p(x,y)=P(X=x,Y=y)$, summing to 1. **Marginals:
 - $\mathrm{Var}(X+Y)=0.24+0.69+2(0.04)=1.01$ (direct enumeration of $X+Y$ confirms: $E[(X+Y)^2]=3.9$, $3.9-1.7^2=1.01$).
 - Conditionals: $P(Y=1\mid X=1)=0.1/0.6=1/6$; $E[Y\mid X=1]=(0\cdot0.2+1\cdot0.1+2\cdot0.3)/0.6=0.7/0.6=1.1\overline6$; $E[Y\mid X=0]=(0.2+0.2)/0.4=1$.
 
-## 6. Covariance and correlation
+## 6. Covariance and correlation [PYQ: Medium]
 
 $$\mathrm{Cov}(X,Y)=E[(X-\mu_X)(Y-\mu_Y)]=E[XY]-E[X]E[Y],\qquad \rho_{XY}=\frac{\mathrm{Cov}(X,Y)}{\sigma_X\sigma_Y}$$
 
@@ -156,7 +158,7 @@ Only for **jointly normal** variables does zero covariance imply independence.
 
 The **covariance matrix** $\Sigma_{ij}=\mathrm{Cov}(X_i,X_j)$ is symmetric positive semi-definite; its eigenvectors are the principal components ([PCA](../16-machine-learning/dimensionality-reduction-pca.md); [eigenvalues](../03-linear-algebra/eigenvalues-and-eigenvectors.md)).
 
-## 7. Conditional expectation and variance
+## 7. Conditional expectation and variance [PYQ: Medium]
 
 $E[Y\mid X=x]=\sum_yy\,p(y\mid x)$ (or $\int yf(y\mid x)dy$). Writing $E[Y\mid X]$ treats it as a random variable, a function of $X$.
 
@@ -175,7 +177,7 @@ Read the second as "average within-group variance + variance between group means
 
 Check with the joint table of Example 9: $E[Y]=P(X=0)E[Y\mid0]+P(X=1)E[Y\mid1]=0.4(1)+0.6(1.1\overline6)=0.4+0.7=1.1$ ✓.
 
-## 8. Joint PDF, marginal PDF and conditional PDF
+## 8. Joint PDF, marginal PDF and conditional PDF [PYQ: Medium]
 
 For continuous $(X,Y)$: joint density $f(x,y)\ge0$, $\iint f=1$. **Marginal:** $f_X(x)=\int f(x,y)dy$. **Conditional PDF:**
 
@@ -203,7 +205,7 @@ Independent iff $f(x,y)=f_X(x)f_Y(y)$ (the support must be a rectangle too!).
 - $E[XY]=E[X\cdot X/2]=\frac14$; $\mathrm{Cov}=\frac14-\frac23\cdot\frac13=\frac1{36}$; $\rho=\frac{1/36}{1/18}=\frac12$. (Simulation of max/min of two uniforms: $\rho\approx0.500$.)
 - Dependent: support is a triangle, not a rectangle.
 
-## 9. Transformations of random variables
+## 9. Transformations of random variables [PYQ: Low]
 
 **Linear:** $Y=aX+b$: $E[Y]=aE[X]+b$, $\mathrm{Var}Y=a^2\mathrm{Var}X$; for continuous, $f_Y(y)=\frac1{|a|}f_X\!\big(\frac{y-b}a\big)$.
 
@@ -276,10 +278,10 @@ Independent iff $f(x,y)=f_X(x)f_Y(y)$ (the support must be a rectangle too!).
 
 </details>
 
-**Q3 (MSQ).** Select all TRUE statements.
-(A) If $\mathrm{Cov}(X,Y)=0$ then $X,Y$ are independent.
-(B) If $X,Y$ are independent then $E[XY]=E[X]E[Y]$.
-(C) $E[X+Y]=E[X]+E[Y]$ for any $X,Y$ with finite means.
+**Q3 (MSQ).** Select all TRUE statements.  
+(A) If $\mathrm{Cov}(X,Y)=0$ then $X,Y$ are independent.  
+(B) If $X,Y$ are independent then $E[XY]=E[X]E[Y]$.  
+(C) $E[X+Y]=E[X]+E[Y]$ for any $X,Y$ with finite means.  
 (D) $\rho(X,Y)=\rho(2X+1,\,-3Y)$.
 
 <details><summary>Answer</summary>

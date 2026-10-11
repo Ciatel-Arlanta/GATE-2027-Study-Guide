@@ -2,11 +2,13 @@
 
 > **Paper:** DA · **Priority:** P1 · **Plan topics:** Propositional logic; Predicate logic
 > **Prerequisites:** [Propositional logic](../01-discrete-mathematics/propositional-logic.md) · [First-order logic](../01-discrete-mathematics/first-order-logic.md) · [Search](search.md) · **Leads to:** [Probabilistic reasoning](probabilistic-reasoning.md)
+> **PYQ weightage:** Medium · 2 Qs (DA 2024–2026 only) · Trend: steady · Most asked: Propositional satisfiability & equivalences, First-order predicate logic translation & inference
 
 > This chapter uses logic as a **knowledge-representation and inference** tool (entailment, resolution, chaining, unification). Syntax, equivalences, normal forms and quantifier rules are taught in full in the discrete-mathematics chapters linked above; here we focus on the algorithms.
 
 ## Quick glance
 
+- **Exam focus:** In GATE DA, logic is tested through propositional logic equivalence, validity, and satisfiability checks, as well as first-order logic predicate representations of natural language assertions and inference (resolution, forward/backward chaining), usually as MCQs and MSQs.
 - A **knowledge base** KB is a set of sentences. **Entailment** $KB\models\alpha$: every model of KB is a model of $\alpha$. **Valid** = true in all models; **satisfiable** = true in some model; **unsatisfiable** = true in none.
 - **Refutation principle**: $KB\models\alpha$ iff $KB\wedge\neg\alpha$ is unsatisfiable.
 - **Model checking** by truth table: $2^n$ rows for $n$ symbols. Propositional SAT is NP-complete.
@@ -16,7 +18,7 @@
 - **FOL**: quantifiers $\forall$, $\exists$; **unification** finds the **most general unifier (MGU)**; **Skolemisation** removes $\exists$; resolution works on clauses with unification. Entailment in FOL is **semi-decidable**.
 - #1 trap: the connective for $\forall$ is $\to$, for $\exists$ is $\wedge$ ($\forall x(\text{Cat}(x)\to\text{Mammal}(x))$, $\exists x(\text{Cat}(x)\wedge\text{Black}(x))$).
 
-## 1. Propositional logic as a knowledge representation
+## 1. Propositional logic as a knowledge representation [PYQ: Medium]
 
 **Semantics.** A **model** assigns true/false to every symbol. A sentence is true in a model if its truth table says so.
 
@@ -37,7 +39,7 @@ Enumerate the 8 models; those satisfying KB are $(P,Q,R)=(0,0,0),(0,0,1),(0,1,1)
 
 **Soundness and completeness.** An inference procedure is **sound** if it derives only entailed sentences, **complete** if it derives every entailed sentence. Truth-table checking is both, but $O(2^n)$.
 
-## 2. Inference by resolution
+## 2. Inference by resolution [PYQ: Low]
 
 **Conjunctive normal form (CNF)**: a conjunction of clauses; a clause is a disjunction of literals.
 
@@ -64,7 +66,7 @@ Clauses: (1) $\neg P\vee Q$, (2) $\neg Q\vee R$, (3) $P$, negated goal (4) $\neg
 
 **Complexity.** The number of possible clauses is $\le 3^n$; resolution can take exponential time in the worst case (propositional inference is co-NP-complete).
 
-## 3. Horn clauses and chaining
+## 3. Horn clauses and chaining [PYQ: Low]
 
 **Horn clause**: at most one positive literal. **Definite clause**: exactly one. Written as an implication $p_1\wedge\dots\wedge p_k\to q$ (a fact if $k=0$). Horn KBs are what rule-based systems use; entailment of an atom is decided in **linear time**.
 
@@ -74,11 +76,11 @@ Clauses: (1) $\neg P\vee Q$, (2) $\neg Q\vee R$, (3) $P$, negated goal (4) $\neg
 
 | Agenda pop | Rule counters updated | New facts |
 | --- | --- | --- |
-| $A$ | r4: 2$\to$1; r5: 2$\to$1 | — |
-| $B$ | r3: 2$\to$1; r5: 1$\to$0 fires | $L$ |
-| $L$ | r2: 2$\to$1; r3: 1$\to$0 fires | $M$ |
-| $M$ | r2: 1$\to$0 fires | $P$ |
-| $P$ | r1: 1$\to$0 fires; r4: 1$\to$0 fires ($L$ already known) | $Q$ |
+| $A$ | r4: 2 → 1; r5: 2 → 1 | — |
+| $B$ | r3: 2 → 1; r5: 1 → 0 fires | $L$ |
+| $L$ | r2: 2 → 1; r3: 1 → 0 fires | $M$ |
+| $M$ | r2: 1 → 0 fires | $P$ |
+| $P$ | r1: 1 → 0 fires; r4: 1 → 0 fires ($L$ already known) | $Q$ |
 | $Q$ | goal reached | |
 
 Inferred order: $A,B,L,M,P,Q$. **Query $Q$ is entailed.**
@@ -92,7 +94,7 @@ Inferred order: $A,B,L,M,P,Q$. **Query $Q$ is entailed.**
 | Cost | linear in KB size | often much less than linear |
 | Example systems | production rules | Prolog |
 
-## 4. Predicate (first-order) logic
+## 4. Predicate (first-order) logic [PYQ: Medium]
 
 **Syntax.** Constants (Socrates), variables ($x,y$), functions ($\text{Mother}(x)$), predicates ($\text{Man}(x)$, $\text{Loves}(x,y)$), connectives, quantifiers $\forall x$, $\exists x$, equality.
 
@@ -149,7 +151,7 @@ Resolve $(\ell_1\vee A)$ and $(\neg\ell_2\vee B)$ when $\ell_1,\ell_2$ unify wit
 
 **Properties.** FOL resolution is sound and **refutation-complete** (Robinson; Herbrand's theorem). Entailment in FOL is **semi-decidable**: a proof is found if the sentence is entailed, but the search may run forever if it is not.
 
-## 5. Comparing the logics
+## 5. Comparing the logics [PYQ: Low]
 
 | | Propositional | First-order |
 | --- | --- | --- |

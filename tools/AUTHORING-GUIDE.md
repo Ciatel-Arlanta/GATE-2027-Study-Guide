@@ -58,3 +58,26 @@ For each concept: intuition (plain language, an analogy if it helps) → precise
 - Correctness above all: these are exam notes. Double-check every formula, every numeric answer and every claim. If a convention varies between textbooks (e.g. tree height from 0 or 1, B-tree order definitions, Bayes vs. frequentist CI wording), state the convention you use and how GATE usually phrases it.
 - Relative links only, using exactly the file paths in [STRUCTURE.md](../STRUCTURE.md). Link to files, not to heading anchors.
 - No emojis. No filler ("In this chapter we will..."). No motivational fluff.
+
+## PYQ weightage marking
+
+Weightage comes from the real PYQ counts in [pyq-weightage-data.md](pyq-weightage-data.md), counted in October 2026 from the PYQ books in `C:\Files\GATE\PYQs Qbs\` (each `GATE ... | Question` header tallied by subtopic and year; duplicates and UGC-NET questions removed). Never invent numbers; map this guide's topics to the PYQ subtopic names and add up the counts.
+
+Levels, based on questions asked since 2015 (all CSE/IT/DA sets):
+
+Level | Chapter (sum of mapped subtopics) | Subtopic / section
+--- | --- | ---
+**High** | ≥ 15 | ≥ 6
+**Medium** | 6–14 | 2–5
+**Low** | ≤ 5 | 0–1
+
+Trend compares 2021+ with 2015–2020 per year: **rising**, **steady**, or **falling**.
+
+Where it goes in a chapter:
+
+1. A third line in the header blockquote:
+   `> **PYQ weightage:** High · 22 Qs since 2015 (9 since 2021) · DA: 0 · Trend: steady · Most asked: <2–4 subtopics>`
+2. Every numbered concept heading ends with a tag: `## 2. Bellman–Ford [PYQ: Medium]`.
+3. The first Quick glance bullet starts with `**Exam focus:**` and names what GATE asks most from this chapter, and the usual question type (MCQ / MSQ / NAT).
+
+In section READMEs, the reading-order table gains a `PYQ weightage` column, and the section summary states the subject's total since 2015 and the per-year trend. The root [WEIGHTAGE.md](../WEIGHTAGE.md) ranks every subject and chapter.

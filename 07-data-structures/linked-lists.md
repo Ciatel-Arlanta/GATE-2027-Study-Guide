@@ -2,9 +2,11 @@
 
 > **Paper:** CS+DA · **Priority:** P0 · **Plan topics:** Linked lists; Data-structure operations and complexity
 > **Prerequisites:** [Functions, recursion, structures](../05-c-programming/functions-recursion-structures.md), [Pointers, arrays, strings](../05-c-programming/pointers-arrays-strings.md) · **Leads to:** [Trees and BST](trees-and-bst.md), [Graphs](graphs.md), [Hashing](../08-algorithms/hashing.md)
+> **PYQ weightage:** Medium · 9 Qs since 2015 (4 since 2021) · DA: 0 · Trend: steady · Most asked: Pointer rewiring (reversal, deletion without head, cycle detection), list traversal code tracing, singly vs doubly linked list operation costs
 
 ## Quick glance
 
+- **Exam focus:** Tracing pointer manipulation in singly linked lists (reversing, merging, deleting a node given only its pointer), Floyd's cycle-finding algorithm, and time complexities of list variants; tested primarily as MCQ and NAT.
 - A **node** = data + pointer(s) to neighbour(s): `struct node { int data; struct node *next; };`. The list is reached through a `head` pointer; the last node's `next` is `NULL`.
 - **Insert/delete at head: O(1). Insert at tail: O(n)** (O(1) with a tail pointer). **Search and access by position: O(n).** No random access.
 - Delete a node given **only a pointer to it** in a singly list: copy the successor's data into it and unlink the successor (O(1); fails for the last node). Otherwise you need the predecessor.
@@ -15,7 +17,7 @@
 - **Doubly linked:** `prev` + `next`; delete a given node in O(1). **Circular:** last points to first, so any node reaches all.
 - The classic code trap: **order of pointer assignments** (overwriting a link before using it) and **NULL checks**.
 
-## 1. Idea and node structure
+## 1. Idea and node structure [PYQ: Low]
 
 Arrays store neighbours side by side, so inserting in the middle shifts everything. A **linked list** keeps elements anywhere in memory and joins them with pointers, like a treasure hunt where each clue tells you where the next one is.
 
@@ -42,7 +44,7 @@ Memory per node: data + one pointer (16 bytes for `int` + pointer under LP64 wit
 | Locality / cache | excellent | poor |
 | Size | fixed (or realloc) | dynamic |
 
-## 2. Singly linked list operations
+## 2. Singly linked list operations [PYQ: High]
 
 ### 2.1 Traversal, search, length
 
@@ -256,7 +258,7 @@ void f(struct node *h) { if (h == NULL) return; printf("%d ", h->data); if (h->n
 ```
 On `1 → 2 → 3 → 4 → 5`: prints `1 3 5 5 3 1` (visits alternate nodes going down, prints each again going up). On `1 → 2 → 3 → 4`: `1 3`, then `f(NULL)` returns: output `1 3 3 1`.
 
-## 3. Doubly linked and circular lists
+## 3. Doubly linked and circular lists [PYQ: Medium]
 
 **Doubly linked:** `struct dnode { int data; struct dnode *prev, *next; };`
 
@@ -282,7 +284,7 @@ NULL <-[ |10| ]<->[ |20| ]<->[ |30| ]-> NULL
 
 **Deleting the last node of a singly linked list is O(n) even with a tail pointer** because the predecessor must be found.
 
-## 4. Linked list as other structures
+## 4. Linked list as other structures [PYQ: Low]
 
 - **Stack:** push/pop at the head, both O(1) ([stacks](arrays-stacks-queues.md)).
 - **Queue:** enqueue at the tail, dequeue at the head, with head and tail pointers, both O(1).

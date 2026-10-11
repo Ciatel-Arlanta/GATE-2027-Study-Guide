@@ -2,8 +2,10 @@
 
 > **Paper:** CS+DA · **Priority:** P0 · **Plan topics:** Matrices and matrix operations; Determinants; Idempotent matrices; Partition matrices and properties; Quadratic forms
 > **Prerequisites:** [Vector spaces](vector-spaces.md) · **Leads to:** [Linear systems and LU](linear-systems-and-lu.md) · [Eigenvalues and eigenvectors](eigenvalues-and-eigenvectors.md)
+> **PYQ weightage:** High · 16 Qs since 2015 (12 since 2021) · DA: 5 · Trend: rising · Most asked: Matrix, Determinant
 
 ## Quick glance
+- **Exam focus:** Determinant calculations (row operation properties, det(kA) = k^n det(A), block triangular determinants), matrix inverse & adjugate relationships (det(adj A) = (det A)^(n-1)), idempotent matrix properties (rank = trace), and positive definiteness of quadratic forms (Sylvester criterion). Tested via NAT calculations and MSQ/MCQs across CS and DA.
 - Matrix product (AB)_ij = row i of A · column j of B; needs (m × n)(n × p). **AB ≠ BA** in general. (AB)^T = B^T A^T, (AB)^-1 = B^-1 A^-1 (order reverses).
 - det: triangular matrix = product of diagonal. **Row swap flips sign; scaling a row by c multiplies det by c; adding a multiple of a row changes nothing.**
 - det(AB) = det A det B; det(A^T) = det A; **det(kA) = k^n det A**; det(A^-1) = 1/det A; A invertible iff det ≠ 0.
@@ -13,7 +15,7 @@
 - Quadratic form x^T A x with A symmetric. **Positive definite iff all eigenvalues > 0 iff all leading principal minors > 0.**
 - **#1 trap:** det(A + B) ≠ det A + det B; and (A + B)^2 ≠ A^2 + 2AB + B^2 unless AB = BA.
 
-## 1. Matrix operations
+## 1. Matrix operations [PYQ: High]
 
 **Intuition.** A matrix is a table that stands for a linear map; the product AB means "apply B first, then A".
 
@@ -39,7 +41,7 @@
 
 **Symmetric / skew decomposition.** Every square A = (A + A^T)/2 + (A - A^T)/2: symmetric part + skew part. This is the source of "symmetrise the quadratic form".
 
-## 2. Determinants
+## 2. Determinants [PYQ: High]
 
 **Definition (n = 2, 3).** det [[a,b],[c,d]] = ad - bc. For larger n use **cofactor expansion** along any row/column: det A = Σ_j a_ij C_ij, with C_ij = (-1)^(i+j) M_ij (M_ij is the minor, determinant after deleting row i and column j). Sign pattern:
 
@@ -84,7 +86,7 @@ det = 2·(-1·5 - 4·2) - 1·(0·5 - 4·1) + 3·(0·2 - (-1)·1) = 2(-13) - 1(-4
 
 **Vandermonde.** det [[1,a,a²],[1,b,b²],[1,c,c²]] = (b - a)(c - a)(c - b).
 
-## 3. Inverse and adjugate
+## 3. Inverse and adjugate [PYQ: Medium]
 
 **Definition.** A is invertible iff det A ≠ 0. The inverse is A^-1 = adj(A) / det(A), where adj(A) is the **transpose of the cofactor matrix**.
 
@@ -100,7 +102,7 @@ det = 2·(-1·5 - 4·2) - 1·(0·5 - 4·1) + 3·(0·2 - (-1)·1) = 2(-13) - 1(-4
 
 **Inverse facts:** (A^-1)^-1 = A; (kA)^-1 = A^-1/k; inverse of a diagonal matrix inverts the diagonal; inverse of an upper triangular matrix is upper triangular (diagonal entries 1/a_ii). Computation by Gauss–Jordan is in [linear systems](linear-systems-and-lu.md).
 
-## 4. Special matrices
+## 4. Special matrices [PYQ: Medium]
 
 | Type | Definition | Eigenvalue / other facts |
 |---|---|---|
@@ -121,7 +123,7 @@ det = 2·(-1·5 - 4·2) - 1·(0·5 - 4·1) + 3·(0·2 - (-1)·1) = 2(-13) - 1(-4
 
 **Worked example 7 — nilpotent / involutory.** N = [[0,1],[0,0]]: N² = 0. Then (I + N)^-1 = I - N. The reflection [[0,1],[1,0]] satisfies A² = I.
 
-## 5. Partitioned (block) matrices
+## 5. Partitioned (block) matrices [PYQ: Low]
 
 Treat blocks like entries, **provided sizes are compatible**: [[A,B],[C,D]] [[E,F],[G,H]] = [[AE + BG, AF + BH],[CE + DG, CF + DH]]. Order of block products matters (non-commutative). Transpose: [[A,B],[C,D]]^T = [[A^T, C^T],[B^T, D^T]].
 
@@ -145,7 +147,7 @@ Treat blocks like entries, **provided sizes are compatible**: [[A,B],[C,D]] [[E,
 3. S = D - (1/5)[[-1,3],[2,-1]] = [[21/5, 2/5],[3/5, 16/5]]; det S = (336 - 6)/25 = 330/25 = 66/5.
 4. det B = 5 · 66/5 = **66**. (Direct computation also gives 66.)
 
-## 6. Quadratic forms
+## 6. Quadratic forms [PYQ: Medium]
 
 **Definition.** A quadratic form in x = (x1..xn) is q(x) = x^T A x = Σ a_ij x_i x_j. Only the symmetric part of A matters because x^T A x = x^T ((A + A^T)/2) x. So **always symmetrise first**: the coefficient of x_i x_j (i ≠ j) splits equally, a_ij = a_ji = (coefficient)/2.
 

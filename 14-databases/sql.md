@@ -2,9 +2,11 @@
 
 > **Paper:** CS+DA · **Priority:** P0 · **Plan topics:** SQL
 > **Prerequisites:** [Relational model, algebra, calculus](relational-model-algebra-calculus.md) · **Leads to:** [Constraints and normalization](constraints-and-normalization.md), [Transactions and concurrency](transactions-and-concurrency.md)
+> **PYQ weightage:** High · 26 Qs since 2015 (13 since 2021) · DA: 5 · Trend: steady · Most asked: Nested subqueries (IN / EXISTS), GROUP BY & HAVING, Aggregates with NULLs, Joins
 
 ## Quick glance
 
+- **Exam focus:** GATE frequently asks for the output tuple count or query equivalence of nested subqueries (`NOT IN` vs `NOT EXISTS` with NULLs), `GROUP BY` with `HAVING` conditions, and outer join aggregations, typically as MCQ or NAT.
 - **Logical evaluation order:** `FROM` (and joins) → `WHERE` → `GROUP BY` → `HAVING` → `SELECT` → `DISTINCT` → `ORDER BY`. Aliases defined in SELECT are not visible in WHERE.
 - SQL tables are **multisets**: `SELECT` keeps duplicates unless `DISTINCT`; `UNION/INTERSECT/EXCEPT` remove duplicates unless `ALL`.
 - **Three-valued logic:** comparison with NULL is *unknown*; `WHERE` keeps only **true** rows. `x NOT IN (…NULL…)` never returns true.
@@ -14,7 +16,7 @@
 - "For all" queries = **double NOT EXISTS** (or GROUP BY + HAVING COUNT).
 - **Trap:** `COUNT(*)` after a LEFT JOIN counts the NULL-padded row as 1; `COUNT(col)` counts 0.
 
-## 1. Sample data used in every example
+## 1. Sample data used in every example [PYQ: Low] [PYQ: Low]
 
 All outputs below were produced by running the queries in SQLite (ANY/ALL results use standard SQL semantics, SQLite lacks those operators).
 
@@ -28,7 +30,7 @@ Student(sid, name, dept, age)     Course(cid, title, credits)    Enroll(sid, cid
 T(a): 1, 2, NULL     U(a): 2, 2, 3     E(a): empty
 ```
 
-## 2. DDL and DML
+## 2. DDL and DML [PYQ: Low] [PYQ: Low]
 
 ```sql
 CREATE TABLE Student (
@@ -60,7 +62,7 @@ DELETE FROM Student WHERE age IS NULL;   -- structure remains
 
 `DELETE` removes rows (can have WHERE, can roll back); `DROP` removes the table; `TRUNCATE` empties it.
 
-## 3. SELECT and evaluation order
+## 3. SELECT and evaluation order [PYQ: High] [PYQ: High]
 
 ```sql
 SELECT   dept, COUNT(*) AS n, AVG(age)
@@ -96,7 +98,7 @@ Rule: every column in SELECT must be a group-by column or inside an aggregate (w
 
 Adding `HAVING COUNT(*) > 1` keeps CS and EE only. `WHERE COUNT(*) > 1` would be a **syntax error** (aggregates are not allowed in WHERE).
 
-## 4. NULLs and three-valued logic
+## 4. NULLs and three-valued logic [PYQ: High] [PYQ: High]
 
 | p | q | p AND q | p OR q | NOT p |
 | --- | --- | --- | --- | --- |
@@ -112,7 +114,7 @@ Adding `HAVING COUNT(*) > 1` keeps CS and EE only. `WHERE COUNT(*) > 1` would be
 - `NULL = NULL` is unknown. In `GROUP BY`, `DISTINCT`, and set operations (UNION etc.), NULLs **are treated as equal** to each other.
 - `COUNT(DISTINCT dept)` = 3.
 
-## 5. Joins
+## 5. Joins [PYQ: High] [PYQ: High]
 
 ```sql
 SELECT s.name, e.cid
@@ -133,7 +135,7 @@ Result (9 rows): Asha C1, C2, C3; Bala C1; Chitra C2; **Dev NULL**; Esha C1, C2,
 
 Replacing `COUNT(e.cid)` by `COUNT(*)` gives **Dev 1**: the padded row exists, though no enrollment does.
 
-## 6. Subqueries
+## 6. Subqueries [PYQ: High] [PYQ: High]
 
 ### 6.1 IN, NOT IN, EXISTS, NOT EXISTS
 
@@ -184,7 +186,7 @@ Read as: no course exists that the student has not taken. Output: **Asha, Esha**
 
 `SELECT MAX(marks) FROM Enroll WHERE marks < (SELECT MAX(marks) FROM Enroll);` = 90 is the max, so the answer is **80**.
 
-## 7. Set operations
+## 7. Set operations [PYQ: Medium] [PYQ: Medium]
 
 | Operator | Duplicates | Multiplicity rule (m, n copies) |
 | --- | --- | --- |
@@ -197,7 +199,7 @@ Read as: no course exists that the student has not taken. Output: **Asha, Esha**
 
 With U = {2,2,3}, T = {1,2,NULL}: `U UNION T` = {1,2,3,NULL}; `U UNION ALL T` has 6 rows; `U INTERSECT T` = {2}; `U EXCEPT T` = {3}; `U EXCEPT ALL T` = {2,3} (one 2 cancelled). The operands need compatible columns.
 
-## 8. Aggregation and grouping details
+## 8. Aggregation and grouping details [PYQ: High] [PYQ: High]
 
 - `SELECT sid, SUM(marks) FROM Enroll GROUP BY sid` → (1,210), (2,60), (3,**NULL**), (5,210). Chitra's only mark is NULL, so SUM is NULL, not 0.
 - `GROUP BY sid HAVING AVG(marks) > 65` → sids **1 and 5** (averages 70; Bala 60; Chitra NULL, excluded as unknown).
@@ -207,7 +209,7 @@ With U = {2,2,3}, T = {1,2,NULL}: `U UNION T` = {1,2,3,NULL}; `U UNION ALL T` ha
 - Cannot nest aggregate functions directly (`MAX(AVG(x))`) in standard SQL.
 - `ORDER BY` default is ASC; NULL ordering is implementation-defined.
 
-## 9. Views
+## 9. Views [PYQ: Low] [PYQ: Low]
 
 ```sql
 CREATE VIEW EEStudents AS SELECT sid, name FROM Student WHERE dept = 'EE';

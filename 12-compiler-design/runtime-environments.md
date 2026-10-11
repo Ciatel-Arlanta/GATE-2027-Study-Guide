@@ -2,9 +2,11 @@
 
 > **Paper:** CS · **Priority:** P1 · **Plan topics:** Runtime environments
 > **Prerequisites:** [Functions, recursion and structures in C](../05-c-programming/functions-recursion-structures.md) · [Syntax-directed translation](syntax-directed-translation.md) · **Leads to:** [Intermediate code generation](intermediate-code-generation.md)
+> **PYQ weightage:** Low · 3 Qs since 2015 (2 since 2021) · DA: 0 · Trend: rising · Most asked: Runtime Environment, Parameter Passing
 
 ## Quick glance
 
+- **Exam focus:** Activation records and stack layout, static vs dynamic scoping resolution, and parameter passing evaluation (call by value, reference, name, value-result); tested via MCQ and NAT tracing.
 - At run time a program's memory is organised as **code, static data, heap, stack** (stack and heap grow toward each other). Each procedure call gets an **activation record (frame)** on the stack; recursion needs it, so languages with recursion use stack allocation.
 - Activation record fields (top of the frame to bottom, one convention): **actual parameters, return value, control (dynamic) link, access (static) link, saved machine status (return address, registers), local variables, temporaries.**
 - **Control link** points to the caller's frame (dynamic chain, used to pop). **Access link** points to the frame of the lexically enclosing procedure (static chain, used to reach non-local variables). **Display** replaces the chain by an array: `d[i]` = the latest frame at nesting depth i.
@@ -14,7 +16,7 @@
 - Total calls vs depth: `fib(5)` makes 15 calls but at most depth 5 (plus main) activation records alive at once.
 - #1 trap: dynamic scoping and call-by-name give different output from static scoping/call-by-reference on the same code; read which discipline the question states.
 
-## 1. Storage organisation
+## 1. Storage organisation [PYQ: Low]
 
 ```text
 low addresses
@@ -42,7 +44,7 @@ high addresses
 
 **Dangling reference.** Returning the address of a local variable or using freed heap memory: the storage is gone while a pointer remains. (See [Pointers, arrays, strings](../05-c-programming/pointers-arrays-strings.md).)
 
-## 2. Activation records
+## 2. Activation records [PYQ: Medium]
 
 An **activation** is one execution of a procedure body. Its record is created at the call and destroyed at the return. Fields (order varies by implementation):
 
@@ -82,7 +84,7 @@ Recursive `int fib(int n) { return n < 2 ? n : fib(n-1) + fib(n-2); }` called as
 - Maximum number of activation records alive at the same time: the deepest chain fib(5) → fib(4) → fib(3) → fib(2) → fib(1) has **5** frames; with main, **6**. In general depth(fib(n)) = n for n ≥ 1.
 - For `fact(n)` recursion (n calls to depth n, n ≥ 1), the stack holds n frames at the deepest point (plus main); the control links form a chain n → n−1 → … → 1 → main.
 
-## 3. Scope: static vs dynamic
+## 3. Scope: static vs dynamic [PYQ: Low]
 
 **Static (lexical) scope:** the binding of a non-local name is determined by where the procedure is *written*. **Dynamic scope:** by where it is *called from* (the most recent active binding).
 
@@ -121,7 +123,7 @@ begin P end.
 
 **Dynamic scoping implementations.** *Deep access:* search the control-link chain for the name. *Shallow access:* keep a central table/stack per name, save and restore its value at entry and exit of each scope. Dynamic scope makes static type checking difficult and is rare (older Lisp, shell variables, Perl's `local`).
 
-## 4. Parameter passing
+## 4. Parameter passing [PYQ: Low]
 
 | Method | What is passed | Effect |
 | --- | --- | --- |
@@ -152,7 +154,7 @@ C passes everything by value (pointers give reference behaviour); C++ has refere
 
 Call by name re-evaluates `a[i]` with the new value of i, so it modifies a different element: the classic reason swap fails with call by name (Jensen's device). All four outcomes were checked by a program.
 
-## 5. Heap management and garbage collection
+## 5. Heap management and garbage collection [PYQ: Low]
 
 **Heap allocation.** The allocator keeps a **free list** of blocks; strategies: first fit, best fit, worst fit, next fit. Problems: **external fragmentation** (free memory scattered in pieces too small), internal fragmentation (rounding up), **coalescing** adjacent free blocks on `free`. Malloc blocks carry a header with size.
 
@@ -166,7 +168,7 @@ Call by name re-evaluates `a[i]` with the new value of i, so it modifies a diffe
 
 **Memory-safety terms.** *Memory leak:* allocated memory never freed and no longer reachable (in C, forgetting `free`). *Dangling pointer:* points to freed storage. *Double free:* freeing twice.
 
-## 6. Other runtime topics
+## 6. Other runtime topics [PYQ: Low]
 
 - **Symbol table at run time** is not needed in compiled code; names become addresses (offsets from the frame pointer, or fixed static addresses).
 - **Variable-length data** (e.g. dynamic arrays declared locally) is placed in the frame using a pointer to the actual data kept at a fixed offset, or on the heap.

@@ -2,9 +2,11 @@
 
 > **Paper:** CS+DA · **Priority:** P0 · **Plan topics:** Relational model; Relational algebra; Tuple calculus
 > **Prerequisites:** [ER model](er-model.md), [Sets, relations, functions](../01-discrete-mathematics/sets-relations-functions.md), [First-order logic](../01-discrete-mathematics/first-order-logic.md) · **Leads to:** [SQL](sql.md), [Constraints and normalization](constraints-and-normalization.md)
+> **PYQ weightage:** High · 29 Qs since 2015 (17 since 2021) · DA: 7 · Trend: rising · Most asked: Relational algebra operators, Tuple relational calculus, Referential integrity & keys
 
 ## Quick glance
 
+- **Exam focus:** GATE heavily tests Relational Algebra expressions (join conditions, division, set difference) and their equivalence to Tuple Relational Calculus (TRC), along with foreign key / referential integrity cascade constraints, in both MCQ and NAT formats (and frequently in the DA paper).
 - A **relation** is a **set** of tuples over a schema; **degree** = number of attributes, **cardinality** = number of tuples. Order of tuples and attributes does not matter; **no duplicate tuples** (in the pure model).
 - Keys: **super key** (unique), **candidate key** (minimal super key), **primary key** (chosen one, no NULL), **alternate key** (unchosen candidates), **foreign key** (refers to a candidate/primary key of another relation).
 - Relational algebra operators: **σ** select, **π** project (removes duplicates), **ρ** rename, **∪ ∩ −** (union-compatible), **×** product, **⋈** joins, **÷** division.
@@ -13,7 +15,7 @@
 - TRC: `{t | P(t)}`. Universal quantification: `∀x P` ≡ `¬∃x ¬P`; "for all" queries become **division** in RA and **double NOT EXISTS** in SQL.
 - **Trap:** π removes duplicates, SQL SELECT does not; NULL never equals NULL in a join condition.
 
-## 1. The relational model
+## 1. The relational model [PYQ: Medium] [PYQ: Medium]
 
 Data is stored as **relations** (tables). Formally, a relation schema R(A1, ..., An) with domains D1, ..., Dn; a **relation instance** r is a **finite subset** of D1 × ... × Dn.
 
@@ -54,7 +56,7 @@ For schema R and attribute set K:
 
 NULL means "unknown" or "not applicable". Any comparison with NULL (including NULL = NULL) yields **unknown**, not true. In a join or selection only tuples where the predicate is **true** pass. Primary key attributes must be non-NULL (entity integrity). A foreign key may be NULL (the reference is simply absent). See [SQL](sql.md) for the three-valued logic tables.
 
-## 2. Relational algebra
+## 2. Relational algebra [PYQ: High] [PYQ: High]
 
 A **procedural** query language: operators take relations and return relations, so they compose. **Pure RA treats relations as sets** (duplicates removed after every operation that could create them).
 
@@ -168,7 +170,7 @@ R has m tuples, S has n tuples:
 
 "And" across rows of the same table cannot use a single σ (a row has one cid); use intersection or a self-join with ρ.
 
-## 3. Tuple relational calculus (TRC)
+## 3. Tuple relational calculus (TRC) [PYQ: Medium] [PYQ: Medium]
 
 Declarative: describe **what** to return, not how. A query is
 

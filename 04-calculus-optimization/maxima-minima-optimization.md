@@ -2,8 +2,10 @@
 
 > **Paper:** CS+DA · **Priority:** P0 · **Plan topics:** Maxima and minima; Single-variable optimization
 > **Prerequisites:** [Limits, continuity, differentiability](limits-continuity-differentiability.md) · [Mean value theorems and Taylor](mean-value-theorems-and-taylor.md) · **Leads to:** [Integration](integration.md) · [Linear and logistic regression](../16-machine-learning/linear-and-logistic-regression.md) · [Neural networks](../16-machine-learning/neural-networks.md)
+> **PYQ weightage:** Medium · 8 Qs since 2015 (5 since 2021) · DA: 4 · Trend: rising · Most asked: Maxima Minima, Critical points, Convexity & Optimization
 
 ## Quick glance
+- **Exam focus:** Finding local extrema via first and second derivative tests, determining global (absolute) extrema on closed intervals (checking critical points and endpoints), testing convexity (f''(x) ≥ 0), and 1-D gradient descent updates. Rising weightage in GATE CS and especially DA (frequent 2-mark NATs and MSQs).
 - **Critical point:** f'(c) = 0 or f'(c) does not exist (c in the domain). Extrema occur only at critical points or endpoints.
 - **First derivative test:** f' changes + → - at c: local max; - → +: local min; no sign change: neither.
 - **Second derivative test:** f'(c) = 0 and f''(c) > 0: local min; f''(c) < 0: local max; f''(c) = 0: **inconclusive** (use the first-derivative test or higher derivatives).
@@ -13,7 +15,7 @@
 - **Gradient descent (1-D):** w ← w - η f'(w). For f(w) = (w - w*)² it converges iff 0 < η < 1.
 - #1 trap: f' = 0 does not guarantee an extremum (x³ at 0), and forgetting the **endpoints** when asked for a global extremum on a closed interval.
 
-## 1. Increasing, decreasing, critical points
+## 1. Increasing, decreasing, critical points [PYQ: Medium]
 
 **Intuition.** The sign of f' says whether the graph climbs or falls. A peak or valley must be flat (f' = 0) or sharp (f' undefined).
 
@@ -37,7 +39,7 @@
     0   1    2    3    4
 ```
 
-## 2. The tests for local extrema
+## 2. The tests for local extrema [PYQ: High]
 
 **First derivative test.** Let c be a critical point. Look at the sign of f' just left and right of c.
 
@@ -59,7 +61,7 @@ Works also when f' does not exist at c (e.g. f(x) = |x| has a min at 0; f(x) = x
 
 **Worked example 4 — x² e^(-x).** f' = (2x - x²) e^(-x) = x(2 - x) e^(-x): critical points 0 and 2. Sign: - for x < 0, + on (0, 2), - for x > 2. **Local min at 0 (f = 0), local max at 2 (f = 4/e² ≈ 0.541).**
 
-## 3. Global extrema on a closed interval
+## 3. Global extrema on a closed interval [PYQ: Medium]
 
 **Method (closed interval method).** For continuous f on [a, b]:
 1. Find all critical points in (a, b).
@@ -74,7 +76,7 @@ Works also when f' does not exist at c (e.g. f(x) = |x| has a min at 0; f(x) = x
 
 **On open or unbounded domains** the global extremum may not exist: check limits at the boundary (as x → ±∞ or at open ends). f(x) = x e^(-x) on R: f → -∞ as x → -∞, so no global minimum.
 
-## 4. Convexity, concavity, inflection
+## 4. Convexity, concavity, inflection [PYQ: Medium]
 
 **Definition.** f is **convex** (concave up) on an interval if f(λx + (1 - λ)y) ≤ λ f(x) + (1 - λ) f(y) for all x, y and λ ∈ [0, 1] (chord above the graph). Twice-differentiable: **convex ⇔ f'' ≥ 0**; strictly convex if f'' > 0. **Concave** ⇔ f'' ≤ 0.
 
@@ -98,7 +100,7 @@ Works also when f' does not exist at c (e.g. f(x) = |x| has a min at 0; f(x) = x
 
 **Worked example 8.** f(x) = x⁴ - 4x³: f'' = 12x(x - 2): positive for x < 0, negative on (0, 2), positive for x > 2. Inflection points at x = 0 and x = 2; f is convex on (-∞, 0] and [2, ∞), concave on [0, 2].
 
-## 5. Optimisation word problems
+## 5. Optimisation word problems [PYQ: Medium]
 
 **Method.** (1) Name the variable and write the quantity to optimise as a function of **one** variable using the constraint. (2) Fix the domain. (3) Differentiate, solve f' = 0. (4) Confirm max/min with f'' or endpoints. (5) Answer the question asked (value or argument).
 
@@ -112,7 +114,7 @@ Works also when f' does not exist at c (e.g. f(x) = |x| has a min at 0; f(x) = x
 
 **Worked example 13 — fencing.** 100 m of fence enclose a rectangle with one side along a wall. Sides x, y with 2x + y = 100, area A = x(100 - 2x). A' = 100 - 4x = 0, x = 25, y = 50, **A = 1250 m²** (A'' = -4 < 0).
 
-## 6. Optimisation in machine learning (1-D intuition)
+## 6. Optimisation in machine learning (1-D intuition) [PYQ: Medium]
 
 **Gradient descent.** To minimise a differentiable f, repeat **w ← w - η f'(w)**, η > 0 the learning rate. It moves downhill; at a stationary point f' = 0 it stops.
 

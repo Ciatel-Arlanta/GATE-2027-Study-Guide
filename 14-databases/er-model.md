@@ -2,9 +2,11 @@
 
 > **Paper:** CS+DA · **Priority:** P1 · **Plan topics:** ER model
 > **Prerequisites:** [Sets, relations, functions](../01-discrete-mathematics/sets-relations-functions.md) · **Leads to:** [Relational model, algebra, calculus](relational-model-algebra-calculus.md), [Constraints and normalization](constraints-and-normalization.md)
+> **PYQ weightage:** Medium · 8 Qs since 2015 (2 since 2021) · DA: 0 · Trend: falling · Most asked: ER-to-relational mapping (minimum tables), Cardinality and participation constraints, Weak entities
 
 ## Quick glance
 
+- **Exam focus:** GATE primarily asks for the **minimum number of relational tables** needed to represent a given ER diagram (accounting for 1:1 total participation merges, 1:N foreign keys, and M:N relationship tables), typically as NAT numericals or MCQs.
 - **Entity** = a distinguishable real-world object; **entity set** = collection of similar entities; **attribute** = property; **relationship** = association among entities; **relationship set** = collection of similar relationships.
 - Attribute kinds: simple, composite, **multivalued** (double ellipse), **derived** (dashed ellipse), **key** (underlined).
 - **Cardinality ratio** (1:1, 1:N, N:1, M:N) says how many entities on one side can be related to one entity on the other; **participation** (total = double line, partial = single line) says whether *every* entity must take part.
@@ -13,11 +15,11 @@
 - **Minimum number of tables** is the standard GATE question: count entities, subtract merges (1:1, 1:N, N:1 relationships), add M:N relationships and multivalued attributes.
 - **Trap:** total participation matters for merging 1:1 (both total gives a *single* table); for 1:N it only decides whether the FK is NOT NULL, not the table count.
 
-## 1. Why a conceptual model
+## 1. Why a conceptual model [PYQ: Low] [PYQ: Low]
 
 Before creating tables we draw a picture of the data: what things exist, what facts we store about them, and how they connect. The ER diagram is that picture. It is independent of any DBMS and is later **mapped** to relations (Section 6). Think of it as the floor plan before the construction drawing.
 
-## 2. Entities and attributes
+## 2. Entities and attributes [PYQ: Low] [PYQ: Low]
 
 - **Entity**: an object that exists and is distinguishable from others (a student with roll 21CS101).
 - **Entity set**: all entities of one type (the set of all students). Drawn as a rectangle.
@@ -37,7 +39,7 @@ Before creating tables we draw a picture of the data: what things exist, what fa
 
 **Entity set with no key = weak entity set** (Section 4).
 
-## 3. Relationships, cardinality, participation
+## 3. Relationships, cardinality, participation [PYQ: Medium] [PYQ: Medium]
 
 A **relationship** associates two or more entities (Student *enrolls in* Course). Drawn as a diamond. Its **degree** is the number of participating entity sets: binary (2), ternary (3), and so on. A relationship can carry its own attributes (grade on *enrolls in*), and these attributes belong to the **relationship**, not to either entity (for M:N, the grade depends on the *pair*).
 
@@ -70,7 +72,7 @@ erDiagram
 
 Crow's-foot reading: `||` exactly one, `o|` zero or one, `|{` one or many, `o{` zero or many.
 
-## 4. Weak entities
+## 4. Weak entities [PYQ: Low] [PYQ: Low]
 
 A **weak entity set** has no sufficient attributes to form a primary key. Each weak entity is identified only **in the context of an owner (identifying/strong) entity**.
 
@@ -82,7 +84,7 @@ A **weak entity set** has no sufficient attributes to form a primary key. Each w
 
 **Example.** Employee(**EID**, Name) owns Dependent(*DepName*, Age). Two employees can both have a dependent named "Ravi", so DepName alone is not a key. Key of Dependent = (EID, DepName).
 
-## 5. Specialisation and generalisation (EER)
+## 5. Specialisation and generalisation (EER) [PYQ: Low] [PYQ: Low]
 
 - **Specialisation** (top-down): split a set into sub-classes with extra attributes or relationships (Employee into Engineer, Manager). Drawn with an **ISA triangle**.
 - **Generalisation** (bottom-up): combine similar sets into a super-class (Car and Truck into Vehicle).
@@ -101,7 +103,7 @@ Mapping options:
 | Table per subclass only (copy super attributes into each) | k | Specialisation is **total and disjoint** |
 | Single table with a type attribute | 1 | Few extra attributes; produces NULLs |
 
-## 6. ER to relational mapping
+## 6. ER to relational mapping [PYQ: High] [PYQ: High]
 
 **Rules (each in one line):**
 

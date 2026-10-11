@@ -2,9 +2,11 @@
 
 > **Paper:** CS · **Priority:** P1 · **Plan topics:** I/O interface; Interrupts; DMA
 > **Prerequisites:** [Memory hierarchy and cache](memory-hierarchy-and-cache.md), [Sequential circuits](../09-digital-logic/sequential-circuits.md) · **Leads to:** [Operating systems](../13-operating-systems/README.md) (device management, interrupt handling)
+> **PYQ weightage:** Medium · 11 Qs since 2015 (9 since 2021) · DA: 0 · Trend: rising · Most asked: DMA, Interrupts, IO Handling
 
 ## Quick glance
 
+- **Exam focus:** DMA cycle stealing vs burst mode transfer time and CPU slowdown percentage, interrupt service routine (ISR) latency and vector address calculation, and interrupt priority resolution (daisy chaining vs polling). Common formats: NAT for percentage of CPU time consumed by DMA/interrupts or transfer durations; MCQ for vectored vs non-vectored interrupt mechanisms.
 - An **I/O interface** (controller) sits between the CPU bus and a device: it has **data, status and control registers** (ports) and translates speed/format.
 - **Memory-mapped I/O:** device registers share the memory address space, ordinary LOAD/STORE; **isolated I/O:** separate address space with IN/OUT.
 - Three transfer techniques: **programmed I/O** (CPU polls status; busy-waiting), **interrupt-driven I/O** (device signals when ready; CPU does useful work meanwhile), **DMA** (controller moves blocks between device and memory without the CPU per word).
@@ -14,7 +16,7 @@
 - **CPU fraction** for polling $=\dfrac{\text{polls/s}\times\text{cycles per poll}}{\text{clock rate}}$; for interrupts $=\dfrac{\text{interrupts/s}\times\text{cycles per interrupt}}{\text{clock rate}}$; for DMA only the setup + completion interrupt per **block** count.
 - #1 trap: interrupt cost is per **transfer unit** (per word/byte); DMA cost is per **block**, so DMA wins for fast block devices.
 
-## 1. I/O interface
+## 1. I/O interface [PYQ: Low]
 
 **Peripheral devices** differ in speed (keyboard: bytes/s; disk: MB/s), data format, and timing, so each is attached through an **interface/controller**.
 
@@ -38,7 +40,7 @@ The CPU addresses these registers as either memory locations (memory-mapped) or 
 
 **I/O processors / channels** are small processors that execute channel programs, offloading even the DMA bookkeeping from the CPU.
 
-## 2. Programmed I/O (polling)
+## 2. Programmed I/O (polling) [PYQ: Low]
 
 The CPU loops reading the status register until READY, then moves the data:
 
@@ -58,7 +60,7 @@ loop:  IN   R1, STATUS
 - **Floppy-style device** delivering 50 KB/s in 2-byte units $\to25000$ polls/s: $25000\times400=10^7$ cycles/s $=1\%$.
 - **Disk** at 4 MB/s ($10^6$ bytes = 1 MB here) in 16-byte chunks $\to250000$ polls/s: $2.5\times10^5\times400=10^8$ cycles/s $=10\%$ (while the transfer is active).
 
-## 3. Interrupt-driven I/O
+## 3. Interrupt-driven I/O [PYQ: Medium]
 
 The device raises an **interrupt request (IRQ)** when it is ready; the CPU continues computing until then.
 
@@ -108,7 +110,7 @@ CPU --INTA--> [Dev1] --> [Dev2] --> [Dev3]  (highest priority nearest the CPU)
 
 **Worked example 5 (priority).** Devices D1, D2, D3 on a daisy chain (D1 nearest). D2 and D3 request simultaneously: D2 receives INTA first and blocks it, so **D2 is served first**; D3 waits until D2's request clears. If D1 requests during D2's ISR and nesting is enabled, D1 preempts.
 
-## 4. Direct memory access (DMA)
+## 4. Direct memory access (DMA) [PYQ: Medium]
 
 A **DMA controller** moves data between an I/O device and memory by itself acting as a bus master. Registers: **address register** (memory address), **word/byte count**, **control/status** (direction, start).
 
@@ -153,7 +155,7 @@ Both modes steal the **same total** bandwidth, but burst mode makes the CPU wait
 
 **Cache interaction:** DMA writes to memory bypass the cache, so the cache may hold **stale** data (and a write-back cache may hold newer data than memory). Systems flush/invalidate cache lines or use coherent DMA. See [Memory hierarchy and cache](memory-hierarchy-and-cache.md).
 
-## 5. Bus arbitration (brief)
+## 5. Bus arbitration (brief) [PYQ: Low]
 
 When several masters (CPU, DMA controllers) want the bus: **daisy-chain arbitration** (bus grant passes along the chain, position = priority), **centralized parallel arbitration** (each master has its own request/grant lines to an arbiter), **distributed** (self-selection by priority codes). The CPU has the lowest priority for the bus in many designs (DMA preempts it at cycle boundaries).
 

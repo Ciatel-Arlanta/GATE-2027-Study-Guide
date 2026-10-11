@@ -2,9 +2,11 @@
 
 > **Paper:** CS+DA · **Priority:** P1 · **Plan topics:** Hashing
 > **Prerequisites:** [Arrays, stacks, queues](../07-data-structures/arrays-stacks-queues.md) · [Linked lists](../07-data-structures/linked-lists.md) · [Asymptotic analysis](asymptotic-analysis.md) · **Leads to:** [Complexity reference](../07-data-structures/complexity-reference.md) · [File organization and indexing](../14-databases/file-organization-and-indexing.md)
+> **PYQ weightage:** Medium · 11 Qs since 2015 (9 since 2021) · DA: 1 · Trend: rising · Most asked: Hashing, Linear Probing, Double Hashing, Uniform Hashing
 
 ## Quick glance
 
+- **Exam focus:** Open addressing probe sequences (linear probing, quadratic probing, double hashing collision traces and search costs), hash table insertions, load factor $\alpha$, and expected comparisons under uniform hashing assumption (SUHA). Common formats: NAT for probe counts, index values, or probability of collision; MCQ for worst/expected case lookups and clustering effects.
 - A **hash table** of size $m$ stores key $k$ at slot $h(k)\in[0,m)$; search, insert, delete are **expected $O(1)$** with a good $h$ and bounded load factor, $O(n)$ worst case.
 - **Load factor** $\alpha=n/m$ (keys per slot). Chaining allows $\alpha>1$; open addressing needs $\alpha\le1$.
 - **Chaining:** each slot holds a list. Expected probes: unsuccessful $\alpha$ (list scanned) , successful $1+\alpha/2$.
@@ -14,7 +16,7 @@
 - **Deletion in open addressing needs tombstones** (a "deleted" marker); emptying the slot breaks later searches.
 - **#1 trap:** in an insertion trace, check *every* probe: skipped occupied slots count as probes, and a table of size $m$ can still fail to insert under quadratic probing even if not full.
 
-## 1. Idea and terminology
+## 1. Idea and terminology [PYQ: Low]
 
 **Intuition:** a library where the shelf number is computed from the book title. You compute the shelf in one step instead of scanning all books. Two titles can compute the same shelf; that is a **collision** and the table must resolve it.
 
@@ -22,7 +24,7 @@
 - A **hash function** $h:U\to\{0,\dots,m-1\}$ should be fast, and spread keys **uniformly** (simple uniform hashing: every key equally likely to land in any slot, independently).
 - **Load factor** $\alpha=n/m$.
 
-## 2. Hash functions
+## 2. Hash functions [PYQ: Low]
 
 | Method | Formula | Notes |
 |---|---|---|
@@ -30,7 +32,7 @@
 | Multiplication | $h(k)=\lfloor m\,(kA\bmod1)\rfloor$, $0<A<1$ | Knuth: $A\approx(\sqrt5-1)/2=0.618\ldots$; $m$ can be a power of 2 |
 | Mid-square | square $k$, take middle digits/bits | needs enough digits |
 | Folding | split digits into parts and add | then reduce mod $m$ |
-| Universal | $h_{a,b}(k)=((ak+b)\bmod p)\bmod m$, $p$ prime $>|U|$, $a\in[1,p-1],b\in[0,p-1]$ random | for any $x\ne y$, $\Pr[h(x)=h(y)]\le1/m$ |
+| Universal | $h_{a,b}(k)=((ak+b)\bmod p)\bmod m$, $p$ prime $>\vert U\vert$, $a\in[1,p-1],b\in[0,p-1]$ random | for any $x\ne y$, $\Pr[h(x)=h(y)]\le1/m$ |
 
 **Worked example 1.**
 - Division: $k=100$, $m=13$: $100=7\cdot13+9\Rightarrow h=9$.
@@ -42,7 +44,7 @@
 
 A good $h$ for strings: polynomial rolling hash $h=\left(\sum s_ip^i\right)\bmod m$.
 
-## 3. Collision resolution by chaining (separate chaining)
+## 3. Collision resolution by chaining (separate chaining) [PYQ: Medium]
 
 Each slot points to a linked list of the keys that hash there. Insert at the head ($O(1)$); search scans the chain.
 
@@ -69,7 +71,7 @@ Each slot points to a linked list of the keys that hash there. Insert at the hea
 
 If $n=O(m)$ then $\alpha=O(1)$ and all operations are $O(1)$ expected. **Worst case** (all keys in one chain): $\Theta(n)$. Chains can be kept sorted (unsuccessful search stops early) or be BSTs.
 
-## 4. Open addressing
+## 4. Open addressing [PYQ: High]
 
 All keys live in the table itself ($n\le m$). On collision, try a **probe sequence** $h(k,0),h(k,1),\dots$, ideally a permutation of $0..m-1$.
 
@@ -132,7 +134,7 @@ If you simply empty a slot, a later search for a key that was *probed past* it s
 
 Fix: mark slot 2 as **DELETED** (tombstone). Search continues past tombstones (so finds 92 at slot 3); insertion may reuse a tombstone slot. Too many tombstones lengthen searches, so tables are periodically **rehashed**.
 
-## 5. Expected probes and load factor
+## 5. Expected probes and load factor [PYQ: Medium]
 
 Assume **uniform hashing** (each key's probe sequence is equally likely to be any permutation).
 
@@ -156,7 +158,7 @@ So open addressing must keep $\alpha$ well below 1 (rehash at about 0.5–0.7); 
 
 **Rehashing/resizing:** when $\alpha$ passes a threshold, allocate a table of about twice the size and reinsert everything. Cost $O(n)$ but **amortised $O(1)$** per insert.
 
-## 6. Chaining vs open addressing
+## 6. Chaining vs open addressing [PYQ: Low]
 
 | Aspect | Chaining | Open addressing |
 |---|---|---|

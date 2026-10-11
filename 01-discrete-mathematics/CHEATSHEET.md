@@ -7,11 +7,11 @@
 | Quantifiers | $\neg\forall xP=\exists x\neg P$; $\neg\exists xP=\forall x\neg P$ |
 | Equivalence relation | Reflexive + symmetric + transitive; partitions set |
 | Partial order | Reflexive + antisymmetric + transitive |
-| Function count | $|B|^{|A|}$ functions $A\to B$ |
+| Function count | $\vert B\vert ^{\vert A\vert }$ functions $A\to B$ |
 | Permutations / combinations | $n!/(n-r)!$ / $\binom nr$ |
-| Inclusion-exclusion | $|A\cup B|=|A|+|B|-|A\cap B|$ |
+| Inclusion-exclusion | $\vert A\cup B\vert =\vert A\vert +\vert B\vert -\vert A\cap B\vert$ |
 | Pigeonhole | n objects, k boxes ⇒ some box has at least $\lceil n/k\rceil$ |
-| Graph degree sum | $\sum_v deg(v)=2|E|$ for undirected graph |
+| Graph degree sum | $\sum_v deg(v)=2\vert E\vert$ for undirected graph |
 | Tree | Connected, acyclic, n vertices and n−1 edges |
 | Matching | Edges share no endpoints; perfect matching covers all vertices |
 | Recurrence | $T(n)=2T(n/2)+n=\Theta(n\log n)$ |

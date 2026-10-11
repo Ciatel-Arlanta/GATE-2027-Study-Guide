@@ -2,9 +2,11 @@
 
 > **Paper:** DA · **Priority:** P0 · **Plan topics:** Lists; Tuples; Dictionaries; Sets; Comprehensions
 > **Prerequisites:** [Python basics](python-basics.md) · **Leads to:** [OOP, recursion, tracing](python-oop-recursion-tracing.md) · [Data structures](../07-data-structures/arrays-stacks-queues.md)
+> **PYQ weightage:** Low · 3 Qs since 2015 (3 since 2021) · DA: 3 · Trend: steady · Note: Python is tested only in the DA paper (introduced 2024); collections (lists, dicts, sets) form the core of DA programming questions · Most asked: List methods (extend vs append), dictionary traversal, set operations, slicing
 
 ## Quick glance
 
+- **Exam focus:** List operations (`extend` vs `append`, in-place vs return value), slicing arithmetic, dictionary key lookups/mutations, and set uniqueness; tested primarily as MCQ and NAT in GATE DA.
 - **list** = ordered, mutable, allows duplicates, `O(1)` index and append, `O(n)` insert/delete at the front or middle. **tuple** = ordered, immutable. **dict** = key to value, keys unique and hashable, insertion-ordered. **set** = unordered unique hashable items.
 - **Mutating methods return `None`**: `append`, `extend`, `insert`, `sort`, `reverse`, `remove`, `clear`. `x = L.sort()` makes `x` equal to `None`. `pop` returns the removed item.
 - **Slicing** `s[i:j:k]`: stop is exclusive, out-of-range indices are clipped, slicing never raises `IndexError`, and a slice is always a **new (shallow) copy**. Negative step walks backwards: defaults flip to `[-1 : -len-1]`.
@@ -15,7 +17,7 @@
 - Never change a dict's size or remove from a list **while iterating over it**.
 - Comprehension: `[expr for x in it if cond]`; the loop variable is local to the comprehension (not leaked in Python 3). Generator expressions `( ... )` are lazy and single-use.
 
-## 1. Lists
+## 1. Lists [PYQ: Low]
 
 **Intuition.** A list is a dynamic array of *references* to objects (like an array of pointers in C). Elements may have different types. See [arrays](../07-data-structures/arrays-stacks-queues.md).
 
@@ -167,7 +169,7 @@ print(q.popleft(), q.pop(), q)                       # 0 4 deque([1, 2, 3])
 
 See [stacks and queues](../07-data-structures/arrays-stacks-queues.md).
 
-## 2. Tuples
+## 2. Tuples [PYQ: Low]
 
 An **immutable** ordered sequence. It supports indexing, slicing, `+`, `*`, `in`, `len`, `count`, `index`, comparison; it has no `append`/`sort`.
 
@@ -198,7 +200,7 @@ a, *b, c = [1, 2, 3, 4, 5]           # a=1, b=[2, 3, 4], c=5   (starred name alw
 - Tuples compare lexicographically like lists: `(1, 2) < (1, 3)` is `True`.
 - `sorted(...)` on a list of tuples sorts by first field, then second, ...: `sorted([(2,'a'),(1,'z'),(2,'A')])` gives `[(1,'z'), (2,'A'), (2,'a')]` (`'A'` is 65 < `'a'` 97).
 
-## 3. Dictionaries
+## 3. Dictionaries [PYQ: Low]
 
 **Intuition.** A dict is a **hash table** (see [hashing](../08-algorithms/hashing.md)): the key is hashed to a slot, so lookup, insert and delete are $O(1)$ on average. Since Python 3.7 dicts remember **insertion order**; updating an existing key keeps its original position; deleting and re-inserting moves it to the end.
 
@@ -258,7 +260,7 @@ for k in d:
 
 **Collections.Counter** counts hashables: `Counter("aabbbc").most_common(2)` gives `[('b', 3), ('a', 2)]`.
 
-## 4. Sets
+## 4. Sets [PYQ: Low]
 
 An unordered collection of **unique, hashable** items with $O(1)$ average membership test. Creating from an iterable removes duplicates.
 
@@ -287,7 +289,7 @@ print(type({}), type({1}), type(set()))     # dict set set
 
 Typical uses: de-duplicate (`len(set(L))`), fast membership, "elements in A but not B".
 
-## 5. Comprehensions
+## 5. Comprehensions [PYQ: Low]
 
 **Intuition.** A comprehension is the Python spelling of "set-builder notation": $\{x^2 \mid x \in \text{range}(5),\ x \text{ even}\}$.
 
@@ -325,7 +327,7 @@ print([x for x in range(3)], x)       # [0, 1, 2] 100
 
 (But a plain `for` loop variable *does* leak.) A lambda inside a comprehension still has late binding (see [basics](python-basics.md)).
 
-## 6. Choosing and combining: cost table
+## 6. Choosing and combining: cost table [PYQ: Low]
 
 | Task | list | tuple | dict | set | deque |
 | --- | --- | --- | --- | --- | --- |

@@ -2,9 +2,11 @@
 
 > **Paper:** CS · **Priority:** P0 · **Plan topics:** CPU scheduling
 > **Prerequisites:** [Processes, threads, system calls](processes-threads-syscalls.md) · **Leads to:** [Synchronization](synchronization.md) (priority inversion) · [Deadlocks](deadlocks.md)
+> **PYQ weightage:** High · 20 Qs since 2015 (10 since 2021) · DA: 0 · Trend: steady · Most asked: SRTF/SJF, Round Robin, Priority scheduling, Average waiting time
 
 ## Quick glance
 
+- **Exam focus:** GATE heavily tests Gantt-chart calculation of average waiting and turnaround times under pre-emptive algorithms (SRTF, Round Robin with context switch overhead, and pre-emptive Priority), almost always as NAT numericals.
 - Definitions: **TAT = CT - AT**, **WT = TAT - BT**, **RT = (first time on CPU) - AT**. Throughput = processes/time. CPU utilisation = busy time / total time.
 - **FCFS:** non-pre-emptive, simple, **convoy effect**, can give a long average wait.
 - **SJF (non-pre-emptive)** and **SRTF (pre-emptive SJF)**: give the **minimum average waiting time** (SJF among non-pre-emptive when all arrive together; SRTF overall). Need burst prediction. Can **starve** long jobs.
@@ -15,7 +17,7 @@
 - Tie-break convention: if a new process arrives at the same instant a quantum expires, **the new arrival enters the ready queue first**, then the pre-empted process (state this when you solve).
 - #1 trap: waiting time in a pre-emptive schedule is **TAT - BT**, not "time of first start - arrival".
 
-## 1. Why scheduling, and what is measured
+## 1. Why scheduling, and what is measured [PYQ: Low] [PYQ: Low]
 
 **Intuition.** Processes alternate **CPU bursts** and **I/O bursts**. While a process waits for I/O, the CPU should run another one. The short-term scheduler picks which Ready process runs; the dispatcher performs the switch.
 
@@ -43,7 +45,7 @@ CPU scheduling decisions occur when a process: (1) goes Running -> Waiting, (2) 
 
 **Goal:** maximise utilisation and throughput; minimise TAT, WT, RT. **Waiting time is the quantity that SJF/SRTF minimise on average.**
 
-## 2. First-Come First-Served (FCFS)
+## 2. First-Come First-Served (FCFS) [PYQ: Medium] [PYQ: Medium]
 
 Ready queue is a FIFO. Non-pre-emptive.
 
@@ -71,7 +73,7 @@ FCFS Gantt:  | P1 (0-8) | P2 (8-12) | P3 (12-21) | P4 (21-26) |
 
 Average TAT = 61/4 = **15.25**; average WT = 35/4 = **8.75**.
 
-## 3. Shortest Job First (SJF) and Shortest Remaining Time First (SRTF)
+## 3. Shortest Job First (SJF) and Shortest Remaining Time First (SRTF) [PYQ: High] [PYQ: High]
 
 **Idea.** Pick the process with the smallest next CPU burst.
 
@@ -131,7 +133,7 @@ Average TAT = 52/4 = **13.0**; average WT = 26/4 = **6.5** (the smallest of FCFS
 
 **Drawback: starvation** of long processes if short ones keep arriving.
 
-## 4. Priority scheduling
+## 4. Priority scheduling [PYQ: Medium] [PYQ: Medium]
 
 Each process has a priority (convention in GATE: **a smaller number = higher priority** unless stated). Non-pre-emptive: highest priority among arrived runs to completion. Pre-emptive: a newly arrived higher-priority process pre-empts. SJF is priority scheduling with priority = predicted burst.
 
@@ -158,7 +160,7 @@ CT: 10, 11, 18, 19, 16. TAT: 10, 10, 16, 16, 12. WT: 0, 9, 14, 15, 7 -> avg WT =
 
 CT: P1 16, P2 2, P3 18, P4 19, P5 9. TAT: 16, 1, 16, 16, 5. WT: 6, 0, 14, 15, 0 -> avg WT = 35/5 = **7.0**.
 
-## 5. Round Robin (RR)
+## 5. Round Robin (RR) [PYQ: High] [PYQ: High]
 
 FCFS with a **time quantum q**. The running process is pre-empted after q if not finished and goes to the **back** of the ready queue. Designed for time-sharing; response time is good.
 
@@ -214,7 +216,7 @@ Slices: P1 (0-3), P2 (3-6, done), P3 (6-9), P1 (9-11, done), P3 (11-14), P3 (14-
 
 (Both computed with the "new arrival before pre-empted process" rule. Completion times for q = 4: B 7, D 13, E 17, A 18, C 22.)
 
-## 6. Highest Response Ratio Next (HRRN)
+## 6. Highest Response Ratio Next (HRRN) [PYQ: Low] [PYQ: Low]
 
 Non-pre-emptive. When the CPU frees up, compute for each ready process
 
@@ -234,7 +236,7 @@ $$\text{Response ratio} = \frac{W + S}{S}$$
 
 TAT: A 3, B 7, C 9, D 14, E 7 (avg 8.0). WT: 0, 1, 5, 9, 5 (avg **4.0**). For comparison FCFS avg WT = 4.6, SJF avg WT = 3.6.
 
-## 7. Multilevel queue and multilevel feedback queue
+## 7. Multilevel queue and multilevel feedback queue [PYQ: Low] [PYQ: Low]
 
 **Multilevel queue (MLQ).** The ready queue is split into permanent queues (e.g. system, interactive, batch). Each has its own algorithm (e.g. RR for interactive, FCFS for batch). Between queues: **fixed priority** (lower queues run only if higher are empty -> starvation) or **time slicing** (e.g. 80%/20%). Processes **do not move** between queues.
 
@@ -244,7 +246,7 @@ TAT: A 3, B 7, C 9, D 14, E 7 (avg 8.0). WT: 0, 1, 5, 9, 5 (avg **4.0**). For co
 
 A job needing a CPU burst of 25 ms: runs 8 in Q0 (does not finish -> demoted), 16 in Q1 (demoted), then the last 1 ms in Q2. Total 8 + 16 + 1 = 25. A job with a 5 ms burst finishes in Q0. This favours short/I/O-bound jobs and gradually pushes CPU-bound work down.
 
-## 8. I/O-bound plus CPU-bound mixes: utilisation
+## 8. I/O-bound plus CPU-bound mixes: utilisation [PYQ: Low] [PYQ: Low]
 
 When processes alternate CPU and I/O bursts, utilisation can be computed from the timeline.
 

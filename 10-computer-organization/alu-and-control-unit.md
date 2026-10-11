@@ -2,9 +2,11 @@
 
 > **Paper:** CS · **Priority:** P1 · **Plan topics:** ALU design; Hardwired control unit; Microprogrammed control unit
 > **Prerequisites:** [Combinational circuits](../09-digital-logic/combinational-circuits.md), [Sequential circuits](../09-digital-logic/sequential-circuits.md), [Instruction sets and addressing](instruction-sets-and-addressing.md) · **Leads to:** [Pipelining](pipelining.md)
+> **PYQ weightage:** Low · 3 Qs since 2015 (1 since 2021) · DA: 0 · Trend: falling · Most asked: Data Path, Microprogramming, Control Unit
 
 ## Quick glance
 
+- **Exam focus:** Single-bus vs multi-bus datapath timing and control signals, microinstruction format (horizontal vs vertical control words and control store size), and hardwired vs microprogrammed control unit trade-offs. Common formats: NAT for control memory size or clock cycles required for a datapath operation; MCQ for control word decoding and micro-operation sequences.
 - The **datapath** (registers, buses, ALU) does the work; the **control unit** generates the control signals that sequence it. Instruction = fixed sequence of **micro-operations**, one or more per clock step.
 - **ALU slice** = AND, OR, full adder, a $B$-inverter, and a MUX; subtraction $=A+\overline B+1$ (Binvert = 1, CarryIn = 1). Zero flag = NOR of outputs; overflow = $C_{n-1}\oplus C_n$.
 - **Barrel shifter:** $n\log_2 n$ 2:1 MUXes shifts any amount in one step. **Booth's algorithm** handles signed multiplication in $n$ add/subtract-shift steps.
@@ -15,7 +17,7 @@
 - **Control memory size** = (number of microinstructions) $\times$ (control word width) where width $=$ sum of field widths + next-address field + condition-select field.
 - #1 trap: **encoded field width** is $\lceil\log_2(\text{signals}+1)\rceil$ (the +1 is the "no signal" code) when the group may also be inactive.
 
-## 1. ALU design
+## 1. ALU design [PYQ: Low]
 
 An **ALU** takes two operands and a function-select code, and produces a result and status flags (Z, N, C, V). Typical functions: add, subtract, AND, OR, XOR, NOT, shift, compare.
 
@@ -78,7 +80,7 @@ Result $1111\,0001_2=-15$. ✓ (verified by simulation). Booth is faster for run
 
 **Restoring division** takes $n$ iterations of shift, subtract, restore if negative; non-restoring avoids the restore step.
 
-## 2. Datapath and micro-operations
+## 2. Datapath and micro-operations [PYQ: Medium]
 
 A **micro-operation** is a register-transfer such as $MAR\leftarrow PC$ or $Z\leftarrow Y+\text{bus}$. Control signals gate registers onto buses (`Rout`) and load them from the bus (`Rin`).
 
@@ -117,7 +119,7 @@ Three buses (two source buses A, B and one destination bus C) with a dual-read r
 
 (Convention varies between textbooks; a GATE question normally supplies the step table.)
 
-## 3. Hardwired control unit
+## 3. Hardwired control unit [PYQ: Low]
 
 Control signals are produced by a fixed network of gates from the instruction bits, the step counter and status flags.
 
@@ -137,7 +139,7 @@ status flags -------------+
 
 **Hardwired size sketch:** for $m$ opcodes and $s$ steps one needs an $\log m\to m$ decoder and an $s$-state counter; each control signal is a sum of products over these lines.
 
-## 4. Microprogrammed control unit
+## 4. Microprogrammed control unit [PYQ: Low]
 
 A control unit built like a tiny computer. Each machine instruction maps to a **microroutine** stored in the **control store (control memory)**, usually a ROM.
 
@@ -182,7 +184,7 @@ IR (opcode) -> starting address generator -> uPC (micro program counter / CMAR)
 ### Nanoprogramming and microprogram optimisations
 A two-level control store: first level (micro store) holds addresses into a smaller second-level **nanostore**, which holds the actual control words (saves space when many control words repeat). Also: writable control store (updateable), micro-subroutines, microprogram-level pipelining.
 
-## 5. Hardwired vs microprogrammed
+## 5. Hardwired vs microprogrammed [PYQ: Low]
 
 | Aspect | Hardwired | Microprogrammed |
 |---|---|---|

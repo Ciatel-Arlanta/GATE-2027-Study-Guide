@@ -2,8 +2,10 @@
 
 > **Paper:** CS+DA · **Priority:** P0 · **Plan topics:** Vectors and vector spaces; Subspaces; Linear dependence and independence; Rank; Nullity
 > **Prerequisites:** [Sets, relations, functions](../01-discrete-mathematics/sets-relations-functions.md) · **Leads to:** [Matrices and determinants](matrices-and-determinants.md) · [Linear systems and LU](linear-systems-and-lu.md)
+> **PYQ weightage:** Medium · 10 Qs since 2015 (6 since 2021) · DA: 4 · Trend: rising · Most asked: Vector Space, Rank of Matrix, Subspace
 
 ## Quick glance
+- **Exam focus:** Subspace verification (must contain 0 and be closed under combinations), linear independence & basis tests (rank of column matrix), and Rank-Nullity Theorem (rank(A) + nullity(A) = n). Most asked as NAT (computing rank or nullity) and MSQ/MCQ (subspace properties; heavily tested in GATE DA).
 - A **vector space** over R is a set closed under addition and scalar multiplication (8 axioms). Examples: R^n, matrices of a fixed size, polynomials of degree ≤ d.
 - **Subspace test:** non-empty, closed under addition, closed under scalar multiplication. Equivalent: contains the zero vector and closed under linear combinations. **A subspace must contain 0.**
 - **Span** = all linear combinations. **Basis** = linearly independent spanning set. **Dimension** = number of vectors in any basis (all bases have the same size).
@@ -13,7 +15,7 @@
 - Rank facts: rank(A) = rank(A^T); rank(AB) ≤ min(rank A, rank B); rank(A^T A) = rank(A) over R; rank(A + B) ≤ rank A + rank B.
 - **#1 trap:** pivot *columns of the original matrix* (not of the echelon form) are the basis of the column space; the nonzero rows *of the echelon form* are the basis of the row space.
 
-## 1. Vectors and vector spaces
+## 1. Vectors and vector spaces [PYQ: Medium]
 
 **Intuition.** A vector space is any collection of objects you can add together and stretch/shrink, with the usual algebra working. Arrows in the plane, n-tuples of reals, m × n matrices and polynomials all qualify.
 
@@ -32,7 +34,7 @@
 
 **GATE-level notes.** Vectors are columns by convention; the dot product is u·v = u^T v; length ||v|| = sqrt(v·v). "Vector" in GATE almost always means an element of R^n.
 
-## 2. Subspaces
+## 2. Subspaces [PYQ: Medium]
 
 **Definition.** W ⊆ V is a subspace if W is itself a vector space under the same operations. **Subspace test:** (i) 0 is in W (equivalently W is non-empty), (ii) u, v in W implies u + v in W, (iii) v in W, c scalar implies c v in W.
 
@@ -58,7 +60,7 @@ dim(U + W) = dim U + dim W - dim(U ∩ W).
 
 **Worked example 2.** In R^4, U = {x : x1 + x2 + x3 + x4 = 0} (dim 3) and W = {x : x1 = x2} (dim 3). U ∩ W is given by two independent equations, so dim 2. Then dim(U + W) = 3 + 3 - 2 = 4, so U + W = R^4.
 
-## 3. Span, linear independence
+## 3. Span, linear independence [PYQ: Medium]
 
 **Span.** span{v1, ..., vk} = {c1 v1 + ... + ck vk}. It is the smallest subspace containing the vectors. Whether b lies in the span of the columns of A is the same as whether Ax = b is solvable.
 
@@ -81,7 +83,7 @@ dim(U + W) = dim U + dim W - dim(U ∩ W).
 **Worked example 4 — parameter.** For which k are the rows (1,1,1), (1,2,4), (1,k,k²) independent?
 This is a Vandermonde matrix with nodes 1, 2, k: det = (2 - 1)(k - 1)(k - 2). So independent iff k ≠ 1 and k ≠ 2. At k = 1 or 2 two rows coincide and rank = 2.
 
-## 4. Basis and dimension
+## 4. Basis and dimension [PYQ: Medium]
 
 **Definition.** A **basis** of V is a list of vectors that is linearly independent **and** spans V. Every vector then has a **unique** coordinate representation.
 
@@ -102,7 +104,7 @@ This is a Vandermonde matrix with nodes 1, 2, k: det = (2 - 1)(k - 1)(k - 2). So
 
 **Worked example 5 — coordinates.** In R^2, basis B = {(1,1), (1,-1)}. Write (5,1) in this basis: a(1,1) + b(1,-1) = (5,1) gives a + b = 5, a - b = 1, so a = 3, b = 2. Coordinates [3, 2].
 
-## 5. Rank and the four fundamental subspaces
+## 5. Rank and the four fundamental subspaces [PYQ: Medium]
 
 For an m × n matrix A:
 
@@ -141,7 +143,7 @@ Row reduce: R2 - 2R1 = (0,0,-2,-4); R3 - 3R1 = (0,0,-2,-4); R4 - R1 = (0,0,-2,-4
 
 **Maximum possible rank** of an m × n matrix is min(m, n). A square matrix has full rank n iff det ≠ 0 iff invertible iff Ax = 0 has only x = 0.
 
-## 6. Rank facts
+## 6. Rank facts [PYQ: Medium]
 
 | Fact | Statement | Note |
 |---|---|---|

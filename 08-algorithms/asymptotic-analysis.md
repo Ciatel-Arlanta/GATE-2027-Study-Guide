@@ -2,9 +2,11 @@
 
 > **Paper:** CS+DA · **Priority:** P0 · **Plan topics:** Asymptotic notation and growth rates; Worst-case time complexity; Worst-case space complexity
 > **Prerequisites:** [Recurrences and generating functions](../01-discrete-mathematics/recurrences-and-generating-functions.md) · [Complexity reference](../07-data-structures/complexity-reference.md) · **Leads to:** [Searching and sorting](searching-and-sorting.md) · [Divide and conquer](divide-and-conquer.md)
+> **PYQ weightage:** High · 57 Qs since 2015 (24 since 2021) · DA: 0 · Trend: falling · Most asked: Recurrence Relation, Asymptotic Notations, Time Complexity, Identify Function
 
 ## Quick glance
 
+- **Exam focus:** Recurrence relations (Master theorem and substitution), asymptotic comparisons of functions (growth rates, big-O/Omega/Theta properties), and loop iteration counting / time complexity analysis. Common formats: NAT for recurrence answers and loop step counts; MCQ/MSQ for function ordering and property truth-values.
 - **Big-O** is an upper bound, **Omega** a lower bound, **Theta** a tight bound (both). $f=\Theta(g)$ iff $f=O(g)$ and $f=\Omega(g)$.
 - Growth ladder: $1 < \log^* n < \log\log n < \log n < \sqrt n < n < n\log n < n^2 < n^3 < 2^n < n! < n^n$.
 - Compare two functions by taking logs (or the limit of the ratio $f/g$): limit $0\Rightarrow f=o(g)$; finite non-zero $\Rightarrow\Theta$; $\infty\Rightarrow f=\omega(g)$.
@@ -15,7 +17,7 @@
 - Space complexity of recursion = **depth of the recursion stack** (times frame size) plus auxiliary arrays.
 - **#1 trap:** "worst-case" is about the input, "O" is about the bound. You can state a best-case $\Omega$, worst-case $O$, or any case with any notation.
 
-## 1. What asymptotic analysis measures
+## 1. What asymptotic analysis measures [PYQ: Low]
 
 An algorithm's running time depends on the machine, so we count **primitive steps** (comparisons, assignments, arithmetic) as a function $T(n)$ of the input size $n$. We then ignore constant factors and small inputs and look only at how $T(n)$ grows when $n\to\infty$.
 
@@ -29,7 +31,7 @@ Three common "cases" for the same algorithm:
 
 **GATE asks almost always about worst-case time unless told otherwise.** The input size $n$ is the number of elements, except when the input is a number (then size is the number of bits, $\log n$ — see the traps).
 
-## 2. The notations, with constants
+## 2. The notations, with constants [PYQ: High]
 
 Let $f,g:\mathbb N\to\mathbb R_{\ge0}$.
 
@@ -69,7 +71,7 @@ The little notations use "for **every** constant $c$"; the big ones use "there *
 
 **Beware:** $f=O(g)\not\Rightarrow 2^{f}=O(2^{g})$. Counter: $f=2n,g=n$ gives $4^n$ vs $2^n$. Similarly $f=O(g)\not\Rightarrow \log f=\ldots$ is safe only when $g\to\infty$ and logs of constants are ignored.
 
-## 3. The growth-rate ladder
+## 3. The growth-rate ladder [PYQ: High]
 
 From slowest to fastest:
 
@@ -99,7 +101,7 @@ When both functions are exponentials or powers, compare $\log f$ and $\log g$ (l
 
 **Worked example 5 (a trap).** $\log(n!)=\Theta(n\log n)$ vs $\log(2^n)=n$, so $n!=\omega(2^n)$ (the logs differ by an $\omega$ gap, which is safe). But $\log(n^n)=n\log n=\Theta(\log n!)$ does **not** make $n^n=\Theta(n!)$: in fact $n^n/n!\approx e^n\to\infty$. **If the logs are $\omega$-separated the functions are; if the logs are merely $\Theta$-equal, nothing follows.**
 
-## 4. Counting loop iterations
+## 4. Counting loop iterations [PYQ: High]
 
 Turn the code into a sum, then simplify.
 
@@ -157,7 +159,7 @@ $(n/2+1)\cdot(n/2)\cdot(\lfloor\log_2 n\rfloor+1)=\Theta(n^2\log n)$.
 
 **Recursive code** is analysed by writing a recurrence (Section 5). Cost of `if (cond) A else B` is $\max$ of the branches in the worst case.
 
-## 5. Solving recurrences
+## 5. Solving recurrences [PYQ: High]
 
 A recurrence expresses $T(n)$ via smaller inputs. Three tools.
 
@@ -230,7 +232,7 @@ Intuition: the leaves cost $n^p$ in total, the root costs $f(n)$; whichever is b
 
 **Worked example 16.** $T(n)=T(\sqrt n)+1$: $S(m)=S(m/2)+1\Rightarrow S=\Theta(\log m)$, so $T(n)=\Theta(\log\log n)$.
 
-## 6. Space complexity
+## 6. Space complexity [PYQ: Low]
 
 **Space complexity** counts memory used by the algorithm beyond the input (auxiliary), as a function of $n$.
 

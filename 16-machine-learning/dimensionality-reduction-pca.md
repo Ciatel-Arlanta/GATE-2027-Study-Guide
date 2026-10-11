@@ -2,9 +2,11 @@
 
 > **Paper:** DA · **Priority:** P0 · **Plan topics:** Dimensionality reduction; Principal component analysis
 > **Prerequisites:** [Eigenvalues and eigenvectors](../03-linear-algebra/eigenvalues-and-eigenvectors.md) · [Orthogonality, projections, SVD](../03-linear-algebra/orthogonality-projections-svd.md) · [Random variables and moments](../02-probability-statistics/random-variables-and-moments.md) (covariance) · **Leads to:** [CHECKPOINT](CHECKPOINT.md)
+> **PYQ weightage:** Low · 1 Q (DA 2024–2026 only) · Trend: steady · Most asked: PCA covariance matrix, Eigenvalues and variance explained, Principal component projection
 
 ## Quick glance
 
+- **Exam focus:** GATE DA tests step-by-step PCA on small 2D/3D datasets: data centering, sample covariance matrix calculation, finding principal directions via eigenvectors, and percentage of variance explained $\lambda_1/\sum \lambda_i$, typically as NAT questions.
 - **Dimensionality reduction**: map $d$-dimensional data to $m<d$ dimensions keeping as much structure as possible. Reasons: compress, visualise, denoise, fight the curse of dimensionality, remove correlated features.
 - **PCA steps**: (1) centre the data (subtract the mean; optionally standardise), (2) covariance matrix $S=\frac1{n-1}X_c^TX_c$, (3) eigen-decomposition $Sv=\lambda v$, (4) sort eigenvalues descending, (5) project: $Z=X_cV_m$.
 - **Principal components = eigenvectors of the covariance matrix**; eigenvalue $\lambda_i$ = variance of the data along component $i$. Components are orthogonal.
@@ -14,7 +16,7 @@
 - PCA is **unsupervised** (ignores labels) and linear; LDA is its supervised relative.
 - #1 trap: forgetting to centre, or using the wrong divisor ($n$ vs $n-1$) — the eigenvectors and variance ratios are unchanged but the eigenvalues scale.
 
-## 1. Why reduce dimensions?
+## 1. Why reduce dimensions? [PYQ: Low]
 
 - **Curse of dimensionality**: with $d$ large, data are sparse, distances concentrate, models need exponentially more samples.
 - **Redundancy**: correlated features carry the same information (height in cm and in inches).
@@ -23,7 +25,7 @@
 
 Two flavours: **feature selection** (keep a subset of the original columns) and **feature extraction** (build new features as combinations: PCA, LDA, autoencoders). PCA is feature extraction.
 
-## 2. The idea of PCA
+## 2. The idea of PCA [PYQ: Low]
 
 **Intuition.** A cloud of points is elongated along some direction. Rotate the axes so the first axis lies along the longest direction (most variance), the second along the longest direction orthogonal to it, and so on. Keep the first few axes; the dropped axes have small spread, so little is lost.
 
@@ -31,7 +33,7 @@ Two flavours: **feature selection** (keep a subset of the original columns) and 
 
 **Equivalent view.** Maximising variance of the projection = minimising the mean squared distance between each point and its projection (Pythagoras: total variance is fixed).
 
-## 3. The algorithm
+## 3. The algorithm [PYQ: Medium]
 
 1. **Centre**: $x_c = x-\bar x$ (columnwise mean). If features have different scales/units, also divide by standard deviations (then $S$ is the correlation matrix).
 2. **Covariance**: $S=\dfrac1{n-1}X_c^TX_c$ (a $d\times d$ symmetric positive semi-definite matrix). Diagonal = variances, off-diagonal = covariances.
@@ -58,7 +60,7 @@ Two flavours: **feature selection** (keep a subset of the original columns) and 
 
 **Worked example C (3-D, block structure).** $S=\begin{pmatrix}2&0&0\\0&3&1\\0&1&3\end{pmatrix}$. The block $\begin{pmatrix}3&1\\1&3\end{pmatrix}$ has eigenvalues $4,2$ (vectors $(0,1,1)/\sqrt2$ and $(0,1,-1)/\sqrt2$); the first coordinate is uncorrelated with the rest and has variance $2$. Eigenvalues $4,2,2$ (trace $=8$ ✓). PC1 $=(0,1,1)/\sqrt2$ explains $4/8=50\%$. Repeated eigenvalue $2$: any orthonormal basis of that eigenspace is valid, so PC2/PC3 are not unique.
 
-## 4. PCA via SVD
+## 4. PCA via SVD [PYQ: Low]
 
 For centred data $X_c$ ($n\times d$): $X_c=U\Sigma V^T$ (thin SVD). Then
 
@@ -66,7 +68,7 @@ $$S=\frac1{n-1}X_c^TX_c=V\frac{\Sigma^2}{n-1}V^T$$
 
 so **right singular vectors $V$ = principal directions** and $\lambda_i=\sigma_i^2/(n-1)$. Principal-component scores $=X_cV=U\Sigma$. Using SVD avoids forming $X_c^TX_c$ (better numerically). In example A: singular values of $X_c$ are $\sqrt8=2.828$ and $\sqrt2=1.414$; $\sigma^2/3=2.667,\ 0.667$ ✓. See [SVD](../03-linear-algebra/orthogonality-projections-svd.md).
 
-## 5. Properties and cautions
+## 5. Properties and cautions [PYQ: Low]
 
 | Fact | Consequence |
 | --- | --- |

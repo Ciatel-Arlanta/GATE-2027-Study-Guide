@@ -2,9 +2,11 @@
 
 > **Paper:** DA · **Priority:** P0 · **Plan topics:** k-nearest neighbours; Naive Bayes classifier; Linear discriminant analysis; Support vector machines; Decision trees
 > **Prerequisites:** [ML foundations](ml-foundations.md) · [Linear and logistic regression](linear-and-logistic-regression.md) · [Probability basics](../02-probability-statistics/probability-basics.md) · **Leads to:** [Neural networks](neural-networks.md) · [Probabilistic reasoning](../17-artificial-intelligence/probabilistic-reasoning.md)
+> **PYQ weightage:** High · 7 Qs (DA 2024–2026 only) · Trend: steady · Most asked: Naive Bayes (parameters & posterior), SVM (margin & support vectors), Decision trees (information gain), k-NN
 
 ## Quick glance
 
+- **Exam focus:** This is one of the highest-yield chapters in GATE DA: questions routinely compute Naive Bayes parameter counts and posterior probabilities, hard-margin SVM equations and support vectors, Decision Tree split criteria (entropy / information gain), and k-NN classification, as NAT and MSQ questions.
 - **k-NN**: lazy learner; predict the majority label (or mean for regression) of the $k$ closest training points. $k=1$ gives training error 0. Small $k$ = low bias / high variance. **Scale features first.**
 - **Naive Bayes**: $P(c\mid x) \propto P(c)\prod_j P(x_j\mid c)$ (features independent given class). Laplace smoothing: $(n_{jc}+1)/(n_c + V_j)$. Never normalise away the zero-frequency problem.
 - **LDA**: Gaussian classes, **shared covariance** $\Rightarrow$ linear boundary. Fisher direction $w \propto S_W^{-1}(\mu_2-\mu_1)$ maximises between-class over within-class scatter. QDA (separate covariances) gives a quadratic boundary.
@@ -13,7 +15,7 @@
 - Ensembles: bagging/random forest cut variance; boosting cuts bias.
 - #1 trap: information gain favours many-valued attributes (an ID column has gain = $H$(parent)); gain ratio corrects it.
 
-## 1. k-nearest neighbours (k-NN)
+## 1. k-nearest neighbours (k-NN) [PYQ: Medium]
 
 **Intuition.** "You are like your neighbours." There is **no training**: store the data; at prediction time find the $k$ stored points closest to the query and vote.
 
@@ -22,8 +24,8 @@
 | Metric | Formula | Notes |
 | --- | --- | --- |
 | Euclidean ($L_2$) | $\sqrt{\sum (x_j-z_j)^2}$ | default |
-| Manhattan ($L_1$) | $\sum |x_j-z_j|$ | grid distance |
-| Minkowski ($L_p$) | $(\sum |x_j-z_j|^p)^{1/p}$ | $p=1,2,\infty$ special cases |
+| Manhattan ($L_1$) | $\sum \vert x_j-z_j\vert$ | grid distance |
+| Minkowski ($L_p$) | $(\sum \vert x_j-z_j\vert ^p)^{1/p}$ | $p=1,2,\infty$ special cases |
 | Cosine distance | $1 - \dfrac{x^Tz}{\|x\|\|z\|}$ | direction only; text data |
 
 **Worked example.** Training set: class A = $(1,1),(2,1),(1,3),(2,3)$; class B = $(4,4),(5,3),(3,5)$. Classify $q=(3,3)$ with Euclidean distance.
@@ -60,7 +62,7 @@ Pick $k$ by cross-validation; use odd $k$ for two classes to avoid vote ties.
 - **Cost.** Training $O(1)$ (store data). Prediction $O(nd)$ per query by brute force: slow for large $n$. Memory $O(nd)$.
 - k-NN **regression**: average (optionally distance-weighted) the $k$ neighbour targets. Weighted voting uses $w=1/d^2$.
 
-## 2. Naive Bayes classifier
+## 2. Naive Bayes classifier [PYQ: High]
 
 **Intuition.** Bayes' rule says the best class is the one with the highest posterior. Estimating $P(x_1,\dots,x_d\mid c)$ needs exponentially many parameters. The *naive* assumption — features are **conditionally independent given the class** — turns it into a product of small tables.
 
@@ -103,7 +105,7 @@ Query: **Overcast, Hot**, no smoothing. Overcast never occurs among No, so the N
 
 **Facts.** Training = counting, $O(nd)$. Works well even when independence is violated (the argmax is often still right though the probabilities are not). It is a Bayesian network with the class as the single parent of all features: see [probabilistic reasoning](../17-artificial-intelligence/probabilistic-reasoning.md).
 
-## 3. Linear discriminant analysis (LDA)
+## 3. Linear discriminant analysis (LDA) [PYQ: Medium]
 
 Two connected ideas share the name.
 
@@ -139,7 +141,7 @@ Note that $w$ is **not** simply $\mu_2-\mu_1$ (that would ignore the within-clas
 
 **Dimension limit.** For $K$ classes Fisher LDA gives at most $K-1$ discriminant directions. LDA is **supervised**; PCA is not ([PCA](dimensionality-reduction-pca.md)).
 
-## 4. Support vector machines (SVM)
+## 4. Support vector machines (SVM) [PYQ: High]
 
 **Intuition.** Many lines separate two classes; choose the one with the **widest empty street** between the classes. Wide margin = robust to noise = lower variance.
 
@@ -173,7 +175,7 @@ Equivalent to **hinge loss** $\max(0,1-y_i f(x_i))$ plus an $L_2$ penalty. $C$ l
 
 **Facts.** The training objective is convex (QP), so there is a global optimum. Prediction cost depends on the number of support vectors. Predicted label: $\text{sign}(w^Tx+b)$.
 
-## 5. Decision trees
+## 5. Decision trees [PYQ: High]
 
 **Intuition.** Play twenty questions: pick the feature test that best purifies the groups, split, and recurse until the leaves are (nearly) pure.
 
@@ -240,7 +242,7 @@ Outlook wins. Two of its branches are already pure leaves; only Rainy needs a fu
 | SVM constraints | $y_i(w^Tx_i+b)\ge1$ | feasibility |
 | Soft margin | $\frac12\|w\|^2+C\sum\xi_i$ | role of $C$ |
 | Entropy 2-class | $-p\log_2p-(1-p)\log_2(1-p)$ | tree split |
-| Information gain | $H(S)-\sum\frac{|S_v|}{|S|}H(S_v)$ | pick split |
+| Information gain | $H(S)-\sum\frac{\vert S_v\vert }{\vert S\vert }H(S_v)$ | pick split |
 | Gini | $1-\sum p_k^2$ | CART |
 
 ## GATE traps

@@ -2,9 +2,11 @@
 
 > **Paper:** CS · **Priority:** P0 · **Plan topics:** System calls; Processes; Threads; Inter-process communication
 > **Prerequisites:** [Pointers, arrays, strings](../05-c-programming/pointers-arrays-strings.md) · [I/O, interrupts, DMA](../10-computer-organization/io-interrupts-dma.md) · **Leads to:** [CPU scheduling](cpu-scheduling.md) · [Synchronization](synchronization.md)
+> **PYQ weightage:** Medium · 12 Qs since 2015 (9 since 2021) · DA: 0 · Trend: rising · Most asked: Threads, Fork system call, Context switch
 
 ## Quick glance
 
+- **Exam focus:** GATE heavily tests `fork()` execution trees (counting created processes/prints in loops or short-circuit expressions) and thread sharing vs private state (user vs kernel threads), usually as NAT or 1–2 mark MCQs.
 - **Kernel mode** can execute privileged instructions and touch all memory; **user mode** cannot. A **system call** is the only controlled door from user to kernel mode (via a **trap** instruction).
 - Interrupt = asynchronous, from hardware, unrelated to the current instruction. Trap = deliberate synchronous (system call). Exception/fault = synchronous error caused by the current instruction (divide by zero, page fault).
 - **Mode switch** (user to kernel and back) is cheap. **Context switch** (save PCB of one process, load PCB of another) is expensive and is pure overhead.
@@ -15,7 +17,7 @@
 - IPC: **shared memory** (fast, needs synchronization) vs **message passing** (simple, kernel-mediated, slower). Pipe = unidirectional byte stream, `fd[0]` read end, `fd[1]` write end.
 - #1 trap: counting processes/prints with `fork()` inside `&&`, `||` and loops. Draw the process tree.
 
-## 1. The kernel and the two modes
+## 1. The kernel and the two modes [PYQ: Low]
 
 **Intuition.** The OS must protect itself and other programs from a buggy or malicious program. The CPU therefore runs in (at least) two modes, indicated by a **mode bit**: 0 = kernel (supervisor), 1 = user.
 
@@ -39,7 +41,7 @@ A privileged instruction in user mode raises an exception, and the kernel typica
 
 **Every one of these transfers control to a kernel handler through the interrupt vector table.** Hardware saves PC and flags, switches to kernel mode, jumps to the handler.
 
-## 2. System calls
+## 2. System calls [PYQ: Low]
 
 A **system call** is a request from a user program to a kernel service. Library wrappers (e.g. `printf` calls `write`) hide the details.
 
@@ -73,7 +75,7 @@ Parameter passing: registers (fast, limited count), a memory block whose address
 
 **Key fact: a system call causes a mode switch but not necessarily a context switch.** A context switch always involves the kernel (so at least two mode switches).
 
-## 3. Processes
+## 3. Processes [PYQ: Medium]
 
 ### 3.1 What a process is
 
@@ -129,7 +131,7 @@ The **dispatcher** is the module that does the context switch, switches to user 
 
 Steps: save the state of the running process into its PCB, move the PCB to the right queue, select another PCB, restore its state, resume. It is **pure overhead** (no useful work). Cost depends on the hardware (register sets, TLB flush, cache). Typical: microseconds.
 
-## 4. fork, exec, wait, exit
+## 4. fork, exec, wait, exit [PYQ: Medium]
 
 `fork()` creates a **copy** of the calling process: same code, copies of data/heap/stack (copy-on-write in practice, see [Virtual memory](virtual-memory.md)), same open files. Both continue **from the instruction after the fork**.
 
@@ -293,7 +295,7 @@ Processes: i=0 fork: P, C0 (prints c0). i=1: P forks C1 (prints c1); C0 forks C0
 - `fork()` return value matters: `if (fork())` is true in the **parent**.
 - The total number of **new** processes = total - 1.
 
-## 5. Threads
+## 5. Threads [PYQ: Medium]
 
 A **thread** is a lightweight unit of execution inside a process. A process may have many threads sharing the same address space.
 
@@ -326,7 +328,7 @@ A **thread** is a lightweight unit of execution inside a process. A process may 
 
 **Fork in a multithreaded process (POSIX):** the child contains only a copy of the thread that called `fork`.
 
-## 6. Inter-process communication
+## 6. Inter-process communication [PYQ: Low]
 
 Processes are isolated, so cooperating processes need IPC. Two fundamental models:
 

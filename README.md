@@ -2,7 +2,7 @@
 
 A connected set of notes for **GATE 2027 Computer Science (CS)** and **Data Science & AI (DA)**, built on the topic list in the *GATE 2027 CS + DA Master Study Plan* and checked against the official IIT Madras 2027 syllabi. Each chapter teaches its topic from scratch, then compresses it into a quick-glance box and a one-page cheat sheet for revision.
 
-Start with the [roadmap](ROADMAP.md). Use [CONNECTIONS.md](CONNECTIONS.md) to see how ideas cross subject boundaries, [COVERAGE.md](COVERAGE.md) to find where any plan topic is taught, [PROGRESS.md](PROGRESS.md) to tick topics off, and [EXAM-STRATEGY.md](EXAM-STRATEGY.md) for the paper pattern, weightage and PYQ method. [STRUCTURE.md](STRUCTURE.md) lists every file.
+Start with the [roadmap](ROADMAP.md). Use [CONNECTIONS.md](CONNECTIONS.md) to see how ideas cross subject boundaries, [COVERAGE.md](COVERAGE.md) to find where any plan topic is taught, [PROGRESS.md](PROGRESS.md) to tick topics off, [EXAM-STRATEGY.md](EXAM-STRATEGY.md) for the paper pattern and PYQ method, and [WEIGHTAGE.md](WEIGHTAGE.md) for real PYQ counts per subject (every chapter is also tagged High / Medium / Low). [STRUCTURE.md](STRUCTURE.md) lists every file.
 
 ## How every chapter is laid out
 
@@ -49,7 +49,7 @@ Every section folder also has a `README.md` (reading order, priorities, weightag
 16 | [Machine Learning](16-machine-learning/README.md) | DA | 15–20
 17 | [Artificial Intelligence](17-artificial-intelligence/README.md) | DA | 8–12
 
-\*Typical ranges from recent papers; weightage shifts by a few marks every year. See [EXAM-STRATEGY.md](EXAM-STRATEGY.md).
+\*Typical ranges from recent papers; weightage shifts by a few marks every year. See [WEIGHTAGE.md](WEIGHTAGE.md) for counts from the PYQ books.
 
 ## What was added beyond the Master Study Plan
 

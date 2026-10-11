@@ -2,9 +2,11 @@
 
 > **Paper:** CS · **Priority:** P0 · **Plan topics:** Memory interfacing; Memory hierarchy and performance; Cache memory mapping
 > **Prerequisites:** [Combinational circuits](../09-digital-logic/combinational-circuits.md) (decoders), [Instruction sets and addressing](instruction-sets-and-addressing.md) · **Leads to:** [I/O, interrupts and DMA](io-interrupts-dma.md), [Pipelining](pipelining.md), [Virtual memory](../13-operating-systems/README.md)
+> **PYQ weightage:** High · 36 Qs since 2015 (18 since 2021) · DA: 0 · Trend: steady · Most asked: Cache Memory, Direct Mapping, Memory Interfacing, Average Memory Access Time
 
 ## Quick glance
 
+- **Exam focus:** Cache address breakdown (tag, index/set, block offset bits) across direct-mapped, set-associative, and fully associative caches, total cache tag directory overhead, multi-level Average Memory Access Time (AMAT), and cache write policies (write-through vs write-back). Common formats: NAT for tag bits, cache size, hit ratios, and AMAT in nanoseconds; MCQ for hit/miss traces and miss classifications.
 - **Hierarchy:** registers $\to$ L1 $\to$ L2 $\to$ L3 $\to$ main memory $\to$ disk: faster = smaller and costlier. It works because of **locality**: temporal (reuse) and spatial (neighbours).
 - **Chip count** for $N\times M$ memory from $k\times m$ chips $=\dfrac{N}{k}\cdot\dfrac{M}{m}$. Address lines $=\log_2N$; the top $\log_2(N/k)$ lines feed a decoder for chip select.
 - **AMAT (hierarchical access):** $t_{avg}=h\,t_1+(1-h)(t_1+t_2)$. **Simultaneous access:** $t_{avg}=h\,t_1+(1-h)t_2$. Multi-level: $t_1+m_1(t_2+m_2\,t_3)$ with local miss rates.
@@ -15,7 +17,7 @@
 - Tag memory $=\#\text{lines}\times(\text{tag}+\text{valid}+\text{dirty bits})$.
 - #1 trap: the **tag/index/offset** split uses the block size, number of *sets* (not lines) and **physical vs virtual** address width; also hierarchical vs simultaneous AMAT.
 
-## 1. Memory interfacing
+## 1. Memory interfacing [PYQ: Medium]
 
 ### Chip organisation arithmetic
 A chip is $k\times m$: $k$ words of $m$ bits. To build $N\times M$:
@@ -50,7 +52,7 @@ See [I/O, interrupts and DMA](io-interrupts-dma.md).
 ### Types of memory
 SRAM: 6 transistors/bit, fast, no refresh (cache). DRAM: 1 transistor + capacitor, must refresh, dense (main memory). ROM/PROM/EPROM/EEPROM/Flash: non-volatile. Access time = latency from request to data; cycle time $\ge$ access time (DRAM precharge). **Interleaving:** with $b$ banks and low-order interleaving (consecutive words in consecutive banks), sequential words are fetched from different banks in an overlapped manner. If a bank needs time $T$ per access and the bus moves one word per time $t$, a stream of sequential words is delivered every $t$ as long as $T\le b\,t$. Example: $T=40$ ns, $t=10$ ns needs $b\ge4$ banks.
 
-## 2. Memory hierarchy and performance
+## 2. Memory hierarchy and performance [PYQ: Medium]
 
 **Locality of reference:** programs reuse recently used items (**temporal**: loop variables) and items near recently used ones (**spatial**: array scans). Caches exploit temporal locality by keeping data and spatial locality by fetching whole blocks.
 
@@ -98,7 +100,7 @@ Two-level, access times $t_1$ (cache) and $t_2$ (memory).
 
 **Effective access time with virtual memory** (page-fault rate $p$): $t=(1-p)\,t_{mem}+p\,t_{fault}$. With $t_{mem}=100$ ns, $t_{fault}=8$ ms, $p=10^{-6}$: $t=99.9999+8.0=108.0$ ns. See [Virtual memory](../13-operating-systems/README.md).
 
-## 3. Cache organisation and address mapping
+## 3. Cache organisation and address mapping [PYQ: High]
 
 A **cache line (block)** holds $B$ bytes plus a **tag**, **valid** bit (and **dirty** bit for write-back). Memory is divided into blocks of $B$ bytes; the block number $=\lfloor\text{address}/B\rfloor$.
 

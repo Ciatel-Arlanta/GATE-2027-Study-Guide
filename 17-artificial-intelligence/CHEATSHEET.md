@@ -42,7 +42,7 @@ Chapters: [search](search.md) Â· [logic and inference](logic-and-inference.md) Â
 | --- | --- |
 | Conditional independence | $P(x,y\mid z)=P(x\mid z)P(y\mid z)$ |
 | BN joint | $\prod_iP(x_i\mid\text{pa}_i)$ |
-| Parameters (binary) | $\sum2^{|\text{Pa}_i|}$ vs $2^n-1$ |
+| Parameters (binary) | $\sum2^{\vert \text{Pa}_i\vert }$ vs $2^n-1$ |
 | d-separation | chain/fork blocked iff middle observed; collider blocked iff it and descendants unobserved |
 | Markov blanket | parents + children + children's other parents |
 | Explaining away | observing a common effect makes causes dependent |

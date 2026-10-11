@@ -2,8 +2,10 @@
 
 > **Paper:** CS+DA · **Priority:** P1 · **Plan topics:** Mean value theorem; Taylor series
 > **Prerequisites:** [Limits, continuity, differentiability](limits-continuity-differentiability.md) · **Leads to:** [Maxima, minima, optimisation](maxima-minima-optimization.md) · [Integration](integration.md)
+> **PYQ weightage:** Low · 0 Qs since 2015 (0 since 2021) · DA: 0 · Trend: steady · Most asked: Lagrange MVT, Taylor series, Rolle's theorem
 
 ## Quick glance
+- **Exam focus:** Finding the intermediate point c in Lagrange/Rolle's MVT, root counting using Rolle's theorem, and constructing Taylor/Maclaurin polynomial expansions to evaluate derivatives (f^(n)(0) = n! × [x^n]) or approximate limits. Primarily conceptual MSQ/MCQ coverage in CS/DA; critical theoretical underpinning for ML optimization.
 - **Rolle:** f continuous on [a, b], differentiable on (a, b), f(a) = f(b) ⇒ some c ∈ (a, b) with **f'(c) = 0**.
 - **Lagrange MVT:** same hypotheses without f(a) = f(b) ⇒ some c with **f'(c) = (f(b) - f(a))/(b - a)** (a tangent parallel to the chord).
 - **Cauchy MVT:** f'(c)/g'(c) = (f(b) - f(a))/(g(b) - g(a)) (g' ≠ 0).
@@ -13,7 +15,7 @@
 - **Lagrange remainder:** R_n(x) = f^(n+1)(c)(x - a)^(n+1)/(n+1)! for some c between a and x. Use it to bound the error.
 - #1 trap: hypotheses matter. MVT fails for |x| on [-1, 1] (not differentiable at 0), so f'(c) = 0 has no solution there.
 
-## 1. Rolle's theorem
+## 1. Rolle's theorem [PYQ: Low]
 
 **Statement.** If (i) f is continuous on [a, b], (ii) differentiable on (a, b), (iii) f(a) = f(b), then there is c ∈ (a, b) with f'(c) = 0.
 
@@ -25,7 +27,7 @@
 
 **Use: counting roots.** If f' has k real roots, f has at most k + 1 real roots (between two roots of f lies a root of f'). Example: f(x) = x³ + x - 1 has f'(x) = 3x² + 1 > 0 (no real roots), so f has **exactly one** real root (IVT: f(0) = -1 < 0, f(1) = 1 > 0). Similarly x³ - 3x + k has at most one root in (-1, 1) (f' = 3x² - 3 ≠ 0 inside).
 
-## 2. Lagrange's mean value theorem
+## 2. Lagrange's mean value theorem [PYQ: Low]
 
 **Statement.** If f is continuous on [a, b] and differentiable on (a, b), there is c ∈ (a, b) with
 
@@ -47,7 +49,7 @@ Rolle is the special case f(a) = f(b). Interpretation: the instantaneous rate eq
 - A function with bounded derivative is Lipschitz: |f(x) - f(y)| ≤ M |x - y|.
 - Darboux: a derivative has the intermediate value property (no jump discontinuities of f').
 
-## 3. Cauchy's mean value theorem
+## 3. Cauchy's mean value theorem [PYQ: Low]
 
 If f, g are continuous on [a, b], differentiable on (a, b) and g' ≠ 0 on (a, b), then for some c ∈ (a, b)
 
@@ -57,7 +59,7 @@ Taking g(x) = x recovers Lagrange. It is the tool behind L'Hôpital's rule.
 
 **Worked example 7.** f(x) = x², g(x) = x³ on [1, 2]: RHS = (4 - 1)/(8 - 1) = 3/7. LHS = 2c/(3c²) = 2/(3c). So 2/(3c) = 3/7, **c = 14/9 ≈ 1.556** ∈ (1, 2) ✓.
 
-## 4. Taylor and Maclaurin series
+## 4. Taylor and Maclaurin series [PYQ: Low]
 
 **Intuition.** Near a, replace a complicated function by the polynomial that matches its value, slope, curvature, ... at a. More terms give a better approximation closer to a.
 

@@ -2,9 +2,11 @@
 
 > **Paper:** CS · **Priority:** P0 · **Plan topics:** Regular expressions; Finite automata; Regular languages
 > **Prerequisites:** [Sets, relations, functions](../01-discrete-mathematics/sets-relations-functions.md) · [Propositional logic](../01-discrete-mathematics/propositional-logic.md) · **Leads to:** [Context-free languages and PDA](context-free-languages-and-pda.md) · [Pumping lemma](pumping-lemma.md) · [Lexical analysis](../12-compiler-design/lexical-analysis.md)
+> **PYQ weightage:** High · 42 Qs since 2015 (23 since 2021) · DA: 0 · Trend: steady · Most asked: Regular Language, Finite Automata, Minimal State Automata, Regular Expression
 
 ## Quick glance
 
+- **Exam focus:** Minimal DFA state counting, NFA-to-DFA subset construction bounds, regular expression equivalence, and closure/decision properties; tested via NAT (state counts) and MCQ/MSQ (regularity identification, closure facts).
 - A **language** is a set of strings over an alphabet Σ. A **regular language** is one accepted by a DFA, equivalently an NFA, ε-NFA, or described by a regular expression.
 - DFA = (Q, Σ, δ, q0, F) with δ: Q×Σ → Q (total). NFA has δ: Q×Σ → 2^Q. ε-NFA adds ε-moves. All three accept exactly the regular languages.
 - **Subset construction:** an NFA with n states gives a DFA with at most 2^n states (tight in the worst case, e.g. "n-th symbol from the end is 1").
@@ -14,7 +16,7 @@
 - Regular = finite memory. **a^n b^n is not regular** (needs unbounded counting); a^n b^m is regular.
 - #1 trap: a DFA must have a transition for every (state, symbol); counting minimal states forgets the **dead (trap) state**.
 
-## 1. Alphabets, strings and languages
+## 1. Alphabets, strings and languages [PYQ: Low]
 
 An **alphabet** Σ is a finite non-empty set of symbols. A **string** is a finite sequence of symbols; |w| is its length; ε is the empty string (|ε| = 0). Σ* is the set of all strings over Σ (including ε), Σ+ = Σ* − {ε}. A **language** is any subset of Σ*.
 
@@ -31,7 +33,7 @@ Operations on languages L1, L2:
 
 Facts: **∅* = {ε}**, and ∅·L = ∅ (concatenation with the empty language kills everything), {ε}·L = L. |Σ^n| = |Σ|^n. If |L1| = m and |L2| = n then |L1·L2| ≤ mn (equality fails when different splits give the same string, as above: 4 products, 3 distinct strings).
 
-## 2. Regular expressions
+## 2. Regular expressions [PYQ: High]
 
 A **regular expression (RE)** over Σ is built from: ∅ (the empty language), ε, each a∈Σ, and if r, s are REs then (r+s) or (r|s) (union), (rs) (concatenation), (r*) (star). Precedence: **star > concatenation > union**.
 
@@ -70,7 +72,7 @@ A **regular expression (RE)** over Σ is built from: ∅ (the empty language), �
 - Third symbol from the right is a: (a+b)*a(a+b)(a+b).
 - Even length: ((a+b)(a+b))*.
 
-## 3. Deterministic finite automata (DFA)
+## 3. Deterministic finite automata (DFA) [PYQ: High]
 
 **Intuition.** A machine with finite memory: it reads the input one symbol at a time, always in exactly one state, and accepts if it ends in a final state. Memory = the state; what the machine must "remember" is what it needs to decide the future.
 
@@ -98,7 +100,7 @@ Check "aab": (E,E) -a-> (O,E) -a-> (E,E) -b-> (E,O): accepted (2 a's, 1 b). Chec
 | no two consecutive a's | last symbol was a? + dead state | 3 |
 | starts with ab | q0 → q1 → q2(accept, loops), plus dead | 4 |
 
-## 4. NFA and ε-NFA
+## 4. NFA and ε-NFA [PYQ: Medium]
 
 **Intuition.** An NFA may be in several states at once (or, equivalently, may guess). It accepts if **some** computation path ends in a final state. ε-moves let it change state without reading input.
 
@@ -157,7 +159,7 @@ Four states including the dead one. This matches the intuitive minimal DFA of a*
 
 **Thompson's construction (brief).** Build an ε-NFA by induction on the RE with a single start and single final state per fragment: symbol a: s -a→ f. Union r+s: new start with ε to both starts, both finals ε to new final. Concatenation: ε from final of r to start of s. Star: new start/final with ε-loop back from final to start of r and ε-bypass start→final. At most 2 states per symbol/operator, so ≤ 2|r| states. The same fragments appear in lexer generators ([Lexical analysis](../12-compiler-design/lexical-analysis.md)).
 
-## 5. DFA minimisation
+## 5. DFA minimisation [PYQ: High]
 
 **Idea.** Two states p, q are **distinguishable** if some string w leads one to a final state and the other to a non-final state. Indistinguishable states can be merged. **Steps:** (1) delete states unreachable from q0; (2) partition into {final}, {non-final}; (3) repeatedly split a block if two of its states go to different blocks on some symbol; (4) stop when stable; each block becomes one state. This is the same as the table-filling algorithm.
 
@@ -213,7 +215,7 @@ All counts below were verified by computing Myhill–Nerode classes by brute for
 
 For "binary divisible by 3": states r0, r1, r2; δ(r,x) = (2r+x) mod 3: r0 -0→ r0, r0 -1→ r1, r1 -0→ r2, r1 -1→ r0, r2 -0→ r1, r2 -1→ r2. Start and final r0. Test 110 = 6: r0→r1→r0→r0 accepted.
 
-## 6. Regular expression ⇄ finite automaton
+## 6. Regular expression ⇄ finite automaton [PYQ: Medium]
 
 ### 6.1 RE → NFA
 Use Thompson (above) or build directly by intuition. Example: (a+b)*abb → the NFA of §4.1.
@@ -233,7 +235,7 @@ Method: add a new start S and new final F with ε-edges (S→q0, q0→F). Elimin
 ### 6.3 Arden's theorem
 If R = Q + RP and ε ∉ P, then R = QP*. To solve a DFA, write one equation per state (state = union of (predecessor · symbol)), plus ε for the start, then eliminate. Useful when equations are small.
 
-## 7. Mealy and Moore machines (brief)
+## 7. Mealy and Moore machines (brief) [PYQ: Low]
 
 Finite automata **with output**, no final states.
 
@@ -245,7 +247,7 @@ Finite automata **with output**, no final states.
 
 Example (Mealy, 1's complement of a binary string): one state q, transitions 0/1 and 1/0. Input 0110 → output 1001. A Moore machine for the same job needs extra states to hold the output. Every Moore machine converts to an equivalent Mealy machine with the same state count, and a Mealy machine converts to Moore with at most (states × |output alphabet|) states. These machines are the ancestors of the sequential circuits in [Sequential circuits](../09-digital-logic/sequential-circuits.md).
 
-## 8. Myhill–Nerode theorem
+## 8. Myhill–Nerode theorem [PYQ: Low]
 
 Define x ≡_L y iff for all z, (xz ∈ L ⟺ yz ∈ L). **L is regular ⟺ ≡_L has finitely many equivalence classes, and the number of classes equals the number of states of the minimal DFA.**
 
@@ -254,7 +256,7 @@ Use it two ways:
 - **Count states:** each class is "a distinct situation the machine must remember" (e.g. for "ends with ab": classes of strings ending in ab, ending in a, others).
 - **Prove non-regular:** for L = {a^n b^n}, the strings a, aa, aaa, … are pairwise inequivalent (a^i b^i ∈ L but a^j b^i ∉ L for i≠j), giving infinitely many classes. Intuition: a finite machine cannot count unboundedly.
 
-## 9. Regular languages: closure and decision properties
+## 9. Regular languages: closure and decision properties [PYQ: High]
 
 **Closure.** Regular languages are closed under:
 

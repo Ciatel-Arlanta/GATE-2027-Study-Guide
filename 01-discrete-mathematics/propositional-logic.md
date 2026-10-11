@@ -2,9 +2,11 @@
 
 > **Paper:** CS · **Priority:** P0 · **Plan topics:** Propositional logic
 > **Prerequisites:** none · **Leads to:** [First-order logic](first-order-logic.md) · [Boolean algebra and minimization](../09-digital-logic/boolean-algebra-and-minimization.md)
+> **PYQ weightage:** High · 18 Qs since 2015 (6 since 2021) · DA: 1 · Trend: falling · Most asked: Tautology & validity testing, Model counting, Functional completeness, Equivalence laws
 
 ## Quick glance
 
+- **Exam focus:** Testing validity/tautology (fast "assume false" method), truth-table model counting, and functional completeness of connective sets; tested in almost every paper as 1-mark or 2-mark MCQ/MSQ/NAT.
 - A **proposition** is a sentence that is exactly true or false. Connectives: NOT (¬), AND (∧), OR (∨), XOR (⊕), implication (→), biconditional (↔).
 - **p → q is false in exactly one row: p = T, q = F.** Everything else is true (a false hypothesis makes the implication vacuously true).
 - Formula with n variables has 2^n truth-table rows and there are 2^(2^n) distinct Boolean functions of n variables.
@@ -15,7 +17,7 @@
 - Rules of inference: modus ponens, modus tollens, hypothetical syllogism, disjunctive syllogism, resolution. **Affirming the consequent and denying the antecedent are fallacies.**
 - DNF = OR of ANDs (read from the true rows); CNF = AND of ORs (read from the false rows).
 
-## 1. Propositions and connectives
+## 1. Propositions and connectives [PYQ: Medium]
 
 **Intuition.** A proposition is a declarative statement with a definite truth value. "2 + 2 = 5" is a proposition (false); "x + 1 = 3" and "close the door" are not (open sentence, command).
 
@@ -51,7 +53,7 @@ The converse and the inverse are contrapositives of each other, hence equivalent
 - Inverse: if it does not rain, the match is not cancelled.
 - Contrapositive: if the match is not cancelled, it did not rain. Logically identical to the original.
 
-## 2. Tautology, contradiction, satisfiability, equivalence
+## 2. Tautology, contradiction, satisfiability, equivalence [PYQ: High]
 
 | Class | Definition | Example |
 |-------|------------|---------|
@@ -104,7 +106,7 @@ To prove A → B is a tautology, **try to make it false**: A = T and B = F. If t
 
 Compare p → (q → r), which is false only at p = T, q = T, r = F: 7 true rows. Hence **→ is not associative**.
 
-## 3. Equivalence laws
+## 3. Equivalence laws [PYQ: Medium]
 
 | Law | Statement |
 |-----|-----------|
@@ -134,7 +136,7 @@ Check at p = 0, q = 0: original = ¬(0 ∨ (1 ∧ 0)) = 1; simplified = 1. ✓.
 
 **Worked example 8.** Show p → (q → p) is a tautology. p → (q → p) ≡ ¬p ∨ (¬q ∨ p) ≡ (¬p ∨ p) ∨ ¬q ≡ T ∨ ¬q ≡ **T**.
 
-## 4. Functional completeness
+## 4. Functional completeness [PYQ: Medium]
 
 A set of connectives is **functionally complete** if every Boolean function can be built from it.
 
@@ -154,7 +156,7 @@ A set of connectives is **functionally complete** if every Boolean function can 
 
 **Number of 2-input Boolean functions:** 2^(2^2) = 16. Of these, 8 are commutative and 8 are associative (brute-force verified). NAND is commutative but **not associative** (verified).
 
-## 5. Normal forms
+## 5. Normal forms [PYQ: Medium]
 
 A **literal** is a variable or its negation. A **minterm** is an AND of literals containing every variable once; a **maxterm** is an OR of literals containing every variable once.
 
@@ -181,7 +183,7 @@ True rows: 001, 011, 100, 101, 111 (five). False rows: 000, 010, 110 (three).
 
 **Facts.** Satisfiability of a DNF is easy (any term without a complementary pair works); satisfiability of a CNF is **SAT, NP-complete** (3-SAT also NP-complete, 2-SAT in polynomial time). Validity of a CNF is easy (each clause must contain p and ¬p); validity of a DNF is co-NP-complete. See [NP-completeness context in algorithms](../08-algorithms/README.md).
 
-## 6. Rules of inference and arguments
+## 6. Rules of inference and arguments [PYQ: Medium]
 
 An argument with premises P₁, …, Pₙ and conclusion C is **valid** iff (P₁ ∧ … ∧ Pₙ) → C is a tautology, i.e. no assignment makes all premises true and C false.
 
@@ -249,7 +251,7 @@ An argument with premises P₁, …, Pₙ and conclusion C is **valid** iff (P�
 
 <details><summary>Answer</summary>
 
-**Answer:** (b)
+**Answer:** (b)  
 **Solution:** (b) is modus ponens: falsify q = F with p = T, then p → q = F so the antecedent is F, no falsifying row. (a) fails at p = F, q = T. (c) fails at p = F, q = T. (d) fails at p = T.
 
 </details>
@@ -258,7 +260,7 @@ An argument with premises P₁, …, Pₙ and conclusion C is **valid** iff (P�
 
 <details><summary>Answer</summary>
 
-**Answer:** 2
+**Answer:** 2  
 **Solution:** The three implications form a cycle, so p, q, r must all be equal. Only (1,1,1) and (0,0,0) work.
 
 </details>
@@ -267,7 +269,7 @@ An argument with premises P₁, …, Pₙ and conclusion C is **valid** iff (P�
 
 <details><summary>Answer</summary>
 
-**Answer:** (a), (b), (d)
+**Answer:** (a), (b), (d)  
 **Solution:** (a) contrapositive, (b) definition, (d) De Morgan: ¬(p ∧ ¬q) ≡ ¬p ∨ q. (c) is the converse.
 
 </details>
@@ -276,7 +278,7 @@ An argument with premises P₁, …, Pₙ and conclusion C is **valid** iff (P�
 
 <details><summary>Answer</summary>
 
-**Answer:** (b)
+**Answer:** (b)  
 **Solution:** "A only if B" is A → B with A = pass, B = study.
 
 </details>
@@ -285,7 +287,7 @@ An argument with premises P₁, …, Pₙ and conclusion C is **valid** iff (P�
 
 <details><summary>Answer</summary>
 
-**Answer:** 5
+**Answer:** 5  
 **Solution:** False only when p → q is T and r = F: three (p,q) rows (00, 01, 11) with r = F. So 8 − 3 = 5.
 
 </details>
@@ -294,7 +296,7 @@ An argument with premises P₁, …, Pₙ and conclusion C is **valid** iff (P�
 
 <details><summary>Answer</summary>
 
-**Answer:** (d)
+**Answer:** (d)  
 **Solution:** ∧ and ∨ map all-true inputs to true, so no formula built from them can compute ¬p (which gives F on input T).
 
 </details>
@@ -303,7 +305,7 @@ An argument with premises P₁, …, Pₙ and conclusion C is **valid** iff (P�
 
 <details><summary>Answer</summary>
 
-**Answer:** (c)
+**Answer:** (c)  
 **Solution:** Assume r = F. Then ¬p ∨ r forces p = F and ¬q ∨ r forces q = F, so p ∨ q = F, contradiction. Hence r is true. p and q individually need not be true (p = T, q = F, r = T satisfies all premises, and so does the opposite).
 
 </details>
@@ -312,7 +314,7 @@ An argument with premises P₁, …, Pₙ and conclusion C is **valid** iff (P�
 
 <details><summary>Answer</summary>
 
-**Answer:** 8
+**Answer:** 8  
 **Solution:** Commutativity requires f(0,1) = f(1,0). Choose f(0,0), f(1,1) and the common value freely: 2³ = 8. (Brute force agrees.)
 
 </details>

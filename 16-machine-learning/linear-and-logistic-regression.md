@@ -2,9 +2,11 @@
 
 > **Paper:** DA · **Priority:** P0 · **Plan topics:** Simple linear regression; Multiple linear regression; Ridge regression; Logistic regression
 > **Prerequisites:** [ML foundations](ml-foundations.md) · [Orthogonality, projections, SVD](../03-linear-algebra/orthogonality-projections-svd.md) · [Maxima and minima](../04-calculus-optimization/maxima-minima-optimization.md) · **Leads to:** [Classification methods](classification-methods.md) · [Neural networks](neural-networks.md) · [PCA](dimensionality-reduction-pca.md)
+> **PYQ weightage:** Medium · 3 Qs (DA 2024–2026 only) · Trend: steady · Most asked: Ordinary least squares (parameter estimation), Logistic regression loss & decision boundaries
 
 ## Quick glance
 
+- **Exam focus:** GATE DA tests closed-form ordinary least squares parameter calculation for 1D/multiple regression, gradient descent updates, and logistic regression log-odds / cross-entropy loss and linear decision boundaries, appearing as NATs and MCQs.
 - Simple LR: $\hat\beta_1 = S_{xy}/S_{xx}$, $\hat\beta_0 = \bar y - \hat\beta_1 \bar x$. The line passes through $(\bar x, \bar y)$.
 - Multiple LR (normal equations): $\hat\beta = (X^TX)^{-1}X^Ty$; $\hat y = X\hat\beta$ is the **orthogonal projection** of $y$ onto the column space of $X$; residuals satisfy $X^Te = 0$.
 - $R^2 = 1 - SSE/SST$; adding predictors never lowers $R^2$ (adjusted $R^2$ can fall).
@@ -13,7 +15,7 @@
 - Cross-entropy loss gradient: $\sum_i (\hat p_i - y_i)\,x_i$. Same form as squared-error gradient for linear regression.
 - #1 trap: logistic regression is a **classifier**, and $\lambda \to\infty$ in ridge sends coefficients (not the intercept) to 0, never exactly 0 for finite $\lambda$ (lasso can hit 0).
 
-## 1. Simple linear regression
+## 1. Simple linear regression [PYQ: Medium]
 
 **Intuition.** Draw the line that sits closest to all points, measuring closeness by the *vertical* gaps (residuals) squared.
 
@@ -44,7 +46,7 @@ $\bar x = 3$, $\bar y = 4$, $S_{xy} = 6$, $S_{xx} = 10$.
 
 **Gradient descent version.** With $J = \frac1n\sum(\hat y_i - y_i)^2$: $\partial J/\partial\beta_0 = \frac2n\sum(\hat y_i - y_i)$, $\partial J/\partial\beta_1 = \frac2n\sum(\hat y_i - y_i)x_i$; update $\beta \leftarrow \beta - \eta\nabla J$. For the data above from $\beta = (0,0)$: $\sum(\hat y - y) = -20$, $\sum(\hat y-y)x = -66$. Gradient $= (-8, -26.4)$. With $\eta = 0.01$: $\beta_0 = 0.08$, $\beta_1 = 0.264$. Converges to $(2.2, 0.6)$ because $J$ is convex.
 
-## 2. Multiple linear regression
+## 2. Multiple linear regression [PYQ: Medium]
 
 **Model.** $y = X\beta + \varepsilon$ with design matrix $X$ ($n\times(p+1)$, first column of ones). Minimising $\|y - X\beta\|^2$ gives the **normal equations**
 
@@ -77,7 +79,7 @@ $\hat y = 1 + 2x_1 + x_2$. Fitted: $5, 6, 11, 12$; residuals $e = (1,-1,-1,1)$. 
 
 **Parameter count:** $p+1$ coefficients for $p$ features.
 
-## 3. Ridge regression
+## 3. Ridge regression [PYQ: Low]
 
 **Intuition.** With many or correlated features, OLS fits noise and coefficients become huge with opposite signs. Penalise large weights: you accept a little bias for a large drop in variance.
 
@@ -102,7 +104,7 @@ The slope shrinks toward 0 while the line still passes through $(\bar x,\bar y)$
 
 **Ridge vs lasso.** Lasso penalises $\lambda\|\beta\|_1$: it produces **exact zeros** (feature selection), has no closed form. Ridge keeps all features with small weights. Bayesian reading: ridge = Gaussian prior on weights (MAP), lasso = Laplace prior.
 
-## 4. Logistic regression
+## 4. Logistic regression [PYQ: Medium]
 
 **Intuition.** For two classes we want a probability in $[0,1]$. A line can leave that range, so we pass the linear score through the **sigmoid**.
 

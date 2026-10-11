@@ -2,9 +2,11 @@
 
 > **Paper:** CS · **Priority:** P0 · **Plan topics:** Instruction sets; Addressing modes
 > **Prerequisites:** [Number representation and arithmetic](../09-digital-logic/number-representation-and-arithmetic.md), [Sequential circuits](../09-digital-logic/sequential-circuits.md) · **Leads to:** [ALU and control unit](alu-and-control-unit.md), [Pipelining](pipelining.md)
+> **PYQ weightage:** High · 18 Qs since 2015 (10 since 2021) · DA: 0 · Trend: rising · Most asked: Instruction Format, Machine Instruction, Addressing Modes, Instruction Execution
 
 ## Quick glance
 
+- **Exam focus:** Expanding opcode encoding schemes, instruction word bit fields (opcodes, register addresses, immediate/displacement fields), effective address calculation across addressing modes, and program counter (PC) relative branching. Common formats: NAT for maximum number of instructions/addresses or number of bits in a field; MCQ for addressing mode matching and instruction execution tracing.
 - An **instruction** = opcode (what to do) + operand specifiers (where the data is). The **instruction set architecture (ISA)** is the programmer-visible contract.
 - **0/1/2/3-address** machines: stack, accumulator, 2-operand (dest = dest op src), 3-operand (dest, src1, src2). Fewer addresses = shorter instructions but more of them.
 - **Expanding opcode:** fixed-length instruction, unused opcode codes at one level become prefixes for the next level; count by multiplying remaining codes by $2^{\text{extra bits}}$ at each level.
@@ -15,7 +17,7 @@
 - Auto-increment/decrement suits array scans and stacks; PC-relative gives **position-independent code**; base register gives **relocation**; indexed gives **array access**.
 - #1 trap: **PC value used for relative addressing is the address of the next instruction** (after fetch increment).
 
-## 1. Instruction format and the instruction set
+## 1. Instruction format and the instruction set [PYQ: High]
 
 An instruction word is divided into fields: **opcode**, one or more **address/operand fields**, and addressing-mode bits.
 
@@ -34,7 +36,7 @@ Typical categories: data transfer (LOAD, STORE, MOV, PUSH, POP), arithmetic/logi
 
 **Worked example: immediate size.** If an I-format instruction has 6-bit opcode, two 5-bit registers and a 16-bit signed immediate, the immediate range is $-2^{15}\ldots2^{15}-1$ and a branch offset counted in words reaches $\pm2^{15}$ words $=\pm2^{17}$ bytes.
 
-## 2. Number of addresses: one expression in each style
+## 2. Number of addresses: one expression in each style [PYQ: Low]
 
 Evaluate $X = (A+B)\times(C+D)$. Let `T1`, `T2` be memory temporaries or registers.
 
@@ -82,7 +84,7 @@ PUSH A; PUSH B; ADD; PUSH C; PUSH D; ADD; MUL; POP X
 
 **Register machines:** GPR machines are **register-memory** (CISC, x86) or **load-store** (RISC: only LOAD/STORE touch memory; arithmetic uses registers).
 
-## 3. Expanding opcodes
+## 3. Expanding opcodes [PYQ: High]
 
 With fixed-length instructions you can keep unused opcode bit patterns as **escape prefixes** to give more bits to the opcode of instructions that need fewer operands.
 
@@ -113,7 +115,7 @@ With fixed-length instructions you can keep unused opcode bit patterns as **esca
 
 **Check:** the total number of distinct bit patterns of the whole instruction word is $2^{16}$ and each instruction format with $a$ addresses consumes $2^{4a}$ patterns per opcode: $15\cdot2^{12}+14\cdot2^{8}+31\cdot2^{4}+16\cdot1 = 61440+3584+496+16 = 65536 = 2^{16}$ (all patterns used).
 
-## 4. RISC vs CISC
+## 4. RISC vs CISC [PYQ: Low]
 
 | Aspect | RISC | CISC |
 |---|---|---|
@@ -128,7 +130,7 @@ With fixed-length instructions you can keep unused opcode bit patterns as **esca
 
 **RISC is easy to pipeline because fixed length makes fetch/decode uniform and load/store separates memory access.** CISC reduces instruction count and memory use but decoding is harder.
 
-## 5. Instruction cycle and register transfer notation
+## 5. Instruction cycle and register transfer notation [PYQ: Medium]
 
 ```text
 fetch:   MAR <- PC
@@ -146,7 +148,7 @@ PC **always** points to the next instruction after fetch. Jump: $PC\leftarrow EA
 
 **Instruction cycle count:** if each memory access takes one cycle, a 2-word `ADD` with a memory operand needs: fetch word 1, fetch word 2, read operand, (write result): 3 or 4 memory cycles.
 
-## 6. Addressing modes
+## 6. Addressing modes [PYQ: Medium]
 
 An addressing mode defines how the operand's **effective address (EA)** or value is obtained.
 
@@ -204,7 +206,7 @@ An addressing mode defines how the operand's **effective address (EA)** or value
 
 **Worked example: instruction size.** Machine has 100 instructions, 8 addressing modes, 32 registers, 24-bit address. Format `opcode, mode, register, address`: opcode 7 bits, mode 3, register 5, address 24: total $39$ bits (round up to 40 for a byte-aligned format).
 
-## 7. Registers, flags and the stack
+## 7. Registers, flags and the stack [PYQ: Low]
 
 - **Program counter (PC)**, **instruction register (IR)**, **MAR/MBR (MDR)**, **stack pointer (SP)**, **status/flags (Z, N, C, V)**, general-purpose registers.
 - **Stack** in memory: SP points to top. Growing downward: PUSH $=SP\leftarrow SP-1$ then store; POP $=$ load then $SP\leftarrow SP+1$. Subroutine calls push the return address; **nested calls and recursion** use the stack for frames (see [Runtime environments](../12-compiler-design/runtime-environments.md)).

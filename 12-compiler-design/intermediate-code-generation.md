@@ -2,9 +2,11 @@
 
 > **Paper:** CS · **Priority:** P0 · **Plan topics:** Intermediate code generation
 > **Prerequisites:** [Syntax-directed translation](syntax-directed-translation.md) · [Runtime environments](runtime-environments.md) · **Leads to:** [Optimization and data-flow analysis](optimization-and-dataflow.md)
+> **PYQ weightage:** Medium · 12 Qs since 2015 (7 since 2021) · DA: 0 · Trend: rising · Most asked: Intermediate Code, Static Single Assignment, Basic Blocks, Directed Acyclic Graph
 
 ## Quick glance
 
+- **Exam focus:** Three-address code generation and temporary counting, Basic Block leader identification, Static Single Assignment (SSA phi-functions and distinct names), and row-major array address calculation; tested mostly via NAT and MCQ.
 - **Intermediate representation (IR):** a machine-independent form between the front end and the back end. With one IR, m front ends × n back ends need only m + n components.
 - Common IRs: **syntax trees/DAGs**, **postfix**, **three-address code (3AC)**, **SSA**. 3AC instructions have at most one operator and three addresses: `x = y op z`, `x = op y`, `x = y`, `goto L`, `if x relop y goto L`, `param x / call p, n / return`, `x = a[i]`, `a[i] = x`, `x = &y / *y`.
 - Three storage forms: **quadruples** (op, arg1, arg2, result) — 4 fields, temporaries named explicitly; **triples** (op, arg1, arg2) — result is the instruction number, 3 fields, hard to reorder; **indirect triples** — a list of pointers to triples, so reordering only moves pointers.
@@ -14,7 +16,7 @@
 - **Basic block:** maximal straight-line sequence with one entry (first instruction) and one exit (last). **Leaders:** (1) the first instruction; (2) any target of a jump; (3) any instruction right after a jump. Each block runs from a leader to the next leader − 1. The **control-flow graph (CFG)** has blocks as nodes and edges for jumps and fall-through.
 - #1 trap: miscounting leaders: the instruction after an **unconditional** goto is also a leader, and so is the instruction after a conditional jump (fall-through path).
 
-## 1. Intermediate representations
+## 1. Intermediate representations [PYQ: Medium]
 
 | IR | Form | Strength |
 | --- | --- | --- |
@@ -80,7 +82,7 @@ a  = t5
 | Moving/optimising code | easy (names fixed) | hard (references are positions) | easy |
 | Memory | most | least | in between |
 
-## 2. Translating expressions and statements
+## 2. Translating expressions and statements [PYQ: Medium]
 
 **Assignment/expression (SDT):** each expression E gets `E.addr` (the name holding the value) and `E.code`. `E → E₁ + E₂`: `E.addr = newtemp()`, `E.code = E₁.code ∥ E₂.code ∥ gen(E.addr '=' E₁.addr '+' E₂.addr)`. For `id = E`: `gen(id.addr '=' E.addr)`.
 
@@ -118,7 +120,7 @@ for (i=0; i<n; i++) S     i = 0
 
 **Procedure calls.** `f(a, b+1)` becomes `param a; t1 = b + 1; param t1; t2 = call f, 2`. The `param` instructions implement the calling sequence ([Runtime environments](runtime-environments.md)).
 
-## 3. Boolean expressions and short-circuit code
+## 3. Boolean expressions and short-circuit code [PYQ: Low]
 
 **Numerical method:** compute 0/1 into a temporary. **Jumping code (control-flow method):** a boolean is translated into jumps to a *true* label or *false* label, with no value materialised. `&&` and `||` are **short-circuit**: in `B₁ || B₂`, if B₁ is true the code jumps straight to the true label without evaluating B₂; `B₁ && B₂`: if B₁ is false, jump to the false label.
 
@@ -149,7 +151,7 @@ Count: 9 instructions plus the next one at 10. The rules used: **B → B₁ || M
 
 **Backpatching** gives one-pass generation of jumps whose targets are not yet known: each unresolved jump is put on a list and later patched when the target label is reached. Functions: `makelist(i)`, `merge(p1, p2)`, `backpatch(p, i)`.
 
-## 4. Arrays
+## 4. Arrays [PYQ: Low]
 
 Element size w. **One dimension**, lower bound low: `addr(A[i]) = base + (i − low) × w`.
 
@@ -173,7 +175,7 @@ x  = A[t3]            (A[t3] means the word at base(A) + t3)
 
 For d dimensions row-major: offset = ((i₁ n₂ + i₂) n₃ + i₃) … computed by Horner's rule, d − 1 multiplications by the sizes plus one by w.
 
-## 5. Static single assignment (SSA)
+## 5. Static single assignment (SSA) [PYQ: Medium]
 
 **Definition.** Each variable is assigned at most once in the program text; each use refers to exactly one definition. Where control-flow paths join, a **φ-function** selects the value according to the path taken: `x3 = φ(x1, x2)` (x1 if control came from the first predecessor, x2 if from the second). Easier optimisation: constant propagation, dead-code elimination, global value numbering.
 
@@ -209,7 +211,7 @@ SSA names: i1, i2, i3, s1, s2, s3 = **6**; φ-functions = **2**, both at the loo
 
 **Where to put φ (minimal SSA).** At the **dominance frontier** of each definition, iterated. For GATE counting questions, add a φ for a variable at a join node only when that variable is defined on at least one path and reaches the join with different definitions.
 
-## 6. Basic blocks and control-flow graphs
+## 6. Basic blocks and control-flow graphs [PYQ: Medium]
 
 **Leader algorithm.**
 1. The first instruction is a leader.

@@ -4,6 +4,8 @@
 > **Weightage:** CS paper about 2–3 marks, DA paper about 8–12 marks. In DA this is one of the highest-yield subjects; in CS it is a quick, high-accuracy source of marks.
 > **Quick links:** [CHEATSHEET](CHEATSHEET.md) · [CHECKPOINT](CHECKPOINT.md)
 
+**PYQ weightage:** ~2.4 Qs per CSE paper (2021–26), trend falling; DA: 21 Qs in 2024–26.
+
 ## Why this subject matters / mental model
 
 A matrix is a **machine that transforms vectors**. Everything in the subject answers one of four questions about that machine:
@@ -19,13 +21,21 @@ For DA, linear algebra is the language of [regression](../16-machine-learning/li
 
 ## Reading order
 
-| # | Chapter | Priority | Plan topics covered |
-|---|---|---|---|
-| 1 | [Vector spaces](vector-spaces.md) | P0 | Vectors and vector spaces; Subspaces; Linear dependence and independence; Rank; Nullity |
-| 2 | [Matrices and determinants](matrices-and-determinants.md) | P0 | Matrices and matrix operations; Determinants; Idempotent matrices; Partition matrices and properties; Quadratic forms |
-| 3 | [Linear systems and LU](linear-systems-and-lu.md) | P0 | Systems of linear equations and solutions; Gaussian elimination; LU decomposition |
-| 4 | [Eigenvalues and eigenvectors](eigenvalues-and-eigenvectors.md) | P0 | Eigenvalues and eigenvectors (also determinants, rank links) |
-| 5 | [Orthogonality, projections, SVD](orthogonality-projections-svd.md) | P1 | Orthogonal matrices; Projection matrices; Projections; Singular value decomposition |
+| # | Chapter | Priority | Plan topics covered | PYQ weightage |
+|---|---|---|---|---|
+| 1 | [Vector spaces](vector-spaces.md) | P0 | Vectors and vector spaces; Subspaces; Linear dependence and independence; Rank; Nullity | Medium · 10 |
+| 2 | [Matrices and determinants](matrices-and-determinants.md) | P0 | Matrices and matrix operations; Determinants; Idempotent matrices; Partition matrices and properties; Quadratic forms | High · 16 |
+| 3 | [Linear systems and LU](linear-systems-and-lu.md) | P0 | Systems of linear equations and solutions; Gaussian elimination; LU decomposition | High · 17 |
+| 4 | [Eigenvalues and eigenvectors](eigenvalues-and-eigenvectors.md) | P0 | Eigenvalues and eigenvectors (also determinants, rank links) | High · 30 |
+| 5 | [Orthogonality, projections, SVD](orthogonality-projections-svd.md) | P1 | Orthogonal matrices; Projection matrices; Projections; Singular value decomposition | Low · 3 |
+
+## Study priority
+
+- [Eigenvalues and eigenvectors](eigenvalues-and-eigenvectors.md) (High · 30) — master characteristic polynomials, multiplicity versus diagonalisability, and the trace/determinant links first; the heaviest chapter of the section.
+- [Linear systems and LU](linear-systems-and-lu.md) (High · 17) — master Gaussian elimination, the consistency conditions for Ax = b and LU decomposition.
+- [Matrices and determinants](matrices-and-determinants.md) (High · 16) — master determinant identities, idempotent and projection matrices, and quadratic forms.
+- [Vector spaces](vector-spaces.md) (Medium · 10) — master span, basis, rank–nullity and independence tests before the applied chapters.
+- [Orthogonality, projections, SVD](orthogonality-projections-svd.md) (Low · 3) — lowest CSE weightage, but the DA paper asks it directly: master orthonormality, projection matrices and SVD last.
 
 ## Chapter dependencies
 

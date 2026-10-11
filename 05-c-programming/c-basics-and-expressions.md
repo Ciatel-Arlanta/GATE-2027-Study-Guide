@@ -2,11 +2,13 @@
 
 > **Paper:** CS · **Priority:** P0 · **Plan topics:** C syntax and semantics; Tracing C programs and expressions
 > **Prerequisites:** [Number representation](../09-digital-logic/number-representation-and-arithmetic.md) · **Leads to:** [Pointers, arrays, strings](pointers-arrays-strings.md), [Functions, recursion, structures](functions-recursion-structures.md)
+> **PYQ weightage:** High · 22 Qs since 2015 (8 since 2021) · DA: 0 · Trend: falling · Most asked: Control flow & loop tracing, operators & precedence, signed/unsigned conversions
 
 Machine assumption used in this whole section (state it in the exam answer if the question does not): **64-bit Linux-style model (LP64): `char`=1, `short`=2, `int`=4, `long`=8, `long long`=8, `float`=4, `double`=8, pointer=8 bytes; little-endian; two's complement.** Many GATE questions say "assume `int` is 4 bytes" (older ones say 2); always read the stated sizes.
 
 ## Quick glance
 
+- **Exam focus:** Tracing nested loops, short-circuit evaluation, operator precedence/associativity, and signed/unsigned promotions; questions are primarily NAT (tracing program output) and MCQ.
 - **Integer promotion:** `char`/`short` operands become `int` before arithmetic. If an `int` meets an `unsigned int`, the `int` becomes unsigned: `-1 > 1u` is **true**.
 - **Signed overflow is undefined; unsigned overflow wraps modulo 2^n.** `unsigned char` 255 + 1 stored back gives 0.
 - **Precedence ladder:** `() [] -> .` > unary (`! ~ ++ -- * & sizeof`, casts) > `* / %` > `+ -` > `<< >>` > `< <= > >=` > `== !=` > `&` > `^` > `|` > `&&` > `||` > `?:` > `= op=` > `,`.
@@ -17,7 +19,7 @@ Machine assumption used in this whole section (state it in the exam answer if th
 - `#define` macros are textual: `SQ(a+1)` with `#define SQ(x) x*x` becomes `a+1*a+1`.
 - `x & (x-1)` clears the lowest set bit; `x & -x` isolates it.
 
-## 1. Types, sizes and constants
+## 1. Types, sizes and constants [PYQ: Low]
 
 A **type** tells the compiler how many bytes a value occupies and how to interpret the bits.
 
@@ -41,7 +43,7 @@ printf("%zu %d", sizeof(i++), i);   // prints "4 5": i++ is never executed
 
 **Char arithmetic.** `'a'` is just 97. `'a' + 1` is the `int` 98; `printf("%c", 'a'+1)` prints `b`. `'a' - 'A'` = 32. `'7' - '0'` = 7 (digit char to value). `'0' + 5` = `'5'`.
 
-## 2. Conversions and the signed/unsigned trap
+## 2. Conversions and the signed/unsigned trap [PYQ: Medium]
 
 **Rules, in order, for a binary operator:**
 1. `char`, `short` (and `bool`, bit-fields) are **promoted to `int`**.
@@ -85,7 +87,7 @@ u = u + 1;                // 256 converted back to unsigned char: 256 mod 256 = 
 - `sizeof(int) > -1` is **false**: `sizeof` is unsigned, `-1` becomes huge.
 - `strlen(s) - 10 > 0` is true even when `strlen(s) < 10`.
 
-## 3. Operators, precedence and associativity
+## 3. Operators, precedence and associativity [PYQ: Medium]
 
 | Level | Operators | Assoc. |
 |---|---|---|
@@ -125,7 +127,7 @@ u = u + 1;                // 256 converted back to unsigned char: 256 mod 256 = 
 
 **Relational chains.** `a < b < c` means `(a < b) < c`, comparing 0/1 to `c`.
 
-## 4. Increment/decrement, sequence points, undefined behaviour
+## 4. Increment/decrement, sequence points, undefined behaviour [PYQ: Medium]
 
 `i++` yields the **old** value then increments; `++i` increments then yields the **new** value.
 
@@ -153,7 +155,7 @@ j = ++i + 10;   // i = 7, j = 17
 
 **GATE use:** if the output depends on a compiler's evaluation order, the intended answer is "undefined" (or the question will not be asked). Do not "pick the usual behaviour".
 
-## 5. Short-circuit, logical and bitwise operators
+## 5. Short-circuit, logical and bitwise operators [PYQ: Medium]
 
 `A && B`: if `A` is 0, `B` is **not evaluated**. `A || B`: if `A` is nonzero, `B` is not evaluated. Result is always 0 or 1.
 
@@ -194,7 +196,7 @@ while (x) { x = x & (x - 1); count++; }
 - `x & y` = 00001100 = 12. `x ^ y` = 00110011 = 51; `<< 1` = 102 (01100110).
 - `<<` binds tighter than `|`: `12 | 102` = 00001100 | 01100110 = 01101110 = **110**.
 
-## 6. Control flow and loop tracing
+## 6. Control flow, loop tracing and invariants [PYQ: High]
 
 **`switch` falls through.** Execution enters at the matching label and continues down until `break` or the end. `default` may be anywhere; it is used only when no case matches, but falling through from it continues into the next label.
 
@@ -235,7 +237,35 @@ Final **s = 19, i = 8**. (`continue` in a `for` still runs `i++`.)
 
 **Other loop traps.** `for (i = 0; i < 5; i++);` (stray semicolon) runs an empty body; a following `printf("%d", i)` prints 5. A `do { } while (c);` body runs at least once. Dangling `else` binds to the nearest `if`.
 
-## 7. `printf` formats and macros
+### 6.1 Loop invariants
+
+**Intuition.** A loop invariant is a formal condition that is true before the loop begins and remains true before and after each iteration. At termination, the invariant combined with the negated loop condition guarantees that the algorithm produced the correct result.
+
+**Verification steps:**
+1. **Initialization:** The invariant holds prior to the first iteration.
+2. **Maintenance:** If the invariant holds before iteration $k$, it remains true before iteration $k+1$.
+3. **Termination:** When the loop condition becomes false, the invariant yields the required post-condition.
+
+**Worked example 14 (GATE-style loop invariant).** Consider the function below that computes $X^Y$ for positive integers $X, Y$:
+```c
+int exp(int X, int Y) {
+    int res = 1, a = X, b = Y;
+    while (b != 0) {
+        if (b % 2 == 0) { a = a * a; b = b / 2; }
+        else { res = res * a; b = b - 1; }
+    }
+    return res;
+}
+```
+Which condition is TRUE before every iteration of the `while` loop?
+- Test the candidate relationship $\text{res} \cdot a^b$:
+  - **Before loop:** $\text{res} = 1, a = X, b = Y \implies 1 \cdot X^Y = X^Y$ (holds).
+  - **Even $b$:** $a_{\text{new}} = a^2, b_{\text{new}} = b/2 \implies \text{res} \cdot (a^2)^{b/2} = \text{res} \cdot a^b$ (preserved).
+  - **Odd $b$:** $\text{res}_{\text{new}} = \text{res} \cdot a, b_{\text{new}} = b - 1 \implies (\text{res} \cdot a) \cdot a^{b-1} = \text{res} \cdot a^b$ (preserved).
+  - **At termination ($b = 0$):** $\text{res} \cdot a^0 = \text{res} = X^Y$.
+Thus the invariant that holds before every iteration is **$\text{res} \cdot a^b = X^Y$**.
+
+## 7. `printf` formats and macros [PYQ: Low]
 
 | Spec | Meaning | Example (value) → output |
 |---|---|---|
@@ -263,7 +293,7 @@ int i = 3, j = 2, m = MAX(i++, j);
 ```
 Fully parenthesised macro bodies and arguments avoid the first two problems; double evaluation remains.
 
-## 8. Storage classes, scope and lifetime
+## 8. Storage classes, scope and lifetime [PYQ: Medium]
 
 | Class | Where stored | Initial value | Lifetime | Scope |
 |---|---|---|---|---|
@@ -438,5 +468,25 @@ void f(void) { static int s = 0; int a = 0; s += 2; a += 2; printf("%d,%d ", s, 
 
 **Answer:** 4  
 **Solution:** Ten increments give 260; stored in an `unsigned char`, 260 mod 256 = 4. `c` is promoted to `int` for `printf`, so `%d` shows 4.
+
+</details>
+
+**Q9 (MCQ).** Consider the following code fragment where $x$ and $y$ are positive integers:
+```c
+int q = 0, r = x;
+while (r >= y) {
+    r = r - y;
+    q = q + 1;
+}
+```
+Which condition is a valid loop invariant that holds before every iteration of the `while` loop?  (A) $r = x - q$  (B) $x = q \cdot y + r$ and $r \ge 0$  (C) $q \cdot y = x + r$  (D) $r = y - q$
+
+<details><summary>Answer</summary>
+
+**Answer:** (B) $x = q \cdot y + r$ and $r \ge 0$  
+**Solution:**
+- **Initialization:** $q = 0, r = x \implies 0 \cdot y + x = x$ (True, and $x > 0 \implies r \ge 0$).
+- **Maintenance:** If $x = q \cdot y + r$ before an iteration where $r \ge y$, the body sets $r' = r - y$ and $q' = q + 1$. Then $q' \cdot y + r' = (q + 1)y + (r - y) = q \cdot y + r = x$. Since $r \ge y$, $r' = r - y \ge 0$.
+- **Termination:** When $r < y$, combined with $x = q \cdot y + r$, this establishes that $q$ is the integer quotient and $r$ is the remainder.
 
 </details>
